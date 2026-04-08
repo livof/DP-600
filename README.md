@@ -1,6 +1,6 @@
 # DP-600 Study Guide
 
-Visual, ADHD-friendly study guide for the **Microsoft DP-600 Fabric Analytics Engineer** certification exam.
+Visual, study guide for the **Microsoft DP-600 Fabric Analytics Engineer** certification exam.
 
 **Live site → [livof.github.io/DP-600](https://livof.github.io/DP-600/)**
 
