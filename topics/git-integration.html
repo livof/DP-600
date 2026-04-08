@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Git Integration — DP-600 Study Guide</title>
+<meta name="description" content="Learn how to connect Fabric workspaces to Azure DevOps Git. Visual, ADHD-friendly DP-600 exam prep. Org → Project → Repo → Branch → Folder.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0b0f;--bg2:#161520;--bg3:#1e1d2a;--surface:#252436;
+  --border:#2e2d42;--text:#e8e6f0;--text2:#b5b1c9;--text3:#7e7a95;
+  --accent:#7c6aef;--accent2:#a78bfa;--accent-glow:rgba(124,106,239,.12);
+  --teal:#34d399;--teal-bg:rgba(52,211,153,.08);--teal-border:rgba(52,211,153,.2);
+  --coral:#f87171;--coral-bg:rgba(248,113,113,.08);--coral-border:rgba(248,113,113,.2);
+  --amber:#fbbf24;--amber-bg:rgba(251,191,36,.08);--amber-border:rgba(251,191,36,.2);
+  --green:#4ade80;--green-bg:rgba(74,222,128,.08);
+  --pink:#f472b6;--pink-bg:rgba(244,114,182,.08);
+  --blue:#60a5fa;--blue-bg:rgba(96,165,250,.08);
+  --font-display:'Fraunces',serif;--font-body:'DM Sans',sans-serif;--font-mono:'DM Mono',monospace;
+  --ease:cubic-bezier(.4,0,.2,1);--radius:16px;--radius-sm:12px;--radius-pill:100px;
+}
+html{scroll-behavior:smooth;font-size:17px}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.9;-webkit-font-smoothing:antialiased;overflow-x:hidden;letter-spacing:.01em}
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03}
+::selection{background:var(--accent);color:#fff}
+a{color:var(--accent2);text-decoration:none;transition:color .2s}a:hover{color:var(--teal)}
+.container{max-width:680px;margin:0 auto;padding:0 2rem}
+
+/* progress */
+.reading-progress{position:fixed;top:0;left:0;width:100%;height:3px;z-index:100}
+.reading-progress .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .08s linear}
+
+/* dots */
+.section-dots{position:fixed;right:1.25rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:50}
+.section-dots .dot{width:10px;height:10px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .25s var(--ease);border:none;padding:0}
+.section-dots .dot:hover{background:var(--accent2);transform:scale(1.3)}
+.section-dots .dot.active{background:var(--accent);transform:scale(1.3)}
+
+.badge{display:inline-block;font-family:var(--font-mono);font-size:.75rem;letter-spacing:.08em;color:var(--accent2);border:1px solid var(--border);padding:.4rem 1.1rem;border-radius:var(--radius-pill);text-transform:uppercase}
+.read-time{font-family:var(--font-mono);font-size:.75rem;color:var(--text3)}
+
+.section{padding:4.5rem 0}.section+.section{border-top:1px solid var(--border)}
+.section-label{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:.5rem}
+.section h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.6rem,3.5vw,2.2rem);line-height:1.25;margin-bottom:.5rem}
+.section .tldr{font-size:1.08rem;color:var(--teal);margin-bottom:2rem;line-height:1.7;font-weight:500}
+
+.topnav{padding:1.25rem 0;display:flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--text3);border-bottom:1px solid var(--border);margin-bottom:1rem}
+.topnav a{color:var(--text3);transition:color .2s}.topnav a:hover{color:var(--accent2)}
+.topnav .sep{opacity:.4}
+
+.hero{padding:4rem 0 3.5rem;position:relative}
+.hero::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--accent2),transparent)}
+.hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(1.8rem,4vw,2.5rem);line-height:1.15;letter-spacing:-.02em;background:linear-gradient(135deg,var(--text) 40%,var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.75rem}
+.hero>p{font-size:1.05rem;color:var(--text2);max-width:520px;line-height:1.75}
+
+/* hierarchy steps */
+.hierarchy{display:flex;flex-direction:column;align-items:center;gap:0;margin:2.5rem 0}
+.h-step{
+  width:100%;max-width:420px;
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.25rem 1.5rem;position:relative;
+  transition:border-color .3s var(--ease),box-shadow .3s var(--ease);
+  display:flex;align-items:center;gap:1.25rem;
+}
+.h-step:hover{border-color:var(--accent);box-shadow:0 0 30px var(--accent-glow)}
+.h-step .h-num{
+  font-family:var(--font-display);font-weight:700;font-size:1.6rem;
+  flex-shrink:0;width:40px;text-align:center;line-height:1;
+}
+.h-step .h-content{flex:1}
+.h-step h3{font-weight:600;font-size:1.05rem;margin-bottom:.2rem}
+.h-step p{font-size:.9rem;color:var(--text2);margin:0;line-height:1.65}
+.h-step .analogy{display:inline-block;margin-top:.4rem;font-size:.82rem;color:var(--amber);font-family:var(--font-mono)}
+
+.h-step.s1{background:rgba(124,106,239,.06)}.h-step.s1 .h-num{color:var(--accent2)}
+.h-step.s2{background:var(--teal-bg)}.h-step.s2 .h-num{color:var(--teal)}
+.h-step.s3{background:var(--amber-bg)}.h-step.s3 .h-num{color:var(--amber)}
+.h-step.s4{background:var(--pink-bg)}.h-step.s4 .h-num{color:var(--pink)}
+.h-step.s5{background:var(--green-bg)}.h-step.s5 .h-num{color:var(--green)}
+
+.h-arrow{width:2px;height:32px;background:linear-gradient(to bottom,var(--border),var(--accent));position:relative}
+.h-arrow::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--accent)}
+
+/* cards */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin:1.5rem 0}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.75rem;transition:transform .25s var(--ease),border-color .3s}
+.card:hover{transform:translateY(-2px);border-color:var(--accent)}
+.card h4{font-size:1.05rem;font-weight:600;margin-bottom:.4rem}
+.card p{font-size:.95rem;color:var(--text2);line-height:1.75}
+.card .card-icon{font-size:1.6rem;margin-bottom:.85rem;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+
+/* wrong */
+.wrong-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;margin:1.5rem 0}
+.wrong-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;position:relative;overflow:hidden}
+.wrong-card::before{content:'✕';position:absolute;top:14px;right:16px;color:var(--coral);font-weight:700;font-size:1rem;opacity:.7}
+.wrong-card h4{font-size:1rem;font-weight:600;color:var(--coral);margin-bottom:.4rem}
+.wrong-card p{font-size:.92rem;color:var(--text3);line-height:1.75}
+
+/* callouts */
+.callout{border-radius:var(--radius);padding:1.75rem;margin:2rem 0}
+.callout .callout-title{font-weight:600;font-size:1.05rem;margin-bottom:.5rem}
+.callout p{font-size:.98rem;color:var(--text2);line-height:1.8}
+.callout.info{background:var(--accent-glow);border:1px solid rgba(124,106,239,.2)}.callout.info .callout-title{color:var(--accent2)}
+.callout.tip{background:var(--teal-bg);border:1px solid var(--teal-border)}.callout.tip .callout-title{color:var(--teal)}
+.callout.memory-big{background:var(--amber-bg);border:1px solid var(--amber-border);text-align:center;padding:2.5rem 2rem}
+.callout.memory-big .hook{font-family:var(--font-display);font-weight:700;font-size:clamp(1.3rem,3vw,1.7rem);color:var(--amber);line-height:1.3;margin-bottom:.5rem}
+.callout.memory-big p{text-align:center;max-width:440px;margin:0 auto}
+
+/* quiz */
+.quiz{margin:1.5rem 0}
+.quiz-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem}
+.quiz-item h4{font-size:1rem;font-weight:600;margin-bottom:1.25rem;line-height:1.65}
+.quiz-options{display:flex;flex-direction:column;gap:.7rem}
+.quiz-option{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.9rem 1.2rem;font-size:.95rem;cursor:pointer;transition:all .2s var(--ease);color:var(--text2);user-select:none}
+.quiz-option:hover{border-color:var(--accent);color:var(--text);background:var(--surface)}
+.quiz-option.correct{background:rgba(52,211,153,.15);border-color:var(--teal);color:var(--teal)}
+.quiz-option.wrong{background:rgba(248,113,113,.1);border-color:var(--coral);color:var(--coral);opacity:.55}
+.quiz-explanation{margin-top:1rem;padding:1rem 1.2rem;background:var(--surface);border-radius:var(--radius-sm);font-size:.92rem;color:var(--text2);line-height:1.75;display:none}
+.quiz-explanation.show{display:block}
+.quiz-score{text-align:center;padding:1.5rem;margin-bottom:1.5rem;border:1px dashed var(--border);border-radius:var(--radius);background:var(--bg2)}
+.quiz-score .score-num{font-family:var(--font-display);font-weight:700;font-size:2.2rem;transition:color .3s}
+.quiz-score .score-label{font-size:.8rem;color:var(--text3);margin-top:.25rem;font-family:var(--font-mono)}
+
+/* pills */
+.topics-list{display:flex;flex-wrap:wrap;gap:.7rem;margin:1rem 0}
+.topic-pill{font-size:.88rem;padding:.5rem 1.15rem;border:1px solid var(--border);border-radius:var(--radius-pill);color:var(--text2);transition:all .2s;cursor:default}
+.topic-pill:hover{border-color:var(--accent);color:var(--accent2)}
+
+.footer{text-align:center;padding:3.5rem 0 2.5rem;border-top:1px solid var(--border);margin-top:2rem}
+.footer p{font-size:.85rem;color:var(--text3);line-height:1.7}
+
+@media(prefers-reduced-motion:no-preference){
+  .fade-in{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+  .fade-in.visible{opacity:1;transform:translateY(0)}
+}
+@media(max-width:600px){
+  .container{padding:0 1.25rem}.section{padding:3rem 0}
+  .card-grid,.wrong-grid{grid-template-columns:1fr}
+  .section-dots{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="reading-progress"><div class="bar"></div></div>
+
+<nav class="section-dots" aria-label="Jump to section">
+  <button class="dot" data-section="story" onclick="document.getElementById('story').scrollIntoView({behavior:'smooth'})" title="The story"></button>
+  <button class="dot" data-section="sequence" onclick="document.getElementById('sequence').scrollIntoView({behavior:'smooth'})" title="The sequence"></button>
+  <button class="dot" data-section="why" onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})" title="Why it matters"></button>
+  <button class="dot" data-section="traps" onclick="document.getElementById('traps').scrollIntoView({behavior:'smooth'})" title="Exam traps"></button>
+  <button class="dot" data-section="bigger" onclick="document.getElementById('bigger').scrollIntoView({behavior:'smooth'})" title="Big picture"></button>
+  <button class="dot" data-section="quiz" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})" title="Quiz"></button>
+</nav>
+
+<div class="container">
+
+  <nav class="topnav">
+    <a href="../index.html">DP-600 Guide</a>
+    <span class="sep">/</span>
+    <a href="../index.html">Domain 1</a>
+    <span class="sep">/</span>
+    <span style="color:var(--text)">Git Integration</span>
+  </nav>
+
+  <header class="hero fade-in">
+    <span class="badge">Domain 1 — Plan, implement & manage</span>
+    <h1>Connect Fabric to Git — the exact sequence</h1>
+    <p>Org → Project → Repo → Branch → Folder. Big to small. Always.</p>
+    <p class="read-time" style="margin-top:.75rem">~3 min read · 3 quiz questions</p>
+  </header>
+
+  <!-- 01 STORY -->
+  <section class="section fade-in" id="story">
+    <p class="section-label">01 — The story</p>
+    <h2>What's going on here?</h2>
+    <p class="tldr">You're connecting a Fabric workspace to Git for version control.</p>
+
+    <p style="color:var(--text2);font-size:1rem;margin-bottom:1rem">
+      Fabric lets you hook your workspace into <strong style="color:var(--accent2)">Azure DevOps</strong> so your work is version-controlled — just like code.
+    </p>
+    <p style="color:var(--text2);font-size:1rem;margin-bottom:1.5rem">
+      The exam tests whether you know the <strong style="color:var(--amber)">exact order</strong> you click through when setting this up. It's always top → down. Big → small.
+    </p>
+
+    <div class="callout tip">
+      <div class="callout-title">The analogy that sticks</div>
+      <p>It's like opening folders on a computer: <strong>Company → Team → Project → Version → File.</strong> You'd never start at the file and work backwards.</p>
+    </div>
+  </section>
+
+  <!-- 02 SEQUENCE -->
+  <section class="section fade-in" id="sequence">
+    <p class="section-label">02 — The sequence</p>
+    <h2>Five steps. This exact order.</h2>
+    <p class="tldr">Org → Project → Repo → Branch → Folder. Done.</p>
+
+    <div class="hierarchy">
+      <div class="h-step s1">
+        <div class="h-num">1</div>
+        <div class="h-content">
+          <h3>Organization</h3>
+          <p>Your Azure DevOps organization. The top level.</p>
+          <span class="analogy">Think: "the company"</span>
+        </div>
+      </div>
+      <div class="h-arrow"></div>
+      <div class="h-step s2">
+        <div class="h-num">2</div>
+        <div class="h-content">
+          <h3>Project</h3>
+          <p>A project inside that org. Groups related work.</p>
+          <span class="analogy">Think: "the department"</span>
+        </div>
+      </div>
+      <div class="h-arrow"></div>
+      <div class="h-step s3">
+        <div class="h-num">3</div>
+        <div class="h-content">
+          <h3>Git repository</h3>
+          <p>The specific repo that holds your Fabric items.</p>
+          <span class="analogy">Think: "the codebase"</span>
+        </div>
+      </div>
+      <div class="h-arrow"></div>
+      <div class="h-step s4">
+        <div class="h-num">4</div>
+        <div class="h-content">
+          <h3>Branch</h3>
+          <p>Which branch to sync with. Usually main or dev.</p>
+          <span class="analogy">Think: "the version"</span>
+        </div>
+      </div>
+      <div class="h-arrow"></div>
+      <div class="h-step s5">
+        <div class="h-num">5</div>
+        <div class="h-content">
+          <h3>Git folder</h3>
+          <p>The folder path inside the repo. Where items live.</p>
+          <span class="analogy">Think: "the location"</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout memory-big">
+      <div class="hook">Org → Project → Repo → Branch → Folder</div>
+      <p>Big → small. Always. Never random order.</p>
+    </div>
+  </section>
+
+  <!-- 03 WHY -->
+  <section class="section fade-in" id="why">
+    <p class="section-label">03 — Why this matters</p>
+    <h2>Three reasons to care</h2>
+    <p class="tldr">Version control, collaboration, and CI/CD in Fabric.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon" style="background:var(--accent-glow);color:var(--accent2)">🔄</span>
+        <h4>Version control</h4>
+        <p>Track changes to your Fabric items. Roll back if something breaks.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon" style="background:var(--teal-bg);color:var(--teal)">👥</span>
+        <h4>Collaboration</h4>
+        <p>Multiple people work on the same workspace without overwriting each other.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon" style="background:var(--amber-bg);color:var(--amber)">🚀</span>
+        <h4>CI/CD</h4>
+        <p>Deploy changes from dev → test → prod using Git branches and pipelines.</p>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-title">Where does this live?</div>
+      <p>Git integration sits in the <strong>workspace settings</strong> and connects to the <strong>governance layer</strong> of Fabric. It's Domain 1 material — planning and managing your solution.</p>
+    </div>
+  </section>
+
+  <!-- 04 TRAPS -->
+  <section class="section fade-in" id="traps">
+    <p class="section-label">04 — Exam traps</p>
+    <h2>These look right but aren't</h2>
+    <p class="tldr">The exam loves to sneak these in as options.</p>
+
+    <div class="wrong-grid">
+      <div class="wrong-card">
+        <h4>Repository URL</h4>
+        <p>You don't paste a URL. You select from the hierarchy dropdown — Org, Project, Repo.</p>
+      </div>
+      <div class="wrong-card">
+        <h4>Personal Access Token</h4>
+        <p>Not needed. Fabric uses Entra ID (Azure AD) login. No manual tokens.</p>
+      </div>
+      <div class="wrong-card">
+        <h4>Make stage public</h4>
+        <p>Completely unrelated. This is about deployment pipelines, not Git integration.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 BIGGER PICTURE -->
+  <section class="section fade-in" id="bigger">
+    <p class="section-label">05 — The bigger picture</p>
+    <h2>How Git fits into Fabric</h2>
+    <p class="tldr">It's one piece of the governance puzzle.</p>
+
+    <p style="color:var(--text2);font-size:1rem;margin-bottom:1.5rem">
+      Git integration is part of how Fabric handles <strong style="color:var(--accent2)">governance</strong> and <strong style="color:var(--teal)">deployment</strong>. Your workspace syncs to a repo. Changes commit to Git. Then deployment pipelines push from dev → test → prod.
+    </p>
+
+    <div class="callout tip">
+      <div class="callout-title">Exam pattern</div>
+      <p>If the question mentions "Git setup" or "connect workspace to source control" — follow the hierarchy. If it mentions "deploy to production" — that's deployment pipelines, a different topic.</p>
+    </div>
+  </section>
+
+  <!-- 06 QUIZ -->
+  <section class="section fade-in" id="quiz">
+    <p class="section-label">06 — Test yourself</p>
+    <h2>3 questions. Tap to answer.</h2>
+    <p class="tldr">See how much stuck.</p>
+
+    <div class="quiz-score">
+      <div class="score-num" style="color:var(--text3)">0 / 3</div>
+      <div class="score-label">Your score</div>
+    </div>
+
+    <div class="quiz">
+
+      <div class="quiz-item" data-correct="1">
+        <h4>Q1: You're connecting a Fabric workspace to Azure DevOps. What do you select first?</h4>
+        <div class="quiz-options">
+          <div class="quiz-option" data-idx="0">A. Git repository</div>
+          <div class="quiz-option" data-idx="1">B. Organization</div>
+          <div class="quiz-option" data-idx="2">C. Branch</div>
+          <div class="quiz-option" data-idx="3">D. Git folder</div>
+        </div>
+        <div class="quiz-explanation">Always start at the top. Organization is the biggest container in Azure DevOps. Then Project → Repo → Branch → Folder. Big → small.</div>
+      </div>
+
+      <div class="quiz-item" data-correct="2">
+        <h4>Q2: How does Fabric authenticate with Azure DevOps for Git integration?</h4>
+        <div class="quiz-options">
+          <div class="quiz-option" data-idx="0">A. Personal Access Token (PAT)</div>
+          <div class="quiz-option" data-idx="1">B. Repository URL with embedded credentials</div>
+          <div class="quiz-option" data-idx="2">C. Microsoft Entra ID (Azure AD) sign-in</div>
+          <div class="quiz-option" data-idx="3">D. SSH key pair</div>
+        </div>
+        <div class="quiz-explanation">Fabric uses your Microsoft Entra ID login — the same identity you use for Fabric itself. No manual tokens, no SSH keys, no URLs with credentials.</div>
+      </div>
+
+      <div class="quiz-item" data-correct="3">
+        <h4>Q3: What is the correct order for setting up Git integration in a Fabric workspace?</h4>
+        <div class="quiz-options">
+          <div class="quiz-option" data-idx="0">A. Branch → Repo → Project → Org → Folder</div>
+          <div class="quiz-option" data-idx="1">B. Repo URL → PAT → Branch → Folder</div>
+          <div class="quiz-option" data-idx="2">C. Project → Org → Repo → Folder → Branch</div>
+          <div class="quiz-option" data-idx="3">D. Org → Project → Repo → Branch → Folder</div>
+        </div>
+        <div class="quiz-explanation">Org → Project → Repo → Branch → Folder. Always top-down, big to small. The exam loves to scramble this order or sneak in "Repo URL" as a fake first step.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- curiosity -->
+  <section class="section fade-in">
+    <p class="section-label">07 — Keep wondering</p>
+    <h2>Questions to sit with</h2>
+    <p class="tldr">Let these marinate. No rush.</p>
+    <div style="display:flex;flex-direction:column;gap:1rem;margin-top:1.25rem">
+      <p style="color:var(--text2);font-size:.95rem;padding-left:1.25rem;border-left:2px solid var(--accent);line-height:1.7">What happens if two people edit the same Fabric item on different branches?</p>
+      <p style="color:var(--text2);font-size:.95rem;padding-left:1.25rem;border-left:2px solid var(--teal);line-height:1.7">How is Git integration different from deployment pipelines in Fabric?</p>
+      <p style="color:var(--text2);font-size:.95rem;padding-left:1.25rem;border-left:2px solid var(--amber);line-height:1.7">Can you use GitHub instead of Azure DevOps? What changes?</p>
+    </div>
+  </section>
+
+  <!-- next -->
+  <section class="section fade-in">
+    <p class="section-label">Up next</p>
+    <h2>More topics coming</h2>
+    <div class="topics-list">
+      <span class="topic-pill">Deployment pipelines</span>
+      <span class="topic-pill">Workspace roles</span>
+      <span class="topic-pill">OneLake architecture</span>
+      <span class="topic-pill">Capacity & SKUs</span>
+      <span class="topic-pill">Data governance</span>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p><a href="../index.html">← Back to all domains</a> · DP-600 Study Guide</p>
+  </footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const bar=document.querySelector('.reading-progress .bar');
+  if(bar)window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=h>0?(window.scrollY/h*100)+'%':'0%'},{passive:true});
+
+  const dots=document.querySelector('.section-dots');
+  const secs=document.querySelectorAll('.section[id]');
+  if(dots&&secs.length){const o=new IntersectionObserver(es=>es.forEach(e=>{const d=dots.querySelector(`[data-section="${e.target.id}"]`);if(d)d.classList.toggle('active',e.isIntersecting)}),{threshold:.3});secs.forEach(s=>o.observe(s))}
+
+  const items=document.querySelectorAll('.quiz-item');
+  const scoreEl=document.querySelector('.quiz-score .score-num');
+  let total=items.length,correct=0,answered=0;
+  items.forEach(item=>{
+    const c=parseInt(item.dataset.correct);
+    const opts=item.querySelectorAll('.quiz-option');
+    const expl=item.querySelector('.quiz-explanation');
+    let done=false;
+    opts.forEach(opt=>{
+      opt.addEventListener('click',()=>{
+        if(done)return;done=true;answered++;
+        const idx=parseInt(opt.dataset.idx);
+        if(idx===c){opt.classList.add('correct');correct++}
+        else{opt.classList.add('wrong');opts[c].classList.add('correct')}
+        if(expl)expl.classList.add('show');
+        if(scoreEl){
+          scoreEl.textContent=correct+' / '+total;
+          if(correct===total&&answered===total){scoreEl.style.color='var(--teal)';scoreEl.textContent=correct+' / '+total+' 🎉'}
+          else if(answered===total)scoreEl.style.color=correct>=total/2?'var(--amber)':'var(--coral)';
+        }
+      });
+    });
+  });
+
+  if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+    const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}}),{threshold:.1});
+    document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+  }
+});
+</script>
+</body>
+</html>
