@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Copy Activity — DP-600 Study Guide</title>
+<meta name="description" content="Learn how Copy Activity moves data from OLTP to Lakehouse in Microsoft Fabric. Visual, ADHD-friendly DP-600 exam prep.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0b0f;--bg2:#161520;--bg3:#1e1d2a;--surface:#252436;
+  --border:#2e2d42;--text:#e8e6f0;--text2:#b5b1c9;--text3:#7e7a95;
+  --accent:#7c6aef;--accent2:#a78bfa;--accent-glow:rgba(124,106,239,.12);
+  --teal:#34d399;--teal-bg:rgba(52,211,153,.08);--teal-border:rgba(52,211,153,.2);
+  --coral:#f87171;--coral-bg:rgba(248,113,113,.08);--coral-border:rgba(248,113,113,.2);
+  --amber:#fbbf24;--amber-bg:rgba(251,191,36,.08);--amber-border:rgba(251,191,36,.2);
+  --green:#4ade80;--green-bg:rgba(74,222,128,.08);
+  --pink:#f472b6;
+  --font-display:'Fraunces',serif;--font-body:'DM Sans',sans-serif;--font-mono:'DM Mono',monospace;
+  --ease:cubic-bezier(.4,0,.2,1);--radius:16px;--radius-sm:12px;--radius-pill:100px;
+}
+html{scroll-behavior:smooth;font-size:17px}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.9;-webkit-font-smoothing:antialiased;overflow-x:hidden;letter-spacing:.01em}
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03}
+::selection{background:var(--accent);color:#fff}
+a{color:var(--accent2);text-decoration:none;transition:color .2s}a:hover{color:var(--teal)}
+.container{max-width:680px;margin:0 auto;padding:0 2rem}
+
+/* progress */
+.reading-progress{position:fixed;top:0;left:0;width:100%;height:3px;z-index:100}
+.reading-progress .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .08s linear}
+
+/* section dots */
+.section-dots{position:fixed;right:1.25rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:50}
+.section-dots .dot{width:10px;height:10px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .25s var(--ease);border:none;padding:0}
+.section-dots .dot:hover{background:var(--accent2);transform:scale(1.3)}
+.section-dots .dot.active{background:var(--accent);transform:scale(1.3)}
+
+/* badge */
+.badge{display:inline-block;font-family:var(--font-mono);font-size:.75rem;letter-spacing:.08em;color:var(--accent2);border:1px solid var(--border);padding:.4rem 1.1rem;border-radius:var(--radius-pill);text-transform:uppercase}
+.read-time{font-family:var(--font-mono);font-size:.75rem;color:var(--text3)}
+
+/* sections */
+.section{padding:4.5rem 0}.section+.section{border-top:1px solid var(--border)}
+.section-label{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:.5rem}
+.section h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.6rem,3.5vw,2.2rem);line-height:1.25;margin-bottom:.5rem}
+.section .tldr{font-size:1.08rem;color:var(--teal);margin-bottom:2rem;line-height:1.7;font-weight:500}
+
+/* nav */
+.topnav{padding:1.25rem 0;display:flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--text3);border-bottom:1px solid var(--border);margin-bottom:1rem}
+.topnav a{color:var(--text3);transition:color .2s}.topnav a:hover{color:var(--accent2)}
+.topnav .sep{opacity:.4}
+
+/* hero */
+.hero{padding:4rem 0 3.5rem;position:relative}
+.hero::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--teal),transparent)}
+.hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(1.8rem,4vw,2.5rem);line-height:1.15;letter-spacing:-.02em;background:linear-gradient(135deg,var(--text) 40%,var(--teal));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.75rem}
+.hero>p{font-size:1.05rem;color:var(--text2);max-width:520px;line-height:1.75}
+
+/* flow */
+.flow{display:flex;flex-direction:column;align-items:center;gap:0;margin:2.5rem 0}
+.flow-node{width:100%;max-width:460px;border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.75rem;position:relative;transition:border-color .3s var(--ease),box-shadow .3s var(--ease)}
+.flow-node:hover{border-color:var(--accent);box-shadow:0 0 30px var(--accent-glow)}
+.flow-node .tag{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;display:block}
+.flow-node h3{font-weight:600;font-size:1.15rem;margin-bottom:.35rem}
+.flow-node p{font-size:.95rem;color:var(--text2);margin:0;line-height:1.7}
+.flow-node .analogy{display:inline-block;margin-top:.6rem;font-size:.85rem;color:var(--amber);font-family:var(--font-mono)}
+.flow-node.source{background:var(--coral-bg)}.flow-node.source .tag,.flow-node.source h3{color:var(--coral)}
+.flow-node.pipeline{background:var(--accent-glow)}.flow-node.pipeline .tag,.flow-node.pipeline h3{color:var(--accent2)}
+.flow-node.copy{background:var(--teal-bg)}.flow-node.copy .tag,.flow-node.copy h3{color:var(--teal)}
+.flow-node.lakehouse{background:var(--green-bg)}.flow-node.lakehouse .tag,.flow-node.lakehouse h3{color:var(--green)}
+.flow-arrow{width:2px;height:44px;background:linear-gradient(to bottom,var(--border),var(--accent));position:relative}
+.flow-arrow::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);border-left:5px solid transparent;border-right:5px solid transparent;border-top:6px solid var(--accent)}
+
+/* cards */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.25rem;margin:1.5rem 0}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem 1.75rem;transition:transform .25s var(--ease),border-color .3s}
+.card:hover{transform:translateY(-2px);border-color:var(--accent)}
+.card h4{font-size:1.05rem;font-weight:600;margin-bottom:.4rem}
+.card p{font-size:.95rem;color:var(--text2);line-height:1.75}
+.card .card-icon{font-size:1.6rem;margin-bottom:.85rem;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+
+/* wrong answers */
+.wrong-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.25rem;margin:1.5rem 0}
+.wrong-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;position:relative;overflow:hidden}
+.wrong-card::before{content:'✕';position:absolute;top:14px;right:16px;color:var(--coral);font-weight:700;font-size:1rem;opacity:.7}
+.wrong-card h4{font-size:1rem;font-weight:600;color:var(--coral);margin-bottom:.4rem}
+.wrong-card p{font-size:.92rem;color:var(--text3);line-height:1.75}
+
+/* table */
+.compare-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.95rem}
+.compare-table th{text-align:left;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:.9rem 1rem;border-bottom:1px solid var(--border)}
+.compare-table td{padding:.9rem 1rem;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;line-height:1.65}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .label{color:var(--text);font-weight:500}
+
+/* callouts */
+.callout{border-radius:var(--radius);padding:1.75rem;margin:2rem 0}
+.callout .callout-title{font-weight:600;font-size:1.05rem;margin-bottom:.5rem}
+.callout p{font-size:.98rem;color:var(--text2);line-height:1.8}
+.callout.info{background:var(--accent-glow);border:1px solid rgba(124,106,239,.2)}.callout.info .callout-title{color:var(--accent2)}
+.callout.danger{background:var(--coral-bg);border:1px solid var(--coral-border)}.callout.danger .callout-title{color:var(--coral)}
+.callout.memory-big{background:var(--amber-bg);border:1px solid var(--amber-border);text-align:center;padding:2.5rem 2rem}
+.callout.memory-big .hook{font-family:var(--font-display);font-weight:700;font-size:clamp(1.3rem,3vw,1.7rem);color:var(--amber);line-height:1.3;margin-bottom:.5rem}
+.callout.memory-big p{text-align:center;max-width:420px;margin:0 auto}
+
+/* quiz */
+.quiz{margin:1.5rem 0}
+.quiz-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem}
+.quiz-item h4{font-size:1rem;font-weight:600;margin-bottom:1.25rem;line-height:1.65}
+.quiz-options{display:flex;flex-direction:column;gap:.7rem}
+.quiz-option{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.9rem 1.2rem;font-size:.95rem;cursor:pointer;transition:all .2s var(--ease);color:var(--text2);user-select:none}
+.quiz-option:hover{border-color:var(--accent);color:var(--text);background:var(--surface)}
+.quiz-option.correct{background:rgba(52,211,153,.15);border-color:var(--teal);color:var(--teal)}
+.quiz-option.wrong{background:rgba(248,113,113,.1);border-color:var(--coral);color:var(--coral);opacity:.55}
+.quiz-explanation{margin-top:1rem;padding:1rem 1.2rem;background:var(--surface);border-radius:var(--radius-sm);font-size:.92rem;color:var(--text2);line-height:1.75;display:none}
+.quiz-explanation.show{display:block}
+.quiz-score{text-align:center;padding:1.5rem;margin-bottom:1.5rem;border:1px dashed var(--border);border-radius:var(--radius);background:var(--bg2)}
+.quiz-score .score-num{font-family:var(--font-display);font-weight:700;font-size:2.2rem;transition:color .3s}
+.quiz-score .score-label{font-size:.8rem;color:var(--text3);margin-top:.25rem;font-family:var(--font-mono)}
+
+/* pills */
+.topics-list{display:flex;flex-wrap:wrap;gap:.7rem;margin:1rem 0}
+.topic-pill{font-size:.88rem;padding:.5rem 1.15rem;border:1px solid var(--border);border-radius:var(--radius-pill);color:var(--text2);transition:all .2s;cursor:default}
+.topic-pill:hover{border-color:var(--accent);color:var(--accent2)}
+
+/* footer */
+.footer{text-align:center;padding:3.5rem 0 2.5rem;border-top:1px solid var(--border);margin-top:2rem}
+.footer p{font-size:.85rem;color:var(--text3);line-height:1.7}
+
+/* animations */
+@media(prefers-reduced-motion:no-preference){
+  .fade-in{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+  .fade-in.visible{opacity:1;transform:translateY(0)}
+}
+@media(max-width:600px){
+  .container{padding:0 1.25rem}.section{padding:3rem 0}
+  .card-grid,.wrong-grid{grid-template-columns:1fr}
+  .section-dots{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="reading-progress"><div class="bar"></div></div>
+
+<nav class="section-dots" aria-label="Jump to section">
+  <button class="dot" data-section="story" onclick="document.getElementById('story').scrollIntoView({behavior:'smooth'})" title="The story"></button>
+  <button class="dot" data-section="flow" onclick="document.getElementById('flow').scrollIntoView({behavior:'smooth'})" title="The flow"></button>
+  <button class="dot" data-section="why" onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})" title="Why it works"></button>
+  <button class="dot" data-section="traps" onclick="document.getElementById('traps').scrollIntoView({behavior:'smooth'})" title="Exam traps"></button>
+  <button class="dot" data-section="elt" onclick="document.getElementById('elt').scrollIntoView({behavior:'smooth'})" title="ETL vs ELT"></button>
+  <button class="dot" data-section="pattern" onclick="document.getElementById('pattern').scrollIntoView({behavior:'smooth'})" title="Cheat sheet"></button>
+  <button class="dot" data-section="quiz" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})" title="Quiz"></button>
+</nav>
+
+<div class="container">
+
+  <nav class="topnav">
+    <a href="../index.html">DP-600 Guide</a>
+    <span class="sep">/</span>
+    <a href="../index.html">Domain 2</a>
+    <span class="sep">/</span>
+    <span style="color:var(--text)">Copy Activity</span>
+  </nav>
+
+  <header class="hero fade-in">
+    <span class="badge">Domain 2 — Prepare and serve data</span>
+    <h1>Move data into Fabric without breaking the source</h1>
+    <p>Copy Activity inside a Data Pipeline. That's it. That's the answer.</p>
+    <p class="read-time" style="margin-top:.75rem">~4 min read · 3 quiz questions</p>
+  </header>
+
+  <!-- 01 -->
+  <section class="section fade-in" id="story">
+    <p class="section-label">01 — The story</p>
+    <h2>What's going on here?</h2>
+    <p class="tldr">Shop + warehouse. Move data without crashing the shop.</p>
+    <p style="color:var(--text2);font-size:1rem;margin-bottom:1.5rem">
+      Your <strong style="color:var(--coral)">OLTP system</strong> is a busy shop — orders, customers, all day. Your <strong style="color:var(--green)">Lakehouse</strong> is a warehouse for analysis.
+    </p>
+    <div class="callout danger">
+      <div class="callout-title">Why not just query the shop?</div>
+      <p>It slows everything down. Customers wait. Transactions break. Bad idea.</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="section fade-in" id="flow">
+    <p class="section-label">02 — The correct path</p>
+    <h2>Four boxes. One direction. Done.</h2>
+    <p class="tldr">This is the only flow you need to remember.</p>
+    <div class="flow">
+      <div class="flow-node source">
+        <span class="tag">Source</span>
+        <h3>OLTP system</h3>
+        <p>Your live database. Busy all day.</p>
+        <span class="analogy">Think: "the shop"</span>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node pipeline">
+        <span class="tag">Orchestrator</span>
+        <h3>Data Pipeline</h3>
+        <p>Decides when to run and where data goes. Handles retries.</p>
+        <span class="analogy">Think: "the brain"</span>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node copy">
+        <span class="tag">Worker</span>
+        <h3>Copy Activity</h3>
+        <p>Picks up data. Prepares it. Delivers it.</p>
+        <span class="analogy">Think: "the hands"</span>
+      </div>
+      <div class="flow-arrow"></div>
+      <div class="flow-node lakehouse">
+        <span class="tag">Destination</span>
+        <h3>Lakehouse</h3>
+        <p>Data lands here for Spark, SQL, or Power BI.</p>
+        <span class="analogy">Think: "the warehouse"</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="section fade-in" id="why">
+    <p class="section-label">03 — Why this is the answer</p>
+    <h2>Four reasons. All short.</h2>
+    <p class="tldr">Copy Activity is built for exactly this job.</p>
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon" style="background:var(--teal-bg);color:var(--teal)">⚡</span>
+        <h4>Fast</h4>
+        <p>Parallel reads and writes. Handles huge datasets.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon" style="background:var(--accent-glow);color:var(--accent2)">🔁</span>
+        <h4>Reliable</h4>
+        <p>Auto-retries. Resumes on failure. You don't babysit it.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon" style="background:var(--green-bg);color:var(--green)">🛡</span>
+        <h4>Gentle</h4>
+        <p>Doesn't overload the source. The shop stays open.</p>
+      </div>
+      <div class="card">
+        <span class="card-icon" style="background:var(--amber-bg);color:var(--amber)">🗓</span>
+        <h4>Automatic</h4>
+        <p>Runs on a schedule. Set it and forget it.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section class="section fade-in" id="traps">
+    <p class="section-label">04 — Exam traps</p>
+    <h2>These look right but aren't</h2>
+    <p class="tldr">Learn why they fail so you never pick them.</p>
+    <div class="wrong-grid">
+      <div class="wrong-card">
+        <h4>Logic Apps</h4>
+        <p>For workflows like emails and triggers. Not for moving big data.</p>
+      </div>
+      <div class="wrong-card">
+        <h4>BCP</h4>
+        <p>Fast but manual. No scheduling, no orchestration. Dead end.</p>
+      </div>
+      <div class="wrong-card">
+        <h4>Synapse Pipelines</h4>
+        <p>Similar idea, but Fabric wants Fabric-native tools. Not legacy.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section class="section fade-in" id="elt">
+    <p class="section-label">05 — The deeper concept</p>
+    <h2>ETL vs ELT</h2>
+    <p class="tldr">Fabric uses ELT. Load first, transform later.</p>
+    <table class="compare-table">
+      <thead><tr><th></th><th>ETL (old)</th><th>ELT (Fabric)</th></tr></thead>
+      <tbody>
+        <tr><td class="label">Order</td><td>Transform → Load</td><td>Load → Transform</td></tr>
+        <tr><td class="label">Speed</td><td>Slower</td><td>Faster</td></tr>
+        <tr><td class="label">Flexibility</td><td>Schema locked early</td><td>Reshape anytime</td></tr>
+      </tbody>
+    </table>
+    <div class="callout info">
+      <div class="callout-title">Copy Activity = the "L" in ELT</div>
+      <p>It loads raw data fast. You transform later with Spark or SQL. That's the modern way.</p>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section class="section fade-in" id="pattern">
+    <p class="section-label">06 — The cheat sheet</p>
+    <h2>Which tool for which job?</h2>
+    <p class="tldr">This table shows up on the exam. Memorize it.</p>
+    <table class="compare-table">
+      <thead><tr><th>I need to…</th><th>Use this</th></tr></thead>
+      <tbody>
+        <tr><td class="label">Move data at scale</td><td style="color:var(--teal);font-weight:500">Copy Activity</td></tr>
+        <tr><td class="label">Transform data</td><td style="color:var(--accent2);font-weight:500">Dataflow Gen2 / Spark</td></tr>
+        <tr><td class="label">Stream in real time</td><td style="color:var(--amber);font-weight:500">Eventstream</td></tr>
+        <tr><td class="label">Reference without copying</td><td style="color:var(--pink);font-weight:500">OneLake shortcut</td></tr>
+      </tbody>
+    </table>
+    <div class="callout memory-big">
+      <div class="hook">Big data move → Pipeline + Copy Activity</div>
+      <p>Pipeline = brain. Copy Activity = hands. Always together.</p>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section class="section fade-in" id="quiz">
+    <p class="section-label">07 — Test yourself</p>
+    <h2>3 questions. Tap to answer.</h2>
+    <p class="tldr">See how much stuck. No pressure.</p>
+
+    <div class="quiz-score">
+      <div class="score-num" style="color:var(--text3)">0 / 3</div>
+      <div class="score-label">Your score</div>
+    </div>
+
+    <div class="quiz">
+      <div class="quiz-item" data-correct="2">
+        <h4>Q1: You need to ingest data from Azure SQL into a Fabric Lakehouse daily. What do you use?</h4>
+        <div class="quiz-options">
+          <div class="quiz-option" data-idx="0">A. Logic Apps with a SQL connector</div>
+          <div class="quiz-option" data-idx="1">B. BCP utility with a cron job</div>
+          <div class="quiz-option" data-idx="2">C. Data Pipeline with Copy Activity</div>
+          <div class="quiz-option" data-idx="3">D. Power BI dataflow refresh</div>
+        </div>
+        <div class="quiz-explanation">Copy Activity in a Pipeline = Fabric-native, scheduled, reliable, large-scale. Logic Apps = workflows. BCP = manual. Power BI dataflows = lightweight transforms, not bulk ingestion.</div>
+      </div>
+
+      <div class="quiz-item" data-correct="1">
+        <h4>Q2: What's the main advantage of ELT (the approach Copy Activity supports)?</h4>
+        <div class="quiz-options">
+          <div class="quiz-option" data-idx="0">A. Data is cleaned before entering the lakehouse</div>
+          <div class="quiz-option" data-idx="1">B. Raw data lands fast, you transform later</div>
+          <div class="quiz-option" data-idx="2">C. It removes the need for a pipeline</div>
+          <div class="quiz-option" data-idx="3">D. It auto-creates star schemas</div>
+        </div>
+        <div class="quiz-explanation">ELT = Extract, Load, Transform. Copy Activity does the E and L. Fast. The T comes later with Spark or SQL. More flexible than cleaning upfront.</div>
+      </div>
+
+      <div class="quiz-item" data-correct="3">
+        <h4>Q3: When should you use an OneLake shortcut instead of Copy Activity?</h4>
+        <div class="quiz-options">
+          <div class="quiz-option" data-idx="0">A. When you need to transform during ingestion</div>
+          <div class="quiz-option" data-idx="1">B. When you need a daily schedule</div>
+          <div class="quiz-option" data-idx="2">C. When you want to physically move data</div>
+          <div class="quiz-option" data-idx="3">D. When you want to reference data without copying it</div>
+        </div>
+        <div class="quiz-explanation">Shortcuts = reference in place, no copy. Copy Activity = physically move data. Key exam distinction: shortcut references, pipeline copies.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- curiosity -->
+  <section class="section fade-in">
+    <p class="section-label">08 — Keep wondering</p>
+    <h2>Questions to sit with</h2>
+    <p class="tldr">No need to answer now. Just let them marinate.</p>
+    <div style="display:flex;flex-direction:column;gap:1rem;margin-top:1.25rem">
+      <p style="color:var(--text2);font-size:.95rem;padding-left:1.25rem;border-left:2px solid var(--accent);line-height:1.7">What happens if the source schema changes between pipeline runs?</p>
+      <p style="color:var(--text2);font-size:.95rem;padding-left:1.25rem;border-left:2px solid var(--teal);line-height:1.7">When would a shortcut beat a copy — and what do you lose?</p>
+      <p style="color:var(--text2);font-size:.95rem;padding-left:1.25rem;border-left:2px solid var(--amber);line-height:1.7">How does Copy Activity play with Delta Lake's ACID transactions?</p>
+    </div>
+  </section>
+
+  <!-- next -->
+  <section class="section fade-in">
+    <p class="section-label">Up next</p>
+    <h2>More topics coming</h2>
+    <div class="topics-list">
+      <span class="topic-pill">Dataflow Gen2</span>
+      <span class="topic-pill">Eventstream</span>
+      <span class="topic-pill">OneLake shortcuts vs copy</span>
+      <span class="topic-pill">Delta Lake tables</span>
+      <span class="topic-pill">Medallion architecture</span>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p><a href="../index.html">← Back to all domains</a> · DP-600 Study Guide</p>
+  </footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  // reading progress
+  const bar=document.querySelector('.reading-progress .bar');
+  if(bar)window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=h>0?(window.scrollY/h*100)+'%':'0%'},{passive:true});
+
+  // section dots
+  const dots=document.querySelector('.section-dots');
+  const secs=document.querySelectorAll('.section[id]');
+  if(dots&&secs.length){const o=new IntersectionObserver(es=>es.forEach(e=>{const d=dots.querySelector(`[data-section="${e.target.id}"]`);if(d)d.classList.toggle('active',e.isIntersecting)}),{threshold:.3});secs.forEach(s=>o.observe(s))}
+
+  // quiz
+  const items=document.querySelectorAll('.quiz-item');
+  const scoreEl=document.querySelector('.quiz-score .score-num');
+  let total=items.length,correct=0,answered=0;
+  items.forEach(item=>{
+    const c=parseInt(item.dataset.correct);
+    const opts=item.querySelectorAll('.quiz-option');
+    const expl=item.querySelector('.quiz-explanation');
+    let done=false;
+    opts.forEach(opt=>{
+      opt.addEventListener('click',()=>{
+        if(done)return;done=true;answered++;
+        const idx=parseInt(opt.dataset.idx);
+        if(idx===c){opt.classList.add('correct');correct++}
+        else{opt.classList.add('wrong');opts[c].classList.add('correct')}
+        if(expl)expl.classList.add('show');
+        if(scoreEl){
+          scoreEl.textContent=correct+' / '+total;
+          if(correct===total&&answered===total){scoreEl.style.color='var(--teal)';scoreEl.textContent=correct+' / '+total+' 🎉'}
+          else if(answered===total)scoreEl.style.color=correct>=total/2?'var(--amber)':'var(--coral)';
+        }
+      });
+    });
+  });
+
+  // fade in
+  if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+    const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}}),{threshold:.1});
+    document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+  }
+});
+</script>
+</body>
+</html>
