@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Managed vs External Tables — DP-600 Study Guide</title>
+<meta name="description" content="Learn the difference between managed and external tables in Fabric Lakehouse. USING DELTA OPTIONS, metadata vs data, Power BI access. DP-600 exam prep.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0b0f;--bg2:#161520;--bg3:#1e1d2a;--surface:#252436;
+  --border:#2e2d42;--text:#e8e6f0;--text2:#b5b1c9;--text3:#7e7a95;
+  --accent:#7c6aef;--accent2:#a78bfa;--accent-glow:rgba(124,106,239,.12);
+  --teal:#34d399;--teal-bg:rgba(52,211,153,.08);--teal-border:rgba(52,211,153,.2);
+  --coral:#f87171;--coral-bg:rgba(248,113,113,.08);--coral-border:rgba(248,113,113,.2);
+  --amber:#fbbf24;--amber-bg:rgba(251,191,36,.08);--amber-border:rgba(251,191,36,.2);
+  --green:#4ade80;--green-bg:rgba(74,222,128,.08);
+  --pink:#f472b6;--pink-bg:rgba(244,114,182,.08);
+  --blue:#60a5fa;--blue-bg:rgba(96,165,250,.08);--blue-border:rgba(96,165,250,.2);
+  --font-display:'Fraunces',serif;--font-body:'DM Sans',sans-serif;--font-mono:'DM Mono',monospace;
+  --ease:cubic-bezier(.4,0,.2,1);--radius:16px;--radius-sm:12px;--radius-pill:100px;
+}
+html{scroll-behavior:smooth;font-size:17px}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.9;-webkit-font-smoothing:antialiased;overflow-x:hidden;letter-spacing:.01em}
+body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03}
+::selection{background:var(--accent);color:#fff}
+a{color:var(--accent2);text-decoration:none;transition:color .2s}a:hover{color:var(--teal)}
+.container{max-width:680px;margin:0 auto;padding:0 2rem}
+
+.reading-progress{position:fixed;top:0;left:0;width:100%;height:3px;z-index:100}
+.reading-progress .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .08s linear}
+
+.section-dots{position:fixed;right:1.25rem;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:50}
+.section-dots .dot{width:10px;height:10px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .25s var(--ease);border:none;padding:0}
+.section-dots .dot:hover{background:var(--accent2);transform:scale(1.3)}
+.section-dots .dot.active{background:var(--accent);transform:scale(1.3)}
+
+.badge{display:inline-block;font-family:var(--font-mono);font-size:.75rem;letter-spacing:.08em;color:var(--accent2);border:1px solid var(--border);padding:.4rem 1.1rem;border-radius:var(--radius-pill);text-transform:uppercase}
+.read-time{font-family:var(--font-mono);font-size:.75rem;color:var(--text3)}
+
+.section{padding:4.5rem 0}.section+.section{border-top:1px solid var(--border)}
+.section-label{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:.5rem}
+.section h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.6rem,3.5vw,2.2rem);line-height:1.25;margin-bottom:.5rem}
+.section .tldr{font-size:1.08rem;color:var(--teal);margin-bottom:2rem;line-height:1.7;font-weight:500}
+
+.topnav{padding:1.25rem 0;display:flex;align-items:center;gap:.5rem;font-size:.85rem;color:var(--text3);border-bottom:1px solid var(--border);margin-bottom:1rem}
+.topnav a{color:var(--text3);transition:color .2s}.topnav a:hover{color:var(--accent2)}
+.topnav .sep{opacity:.4}
+
+.hero{padding:4rem 0 3.5rem;position:relative}
+.hero::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:200px;height:1px;background:linear-gradient(90deg,transparent,var(--amber),transparent)}
+.hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(1.8rem,4vw,2.5rem);line-height:1.15;letter-spacing:-.02em;background:linear-gradient(135deg,var(--text) 40%,var(--amber));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.75rem}
+.hero>p{font-size:1.05rem;color:var(--text2);max-width:520px;line-height:1.75}
+
+/* code */
+.code-block{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:1.25rem 1.5rem;margin:1.5rem 0;font-family:var(--font-mono);font-size:.88rem;line-height:1.7;color:var(--text2);overflow-x:auto}
+.code-block .code-label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:.75rem;display:block}
+.code-block .hl{color:var(--blue)}
+.code-block .str{color:var(--teal)}
+.code-block .key{color:var(--amber)}
+.code-block .cmt{color:var(--text3);font-style:italic}
+.code-block .danger{color:var(--coral);font-weight:600}
+
+/* vs cards */
+.vs-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin:2rem 0}
+.vs-card{padding:1.5rem;border-radius:var(--radius);border:1px solid var(--border)}
+.vs-card.managed{background:var(--teal-bg);border-color:var(--teal-border)}
+.vs-card.external{background:var(--amber-bg);border-color:var(--amber-border)}
+.vs-card .vs-icon{font-size:1.8rem;margin-bottom:.75rem;display:block}
+.vs-card .vs-label{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;display:block}
+.vs-card.managed .vs-label{color:var(--teal)}
+.vs-card.external .vs-label{color:var(--amber)}
+.vs-card h4{font-size:1.05rem;font-weight:600;margin-bottom:.4rem}
+.vs-card p{font-size:.9rem;color:var(--text2);line-height:1.7}
+.vs-card ul{list-style:none;margin-top:.6rem;padding:0}
+.vs-card li{font-size:.88rem;color:var(--text2);line-height:1.7;padding-left:1.1rem;position:relative;margin-bottom:.25rem}
+.vs-card li::before{content:'→';position:absolute;left:0;color:var(--text3)}
+
+/* statement cards (for the yes/no exam format) */
+.stmt-list{display:flex;flex-direction:column;gap:1rem;margin:2rem 0}
+.stmt-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;cursor:pointer;transition:all .2s var(--ease);user-select:none;position:relative}
+.stmt-card:hover{border-color:var(--accent)}
+.stmt-card .stmt-text{font-size:.95rem;font-weight:500;margin-bottom:.75rem;line-height:1.65;padding-right:3rem}
+.stmt-card .stmt-options{display:flex;gap:.75rem}
+.stmt-btn{padding:.5rem 1.25rem;border-radius:var(--radius-sm);border:1px solid var(--border);background:var(--bg3);font-size:.88rem;cursor:pointer;transition:all .2s var(--ease);color:var(--text2);font-family:var(--font-body)}
+.stmt-btn:hover{border-color:var(--accent);color:var(--text)}
+.stmt-btn.selected.right{background:rgba(52,211,153,.15);border-color:var(--teal);color:var(--teal)}
+.stmt-btn.selected.wrong{background:rgba(248,113,113,.1);border-color:var(--coral);color:var(--coral)}
+.stmt-btn.actual-answer{background:rgba(52,211,153,.08);border-color:var(--teal);color:var(--teal)}
+.stmt-explain{margin-top:.75rem;padding:1rem;background:var(--surface);border-radius:var(--radius-sm);font-size:.88rem;color:var(--text2);line-height:1.75;display:none}
+.stmt-explain.show{display:block}
+
+/* callouts */
+.callout{border-radius:var(--radius);padding:1.75rem;margin:2rem 0}
+.callout .callout-title{font-weight:600;font-size:1.05rem;margin-bottom:.5rem}
+.callout p{font-size:.98rem;color:var(--text2);line-height:1.8}
+.callout.info{background:var(--accent-glow);border:1px solid rgba(124,106,239,.2)}.callout.info .callout-title{color:var(--accent2)}
+.callout.tip{background:var(--teal-bg);border:1px solid var(--teal-border)}.callout.tip .callout-title{color:var(--teal)}
+.callout.danger{background:var(--coral-bg);border:1px solid var(--coral-border)}.callout.danger .callout-title{color:var(--coral)}
+.callout.memory-big{background:var(--amber-bg);border:1px solid var(--amber-border);text-align:center;padding:2.5rem 2rem}
+.callout.memory-big .hook{font-family:var(--font-display);font-weight:700;font-size:clamp(1.3rem,3vw,1.7rem);color:var(--amber);line-height:1.3;margin-bottom:.5rem}
+.callout.memory-big p{text-align:center;max-width:440px;margin:0 auto}
+
+/* table */
+.compare-table{width:100%;border-collapse:collapse;margin:1.5rem 0;font-size:.95rem}
+.compare-table th{text-align:left;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:.9rem 1rem;border-bottom:1px solid var(--border)}
+.compare-table td{padding:.9rem 1rem;border-bottom:1px solid var(--border);color:var(--text2);vertical-align:top;line-height:1.65}
+.compare-table tr:last-child td{border-bottom:none}
+.compare-table .label{color:var(--text);font-weight:500}
+
+/* trigger */
+.trigger-list{display:flex;flex-wrap:wrap;gap:.6rem;margin:1rem 0}
+.trigger-pill{font-size:.85rem;padding:.45rem 1rem;border-radius:var(--radius-pill);font-family:var(--font-mono);font-weight:500}
+.trigger-pill.managed{background:var(--teal-bg);border:1px solid var(--teal-border);color:var(--teal)}
+.trigger-pill.external{background:var(--amber-bg);border:1px solid var(--amber-border);color:var(--amber)}
+
+/* quiz */
+.quiz{margin:1.5rem 0}
+.quiz-item{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.75rem;margin-bottom:1.25rem}
+.quiz-item h4{font-size:1rem;font-weight:600;margin-bottom:1.25rem;line-height:1.65}
+.quiz-options{display:flex;flex-direction:column;gap:.7rem}
+.quiz-option{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius-sm);padding:.9rem 1.2rem;font-size:.95rem;cursor:pointer;transition:all .2s var(--ease);color:var(--text2);user-select:none}
+.quiz-option:hover{border-color:var(--accent);color:var(--text);background:var(--surface)}
+.quiz-option.correct{background:rgba(52,211,153,.15);border-color:var(--teal);color:var(--teal)}
+.quiz-option.wrong{background:rgba(248,113,113,.1);border-color:var(--coral);color:var(--coral);opacity:.55}
+.quiz-explanation{margin-top:1rem;padding:1rem 1.2rem;background:var(--surface);border-radius:var(--radius-sm);font-size:.92rem;color:var(--text2);line-height:1.75;display:none}
+.quiz-explanation.show{display:block}
+.quiz-score{text-align:center;padding:1.5rem;margin-bottom:1.5rem;border:1px dashed var(--border);border-radius:var(--radius);background:var(--bg2)}
+.quiz-score .score-num{font-family:var(--font-display);font-weight:700;font-size:2.2rem;transition:color .3s}
+.quiz-score .score-label{font-size:.8rem;color:var(--text3);margin-top:.25rem;font-family:var(--font-mono)}
+
+.topics-list{display:flex;flex-wrap:wrap;gap:.7rem;margin:1rem 0}
+.topic-pill{font-size:.88rem;padding:.5rem 1.15rem;border:1px solid var(--border);border-radius:var(--radius-pill);color:var(--text2);transition:all .2s;cursor:default}
+.topic-pill:hover{border-color:var(--accent);color:var(--accent2)}
+
+.footer{text-align:center;padding:3.5rem 0 2.5rem;border-top:1px solid var(--border);margin-top:2rem}
+.footer p{font-size:.85rem;color:var(--text3);line-height:1.7}
+
+@media(prefers-reduced-motion:no-preference){
+  .fade-in{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+  .fade-in.visible{opacity:1;transform:translateY(0)}
+}
+@media(max-width:600px){
+  .container{padding:0 1.25rem}.section{padding:3rem 0}
+  .vs-grid{grid-template-columns:1fr}
+  .section-dots{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="reading-progress"><div class="bar"></div></div>
+
+<nav class="section-dots" aria-label="Jump to section">
+  <button class="dot" data-section="story" onclick="document.getElementById('story').scrollIntoView({behavior:'smooth'})" title="The story"></button>
+  <button class="dot" data-section="code" onclick="document.getElementById('code').scrollIntoView({behavior:'smooth'})" title="The code"></button>
+  <button class="dot" data-section="compare" onclick="document.getElementById('compare').scrollIntoView({behavior:'smooth'})" title="Managed vs External"></button>
+  <button class="dot" data-section="detect" onclick="document.getElementById('detect').scrollIntoView({behavior:'smooth'})" title="How to detect"></button>
+  <button class="dot" data-section="exam" onclick="document.getElementById('exam').scrollIntoView({behavior:'smooth'})" title="Exam question"></button>
+  <button class="dot" data-section="quiz" onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})" title="Quiz"></button>
+</nav>
+
+<div class="container">
+
+  <nav class="topnav">
+    <a href="index.html">DP-600 Guide</a>
+    <span class="sep">/</span>
+    <a href="index.html">Domain 2</a>
+    <span class="sep">/</span>
+    <span style="color:var(--text)">Managed vs External Tables</span>
+  </nav>
+
+  <header class="hero fade-in">
+    <span class="badge">Domain 2 — Prepare and serve data</span>
+    <h1>Managed vs external tables — who owns the data?</h1>
+    <p>If you specify a path, it's external. If you don't, it's managed. That one line changes everything.</p>
+    <p class="read-time" style="margin-top:.75rem">~5 min read · 1 exam question · 3 quiz questions</p>
+  </header>
+
+  <!-- 01 STORY -->
+  <section class="section fade-in" id="story">
+    <p class="section-label">01 — The core idea</p>
+    <h2>Two types of tables. One question: who owns the data?</h2>
+    <p class="tldr">Managed = Fabric owns the house. External = you own the house, Fabric has the address.</p>
+
+    <div class="vs-grid">
+      <div class="vs-card managed">
+        <span class="vs-icon">🏠</span>
+        <span class="vs-label">Managed table</span>
+        <h4>Fabric owns everything</h4>
+        <ul>
+          <li>Fabric controls data + metadata</li>
+          <li>Drop table = data deleted</li>
+          <li>Fully integrated with Power BI, SQL endpoint</li>
+          <li>Fabric's default preference</li>
+        </ul>
+      </div>
+      <div class="vs-card external">
+        <span class="vs-icon">📍</span>
+        <span class="vs-label">External table</span>
+        <h4>You own the data</h4>
+        <ul>
+          <li>Fabric controls metadata only</li>
+          <li>Drop table = metadata gone, data stays</li>
+          <li>Not fully visible to Power BI or SQL endpoint</li>
+          <li>Data lives at your chosen path</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 THE CODE -->
+  <section class="section fade-in" id="code">
+    <p class="section-label">02 — The code that decides everything</p>
+    <h2>One line makes it external</h2>
+    <p class="tldr">USING DELTA OPTIONS (path '...') = external. No path = managed.</p>
+
+    <div class="code-block">
+      <span class="code-label">This creates an EXTERNAL table</span>
+      <span class="hl">%%sql</span><br>
+      <span class="key">CREATE TABLE</span> FactRetailSalesFY23 (<br>
+      &nbsp;&nbsp;CustomerID <span class="str">STRING</span>,<br>
+      &nbsp;&nbsp;ProductID <span class="str">STRING</span>,<br>
+      &nbsp;&nbsp;SalesAmount <span class="str">STRING</span>,<br>
+      &nbsp;&nbsp;....<br>
+      ) <span class="danger">USING DELTA OPTIONS (path 'Files/FactRetailSalesFY23')</span>;<br><br>
+      <span class="cmt">-- ↑ THIS LINE is everything. You gave a path → external.</span>
+    </div>
+
+    <div class="code-block">
+      <span class="code-label">This would create a MANAGED table</span>
+      <span class="hl">%%sql</span><br>
+      <span class="key">CREATE TABLE</span> FactRetailSalesFY23 (<br>
+      &nbsp;&nbsp;CustomerID <span class="str">STRING</span>,<br>
+      &nbsp;&nbsp;ProductID <span class="str">STRING</span>,<br>
+      &nbsp;&nbsp;SalesAmount <span class="str">STRING</span><br>
+      );<br><br>
+      <span class="cmt">-- ↑ No path. Fabric decides where data lives → managed.</span>
+    </div>
+
+    <div class="callout danger">
+      <div class="callout-title">The exam trick</div>
+      <p>The code <em>looks</em> like a normal CREATE TABLE. You have to spot the <strong>USING DELTA OPTIONS (path ...)</strong> at the bottom. That single clause flips everything from managed to external.</p>
+    </div>
+  </section>
+
+  <!-- 03 COMPARISON -->
+  <section class="section fade-in" id="compare">
+    <p class="section-label">03 — Side by side</p>
+    <h2>Everything that changes</h2>
+    <p class="tldr">Same SQL. Different behavior. All because of one line.</p>
+
+    <table class="compare-table">
+      <thead><tr><th>Behavior</th><th style="color:var(--teal)">Managed</th><th style="color:var(--amber)">External</th></tr></thead>
+      <tbody>
+        <tr><td class="label">Who controls data?</td><td>Fabric</td><td>You (your path)</td></tr>
+        <tr><td class="label">DROP TABLE deletes…</td><td>Data + metadata</td><td>Metadata only (data stays)</td></tr>
+        <tr><td class="label">Power BI access?</td><td>Yes, fully integrated</td><td>No — not visible to standard tools</td></tr>
+        <tr><td class="label">SQL Analytics endpoint?</td><td>Yes</td><td>No</td></tr>
+        <tr><td class="label">Dataflow Gen2 access?</td><td>Yes</td><td>No</td></tr>
+        <tr><td class="label">How to create?</td><td>CREATE TABLE (no path)</td><td>CREATE TABLE ... USING DELTA OPTIONS (path)</td></tr>
+        <tr><td class="label">Data location</td><td>Tables/ folder (auto)</td><td>Files/ folder (your choice)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- 04 HOW TO DETECT -->
+  <section class="section fade-in" id="detect">
+    <p class="section-label">04 — Pattern recognition</p>
+    <h2>How to spot it instantly on the exam</h2>
+    <p class="tldr">Scan the code for one thing: is there a path?</p>
+
+    <div style="display:flex;flex-direction:column;gap:.5rem;margin:1.5rem 0">
+      <p style="font-size:1rem"><strong style="color:var(--teal)">No path, no OPTIONS →</strong> Managed table. Fabric default. Everything works.</p>
+      <p style="font-size:1rem"><strong style="color:var(--amber)">USING DELTA OPTIONS (path '...') →</strong> External table. You own the data. Limited integration.</p>
+    </div>
+
+    <div class="callout memory-big">
+      <div class="hook">Path in the code → External table</div>
+      <p>No path → managed. Path → external. That's the whole test.</p>
+    </div>
+
+    <p style="color:var(--text2);font-size:.95rem;margin-top:1.5rem">
+      <strong>Trigger words for managed:</strong>
+    </p>
+    <div class="trigger-list" style="margin-bottom:1.5rem">
+      <span class="trigger-pill managed">CREATE TABLE (clean)</span>
+      <span class="trigger-pill managed">no OPTIONS</span>
+      <span class="trigger-pill managed">Tables/ folder</span>
+      <span class="trigger-pill managed">fully integrated</span>
+    </div>
+
+    <p style="color:var(--text2);font-size:.95rem">
+      <strong>Trigger words for external:</strong>
+    </p>
+    <div class="trigger-list">
+      <span class="trigger-pill external">USING DELTA</span>
+      <span class="trigger-pill external">OPTIONS (path)</span>
+      <span class="trigger-pill external">Files/ folder</span>
+      <span class="trigger-pill external">ABFS path</span>
+      <span class="trigger-pill external">metadata only</span>
+    </div>
+  </section>
+
+  <!-- 05 EXAM QUESTION -->
+  <section class="section fade-in" id="exam">
+    <p class="section-label">05 — Real exam question</p>
+    <h2>The actual Yes/No statements</h2>
+    <p class="tldr">Read the code, then decide each statement. Tap Yes or No.</p>
+
+    <div class="code-block" style="margin-bottom:2rem">
+      <span class="code-label">The code from the exam</span>
+      <span class="hl">%%sql</span><br>
+      <span class="key">CREATE TABLE</span> FactRetailSalesFY23 (<br>
+      &nbsp;&nbsp;CustomerID STRING, ProductID STRING,<br>
+      &nbsp;&nbsp;CurrencyID STRING, SalesAmount STRING, ....<br>
+      ) <span class="danger">USING DELTA OPTIONS (path 'Files/FactRetailSalesFY23')</span>;<br><br>
+      <span class="key">INSERT INTO</span> FactRetailSalesFY23<br>
+      <span class="key">SELECT</span> * <span class="key">FROM</span> FactRetailSalesFY23_view;
+    </div>
+
+    <div class="stmt-list">
+
+      <div class="stmt-card" data-answer="no">
+        <p class="stmt-text">The code creates a Managed table in Fabric Lakehouse using SparkSQL.</p>
+        <div class="stmt-options">
+          <button class="stmt-btn" data-val="yes">Yes</button>
+          <button class="stmt-btn" data-val="no">No</button>
+        </div>
+        <div class="stmt-explain">
+          <strong style="color:var(--coral)">No.</strong> The USING DELTA OPTIONS (path '...') clause makes this an <strong>external</strong> table, not managed. Without that OPTIONS line, it would be managed.
+        </div>
+      </div>
+
+      <div class="stmt-card" data-answer="yes">
+        <p class="stmt-text">Dropping FactRetailSalesFY23 will delete metadata only.</p>
+        <div class="stmt-options">
+          <button class="stmt-btn" data-val="yes">Yes</button>
+          <button class="stmt-btn" data-val="no">No</button>
+        </div>
+        <div class="stmt-explain">
+          <strong style="color:var(--teal)">Yes.</strong> Since it's an external table, dropping it only removes the metadata (the table definition). The actual data files at Files/FactRetailSalesFY23 remain untouched.
+        </div>
+      </div>
+
+      <div class="stmt-card" data-answer="yes">
+        <p class="stmt-text">Data residing in FactRetailSalesFY23 cannot be accessed by using Power BI.</p>
+        <div class="stmt-options">
+          <button class="stmt-btn" data-val="yes">Yes</button>
+          <button class="stmt-btn" data-val="no">No</button>
+        </div>
+        <div class="stmt-explain">
+          <strong style="color:var(--teal)">Yes.</strong> External tables with data in the Files/ path (ABFS) are not visible to Power BI, the SQL Analytics endpoint, or Dataflow Gen2. Only managed tables in the Tables/ folder get full integration.
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 06 QUIZ -->
+  <section class="section fade-in" id="quiz">
+    <p class="section-label">06 — Test yourself</p>
+    <h2>3 more questions. Different angles.</h2>
+    <p class="tldr">Lock in the concept.</p>
+
+    <div class="quiz-score">
+      <div class="score-num" style="color:var(--text3)">0 / 3</div>
+      <div class="score-label">Your score</div>
+    </div>
+
+    <div class="quiz">
+      <div class="quiz-item" data-correct="1">
+        <h4>Q1: You run DROP TABLE on a managed table. What happens?</h4>
+        <div class="quiz-options">
+          <div class="quiz-option" data-idx="0">A. Only metadata is deleted, data stays</div>
+          <div class="quiz-option" data-idx="1">B. Both metadata and data are deleted</div>
+          <div class="quiz-option" data-idx="2">C. Nothing happens — managed tables can't be dropped</div>
+          <div class="quiz-option" data-idx="3">D. Only the data is deleted, metadata stays</div>
+        </div>
+        <div class="quiz-explanation">Managed = Fabric owns everything. Drop it → everything goes. Both metadata and the actual data files are deleted. That's the key difference from external tables.</div>
+      </div>
+
+      <div class="quiz-item" data-correct="2">
+        <h4>Q2: What makes this code create an external table instead of managed?</h4>
+        <div class="quiz-options">
+          <div class="quiz-option" data-idx="0">A. The %%sql magic command</div>
+          <div class="quiz-option" data-idx="1">B. The INSERT INTO statement</div>
+          <div class="quiz-option" data-idx="2">C. The USING DELTA OPTIONS (path '...') clause</div>
+          <div class="quiz-option" data-idx="3">D. The STRING data types</div>
+        </div>
+        <div class="quiz-explanation">USING DELTA OPTIONS (path '...') is the single line that makes it external. You're telling Fabric: "I choose where this data lives." Remove that line → managed table.</div>
+      </div>
+
+      <div class="quiz-item" data-correct="0">
+        <h4>Q3: Which of these is true about Fabric's default behavior?</h4>
+        <div class="quiz-options">
+          <div class="quiz-option" data-idx="0">A. Fabric prefers managed tables — they're faster, easier, and fully integrated</div>
+          <div class="quiz-option" data-idx="1">B. Fabric prefers external tables for flexibility</div>
+          <div class="quiz-option" data-idx="2">C. There's no default — you always have to specify</div>
+          <div class="quiz-option" data-idx="3">D. External tables have better Power BI integration</div>
+        </div>
+        <div class="quiz-explanation">Fabric defaults to managed tables. They're faster, easier to work with, and fully integrated with Power BI, SQL endpoint, and Dataflows. External tables are for special cases only.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- curiosity -->
+  <section class="section fade-in">
+    <p class="section-label">07 — Keep wondering</p>
+    <h2>Questions to sit with</h2>
+    <p class="tldr">Let these marinate.</p>
+    <div style="display:flex;flex-direction:column;gap:1rem;margin-top:1.25rem">
+      <p style="color:var(--text2);font-size:.95rem;padding-left:1.25rem;border-left:2px solid var(--teal);line-height:1.7">What's the actual folder structure inside a Lakehouse? Where do Tables/ and Files/ live?</p>
+      <p style="color:var(--text2);font-size:.95rem;padding-left:1.25rem;border-left:2px solid var(--amber);line-height:1.7">When would you deliberately choose an external table over managed?</p>
+      <p style="color:var(--text2);font-size:.95rem;padding-left:1.25rem;border-left:2px solid var(--accent);line-height:1.7">Can you convert an external table to managed (or vice versa)?</p>
+    </div>
+  </section>
+
+  <section class="section fade-in">
+    <p class="section-label">Up next</p>
+    <h2>More topics coming</h2>
+    <div class="topics-list">
+      <span class="topic-pill">Files/ vs Tables/ folder structure</span>
+      <span class="topic-pill">Delta Lake deep dive</span>
+      <span class="topic-pill">Spark catalog & views</span>
+      <span class="topic-pill">Medallion architecture</span>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <p><a href="index.html">← Back to all domains</a> · DP-600 Study Guide</p>
+  </footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const bar=document.querySelector('.reading-progress .bar');
+  if(bar)window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=h>0?(window.scrollY/h*100)+'%':'0%'},{passive:true});
+
+  const dots=document.querySelector('.section-dots');
+  const secs=document.querySelectorAll('.section[id]');
+  if(dots&&secs.length){const o=new IntersectionObserver(es=>es.forEach(e=>{const d=dots.querySelector(`[data-section="${e.target.id}"]`);if(d)d.classList.toggle('active',e.isIntersecting)}),{threshold:.3});secs.forEach(s=>o.observe(s))}
+
+  // yes/no statement cards
+  document.querySelectorAll('.stmt-card').forEach(card=>{
+    const answer=card.dataset.answer;
+    const btns=card.querySelectorAll('.stmt-btn');
+    const expl=card.querySelector('.stmt-explain');
+    let done=false;
+    btns.forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        if(done)return;done=true;
+        const val=btn.dataset.val;
+        if(val===answer){btn.classList.add('selected','right')}
+        else{
+          btn.classList.add('selected','wrong');
+          btns.forEach(b=>{if(b.dataset.val===answer)b.classList.add('actual-answer')});
+        }
+        if(expl)expl.classList.add('show');
+      });
+    });
+  });
+
+  // quiz
+  const items=document.querySelectorAll('.quiz-item');
+  const scoreEl=document.querySelector('.quiz-score .score-num');
+  let total=items.length,correct=0,answered=0;
+  items.forEach(item=>{
+    const c=parseInt(item.dataset.correct);
+    const opts=item.querySelectorAll('.quiz-option');
+    const expl=item.querySelector('.quiz-explanation');
+    let done=false;
+    opts.forEach(opt=>{
+      opt.addEventListener('click',()=>{
+        if(done)return;done=true;answered++;
+        const idx=parseInt(opt.dataset.idx);
+        if(idx===c){opt.classList.add('correct');correct++}
+        else{opt.classList.add('wrong');opts[c].classList.add('correct')}
+        if(expl)expl.classList.add('show');
+        if(scoreEl){
+          scoreEl.textContent=correct+' / '+total;
+          if(correct===total&&answered===total){scoreEl.style.color='var(--teal)';scoreEl.textContent=correct+' / '+total+' 🎉'}
+          else if(answered===total)scoreEl.style.color=correct>=total/2?'var(--amber)':'var(--coral)';
+        }
+      });
+    });
+  });
+
+  if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){
+    const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}}),{threshold:.1});
+    document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+  }
+});
+</script>
+</body>
+</html>
