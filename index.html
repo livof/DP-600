@@ -4,285 +4,130 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DP-600 Study Guide — Fabric Analytics Engineer</title>
-<meta name="description" content="Visual, ADHD-friendly study guide for the Microsoft DP-600 Fabric Analytics Engineer certification exam. Short pages, big visuals, no walls of text.">
+<meta name="description" content="Visual study guide for the Microsoft DP-600 Fabric Analytics Engineer certification exam. Short pages, big visuals, no walls of text.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#0c0b0f;--bg2:#161520;--bg3:#1e1d2a;--surface:#252436;
-  --border:#2e2d42;--text:#e8e6f0;--text2:#b5b1c9;--text3:#7e7a95;
-  --accent:#7c6aef;--accent2:#a78bfa;--accent-glow:rgba(124,106,239,.12);
-  --teal:#34d399;--teal-bg:rgba(52,211,153,.08);--teal-border:rgba(52,211,153,.2);
-  --coral:#f87171;--coral-bg:rgba(248,113,113,.08);
-  --amber:#fbbf24;--amber-bg:rgba(251,191,36,.08);--amber-border:rgba(251,191,36,.2);
-  --green:#4ade80;--green-bg:rgba(74,222,128,.08);
-  --pink:#f472b6;--pink-bg:rgba(244,114,182,.08);
-  --blue:#60a5fa;--blue-bg:rgba(96,165,250,.08);
-  --font-display:'Fraunces',serif;--font-body:'DM Sans',sans-serif;--font-mono:'DM Mono',monospace;
-  --ease:cubic-bezier(.4,0,.2,1);--radius:16px;--radius-sm:12px;--radius-pill:100px;
-}
+:root{--bg:#0c0b0f;--bg2:#161520;--bg3:#1e1d2a;--surface:#252436;--border:#2e2d42;--text:#e8e6f0;--text2:#b5b1c9;--text3:#7e7a95;--accent:#7c6aef;--accent2:#a78bfa;--accent-glow:rgba(124,106,239,.12);--teal:#34d399;--teal-bg:rgba(52,211,153,.08);--teal-border:rgba(52,211,153,.2);--coral:#f87171;--amber:#fbbf24;--amber-bg:rgba(251,191,36,.08);--amber-border:rgba(251,191,36,.2);--green:#4ade80;--pink:#f472b6;--pink-bg:rgba(244,114,182,.08);--blue:#60a5fa;--blue-bg:rgba(96,165,250,.08);--font-display:'Fraunces',serif;--font-body:'DM Sans',sans-serif;--font-mono:'DM Mono',monospace;--ease:cubic-bezier(.4,0,.2,1);--radius:16px;--radius-sm:12px;--radius-pill:100px}
 html{scroll-behavior:smooth;font-size:17px}
 body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.9;-webkit-font-smoothing:antialiased;overflow-x:hidden;letter-spacing:.01em}
 body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03}
 ::selection{background:var(--accent);color:#fff}
-a{color:var(--accent2);text-decoration:none;transition:color .2s}
-a:hover{color:var(--teal)}
+a{color:var(--accent2);text-decoration:none;transition:color .2s}a:hover{color:var(--teal)}
 .container{max-width:680px;margin:0 auto;padding:0 2rem}
-
-/* progress bar */
-.reading-progress{position:fixed;top:0;left:0;width:100%;height:3px;z-index:100}
-.reading-progress .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .08s linear}
-
-/* badge */
+.reading-progress{position:fixed;top:0;left:0;width:100%;height:3px;z-index:100}.reading-progress .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .08s linear}
 .badge{display:inline-block;font-family:var(--font-mono);font-size:.75rem;letter-spacing:.08em;color:var(--accent2);border:1px solid var(--border);padding:.4rem 1.1rem;border-radius:var(--radius-pill);text-transform:uppercase}
-
-/* sections */
+.read-time{font-family:var(--font-mono);font-size:.75rem;color:var(--text3)}
 .section{padding:4.5rem 0}.section+.section{border-top:1px solid var(--border)}
 .section-label{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:.5rem}
 .section h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.6rem,3.5vw,2.2rem);line-height:1.25;margin-bottom:.5rem}
 .section .tldr{font-size:1.08rem;color:var(--teal);margin-bottom:2rem;line-height:1.7;font-weight:500}
-
-/* hero */
-.hero{padding:5rem 0 4rem;position:relative;text-align:center}
-.hero::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:240px;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}
-.hero .badge{margin-bottom:1.5rem}
-.hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(2.2rem,5.5vw,3.2rem);line-height:1.12;letter-spacing:-.025em;background:linear-gradient(135deg,var(--text) 30%,var(--accent2) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1.25rem;max-width:580px;margin-left:auto;margin-right:auto}
-.hero .subtitle{font-size:1.1rem;color:var(--text2);max-width:480px;line-height:1.75;margin:0 auto}
-
-/* stats */
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2.5rem 0}
-.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center}
-.stat .num{font-family:var(--font-display);font-weight:700;font-size:2rem;line-height:1;margin-bottom:.3rem}
-.stat .label{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-family:var(--font-mono)}
-
-/* how grid */
-.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.25rem;margin:1.5rem 0}
-.how-step{padding:1.5rem;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);transition:border-color .3s}
-.how-step:hover{border-color:var(--accent)}
-.how-step .step-num{font-family:var(--font-mono);font-size:.72rem;color:var(--accent2);margin-bottom:.6rem;display:block}
-.how-step h4{font-size:.98rem;font-weight:600;margin-bottom:.35rem}
-.how-step p{font-size:.88rem;color:var(--text3);line-height:1.7}
-
-/* domain cards */
-.domain-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;margin-bottom:1.25rem;transition:border-color .3s var(--ease),box-shadow .3s;position:relative;overflow:hidden}
-.domain-card:hover{border-color:var(--accent);box-shadow:0 0 40px var(--accent-glow)}
-.domain-card .domain-number{font-family:var(--font-display);font-weight:700;font-size:4rem;line-height:1;position:absolute;top:.75rem;right:1.5rem;opacity:.05;color:var(--text)}
-.domain-card .domain-badge{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;display:inline-block;padding:.3rem .8rem;border-radius:var(--radius-pill);margin-bottom:.85rem}
-.domain-card h3{font-size:1.2rem;font-weight:600;margin-bottom:.5rem}
-.domain-card .domain-desc{font-size:.95rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.75}
-.domain-card[data-domain="1"] .domain-badge{color:var(--accent2);background:var(--accent-glow);border:1px solid rgba(124,106,239,.2)}
-.domain-card[data-domain="2"] .domain-badge{color:var(--teal);background:var(--teal-bg);border:1px solid var(--teal-border)}
-.domain-card[data-domain="3"] .domain-badge{color:var(--amber);background:var(--amber-bg);border:1px solid var(--amber-border)}
-.domain-card[data-domain="4"] .domain-badge{color:var(--pink);background:var(--pink-bg);border:1px solid rgba(244,114,182,.2)}
-.domain-card[data-domain="5"] .domain-badge{color:var(--blue);background:var(--blue-bg);border:1px solid rgba(96,165,250,.2)}
-
-/* topic links */
-.topic-list{display:flex;flex-direction:column;gap:.6rem}
-.topic-link{display:flex;align-items:center;gap:.85rem;padding:.75rem 1.15rem;border-radius:var(--radius-sm);background:var(--bg3);border:1px solid transparent;font-size:.95rem;color:var(--text2);transition:all .2s var(--ease);text-decoration:none}
-.topic-link:hover{border-color:var(--accent);color:var(--text);background:var(--surface)}
-.topic-link .status{width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.topic-link .status.done{background:var(--teal)}
-.topic-link .status.soon{background:var(--text3);opacity:.3}
-.topic-count{font-family:var(--font-mono);font-size:.75rem;color:var(--text3);margin-top:.85rem}
-
-/* read time */
-.read-time{font-family:var(--font-mono);font-size:.75rem;color:var(--text3)}
-
-/* footer */
-.footer{text-align:center;padding:3.5rem 0 2.5rem;border-top:1px solid var(--border);margin-top:2rem}
-.footer p{font-size:.85rem;color:var(--text3);line-height:1.7}
-
-/* animations */
-@media(prefers-reduced-motion:no-preference){
-  .fade-in{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
-  .fade-in.visible{opacity:1;transform:translateY(0)}
-  .fade-in.d1{transition-delay:.1s}.fade-in.d2{transition-delay:.2s}.fade-in.d3{transition-delay:.3s}
-}
-
-@media(max-width:600px){
-  .container{padding:0 1.25rem}
-  .section{padding:3rem 0}
-  .stats-row{grid-template-columns:1fr}
-  .how-grid{grid-template-columns:1fr}
-  .hero{padding:3.5rem 0 3rem}
-}
+.hero{padding:5rem 0 4rem;position:relative;text-align:center}.hero::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:240px;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}.hero .badge{margin-bottom:1.5rem}.hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(2.2rem,5.5vw,3.2rem);line-height:1.12;letter-spacing:-.025em;background:linear-gradient(135deg,var(--text) 30%,var(--accent2) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1.25rem;max-width:580px;margin-left:auto;margin-right:auto}.hero .subtitle{font-size:1.1rem;color:var(--text2);max-width:480px;line-height:1.75;margin:0 auto}
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2.5rem 0}.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center}.stat .num{font-family:var(--font-display);font-weight:700;font-size:2rem;line-height:1;margin-bottom:.3rem}.stat .label{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-family:var(--font-mono)}
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.25rem;margin:1.5rem 0}.how-step{padding:1.5rem;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);transition:border-color .3s}.how-step:hover{border-color:var(--accent)}.how-step .step-num{font-family:var(--font-mono);font-size:.72rem;color:var(--accent2);margin-bottom:.6rem;display:block}.how-step h4{font-size:.98rem;font-weight:600;margin-bottom:.35rem}.how-step p{font-size:.88rem;color:var(--text3);line-height:1.7}
+.domain-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;margin-bottom:1.25rem;transition:border-color .3s var(--ease),box-shadow .3s;position:relative;overflow:hidden}.domain-card:hover{border-color:var(--accent);box-shadow:0 0 40px var(--accent-glow)}.domain-card .domain-number{font-family:var(--font-display);font-weight:700;font-size:4rem;line-height:1;position:absolute;top:.75rem;right:1.5rem;opacity:.05;color:var(--text)}.domain-card .domain-badge{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;display:inline-block;padding:.3rem .8rem;border-radius:var(--radius-pill);margin-bottom:.85rem}.domain-card h3{font-size:1.2rem;font-weight:600;margin-bottom:.5rem}.domain-card .domain-desc{font-size:.95rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.75}
+.domain-card[data-domain="1"] .domain-badge{color:var(--accent2);background:var(--accent-glow);border:1px solid rgba(124,106,239,.2)}.domain-card[data-domain="2"] .domain-badge{color:var(--teal);background:var(--teal-bg);border:1px solid var(--teal-border)}.domain-card[data-domain="3"] .domain-badge{color:var(--amber);background:var(--amber-bg);border:1px solid var(--amber-border)}.domain-card[data-domain="4"] .domain-badge{color:var(--pink);background:var(--pink-bg);border:1px solid rgba(244,114,182,.2)}.domain-card[data-domain="5"] .domain-badge{color:var(--blue);background:var(--blue-bg);border:1px solid rgba(96,165,250,.2)}
+.topic-list{display:flex;flex-direction:column;gap:.6rem}.topic-link{display:flex;align-items:center;gap:.85rem;padding:.75rem 1.15rem;border-radius:var(--radius-sm);background:var(--bg3);border:1px solid transparent;font-size:.95rem;color:var(--text2);transition:all .2s var(--ease);text-decoration:none}.topic-link:hover{border-color:var(--accent);color:var(--text);background:var(--surface)}.topic-link .status{width:10px;height:10px;border-radius:50%;flex-shrink:0}.topic-link .status.done{background:var(--teal)}.topic-link .status.soon{background:var(--text3);opacity:.3}.topic-count{font-family:var(--font-mono);font-size:.75rem;color:var(--text3);margin-top:.85rem}
+.footer{text-align:center;padding:3.5rem 0 2.5rem;border-top:1px solid var(--border);margin-top:2rem}.footer p{font-size:.85rem;color:var(--text3);line-height:1.7}
+@media(prefers-reduced-motion:no-preference){.fade-in{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ease),transform .65s var(--ease)}.fade-in.visible{opacity:1;transform:translateY(0)}.fade-in.d1{transition-delay:.1s}.fade-in.d2{transition-delay:.2s}.fade-in.d3{transition-delay:.3s}}
+@media(max-width:600px){.container{padding:0 1.25rem}.section{padding:3rem 0}.stats-row{grid-template-columns:1fr}.how-grid{grid-template-columns:1fr}.hero{padding:3.5rem 0 3rem}}
 </style>
 </head>
 <body>
-
 <div class="reading-progress"><div class="bar"></div></div>
-
 <div class="container">
-
-  <!-- ════ HERO ════ -->
   <header class="hero fade-in">
     <span class="badge">Microsoft DP-600 · Fabric Analytics Engineer</span>
-    <h1>Study guide for brains that learn by seeing</h1>
+    <h1>Study guide for visual learners</h1>
     <p class="subtitle">Short pages. Big visuals. No walls of text.<br>Built one topic at a time — free for everyone.</p>
     <p class="read-time" style="margin-top:1.25rem">~2 min to explore this page</p>
   </header>
-
-  <!-- ════ STATS ════ -->
   <div class="stats-row fade-in">
-    <div class="stat">
-      <div class="num" style="color:var(--teal)">1</div>
-      <div class="label">Topic done</div>
-    </div>
-    <div class="stat">
-      <div class="num" style="color:var(--text3)">5</div>
-      <div class="label">Domains</div>
-    </div>
-    <div class="stat">
-      <div class="num" style="color:var(--accent2)">Growing</div>
-      <div class="label">As I study</div>
-    </div>
+    <div class="stat"><div class="num" style="color:var(--teal)">4</div><div class="label">Topics done</div></div>
+    <div class="stat"><div class="num" style="color:var(--text3)">5</div><div class="label">Domains</div></div>
+    <div class="stat"><div class="num" style="color:var(--accent2)">Growing</div><div class="label">As I study</div></div>
   </div>
-
-  <!-- ════ HOW THIS WORKS ════ -->
   <section class="section fade-in">
     <p class="section-label">How this works</p>
     <h2>Three steps, that's it</h2>
     <p class="tldr">I study → I make a page → you benefit.</p>
     <div class="how-grid">
-      <div class="how-step fade-in d1">
-        <span class="step-num">01</span>
-        <h4>Study with Claude</h4>
-        <p>I work through Microsoft Learn modules and practice questions with AI.</p>
-      </div>
-      <div class="how-step fade-in d2">
-        <span class="step-num">02</span>
-        <h4>Turn it into a page</h4>
-        <p>Each concept gets a visual page with diagrams, analogies, and quizzes.</p>
-      </div>
-      <div class="how-step fade-in d3">
-        <span class="step-num">03</span>
-        <h4>Share it here</h4>
-        <p>Free on GitHub Pages. Use it, share it, pass the exam.</p>
-      </div>
+      <div class="how-step fade-in d1"><span class="step-num">01</span><h4>Study with Claude</h4><p>I work through Microsoft Learn modules and practice questions with AI.</p></div>
+      <div class="how-step fade-in d2"><span class="step-num">02</span><h4>Turn it into a page</h4><p>Each concept gets a visual page with diagrams, analogies, and quizzes.</p></div>
+      <div class="how-step fade-in d3"><span class="step-num">03</span><h4>Share it here</h4><p>Free on GitHub Pages. Use it, share it, pass the exam.</p></div>
     </div>
   </section>
-
-  <!-- ════ WHAT'S ON EACH PAGE ════ -->
   <section class="section fade-in">
     <p class="section-label">Every topic page includes</p>
     <h2>Built for how your brain actually works</h2>
     <p class="tldr">No 2000-word essays. Just the stuff that sticks.</p>
     <div class="how-grid">
-      <div class="how-step fade-in d1">
-        <span class="step-num" style="color:var(--teal)">Visual flow</span>
-        <h4>See the big picture</h4>
-        <p>Diagram showing how things connect — source to destination.</p>
-      </div>
-      <div class="how-step fade-in d2">
-        <span class="step-num" style="color:var(--amber)">Plain language</span>
-        <h4>Short sentences</h4>
-        <p>Analogies, not jargon. "The pipeline is the brain" beats a paragraph.</p>
-      </div>
-      <div class="how-step fade-in d1">
-        <span class="step-num" style="color:var(--coral)">Exam traps</span>
-        <h4>Wrong answers explained</h4>
-        <p>Why each distractor fails — so you never pick it.</p>
-      </div>
-      <div class="how-step fade-in d2">
-        <span class="step-num" style="color:var(--accent2)">Tap-to-check quiz</span>
-        <h4>Test yourself instantly</h4>
-        <p>Tap an answer, see if you're right. Score tracking built in.</p>
-      </div>
+      <div class="how-step fade-in d1"><span class="step-num" style="color:var(--teal)">Visual flow</span><h4>See the big picture</h4><p>Diagram showing how things connect — source to destination.</p></div>
+      <div class="how-step fade-in d2"><span class="step-num" style="color:var(--amber)">Plain language</span><h4>Short sentences</h4><p>Analogies, not jargon. "The pipeline is the brain" beats a paragraph.</p></div>
+      <div class="how-step fade-in d1"><span class="step-num" style="color:var(--coral)">Exam traps</span><h4>Wrong answers explained</h4><p>Why each distractor fails — so you never pick it.</p></div>
+      <div class="how-step fade-in d2"><span class="step-num" style="color:var(--accent2)">Tap-to-check quiz</span><h4>Test yourself instantly</h4><p>Real exam questions + practice quizzes with score tracking.</p></div>
     </div>
   </section>
-
-  <!-- ════ THE 5 DOMAINS ════ -->
   <section class="section fade-in">
     <p class="section-label">The 5 exam domains</p>
     <h2>Tap a green topic to start</h2>
     <p class="tldr">Green dot = ready. Gray dot = coming soon.</p>
-
-    <!-- Domain 1 -->
     <div class="domain-card fade-in" data-domain="1">
       <div class="domain-number">1</div>
       <span class="domain-badge">25–30%</span>
       <h3>Plan, implement, and manage a solution</h3>
       <p class="domain-desc">Fabric architecture, OneLake, workspaces, capacities, Git integration.</p>
       <div class="topic-list">
-        <span class="topic-link" style="cursor:default;opacity:.45">
-          <span class="status soon"></span>Coming as I study this domain
-        </span>
+        <a href="git-integration.html" class="topic-link"><span class="status done"></span>Git integration (Azure DevOps sequence)</a>
       </div>
-      <p class="topic-count">0 topics</p>
+      <p class="topic-count">1 topic</p>
     </div>
-
-    <!-- Domain 2 -->
     <div class="domain-card fade-in" data-domain="2">
       <div class="domain-number">2</div>
       <span class="domain-badge">25–30%</span>
       <h3>Prepare and serve data</h3>
       <p class="domain-desc">Pipelines, Copy Activity, Dataflows, lakehouses, SQL endpoints.</p>
       <div class="topic-list">
-        <a href="topics/copy-activity.html" class="topic-link">
-          <span class="status done"></span>
-          Data ingestion with Copy Activity
-        </a>
+        <a href="copy-activity.html" class="topic-link"><span class="status done"></span>Data ingestion with Copy Activity</a>
+        <a href="dynamic-expressions.html" class="topic-link"><span class="status done"></span>Dynamic expression handling</a>
+        <a href="managed-vs-external-tables.html" class="topic-link"><span class="status done"></span>Managed vs external tables</a>
       </div>
-      <p class="topic-count">1 topic</p>
+      <p class="topic-count">3 topics</p>
     </div>
-
-    <!-- Domain 3 -->
     <div class="domain-card fade-in" data-domain="3">
       <div class="domain-number">3</div>
       <span class="domain-badge">25–30%</span>
       <h3>Implement and manage semantic models</h3>
       <p class="domain-desc">Star schema, DAX, relationships, Direct Lake, optimization.</p>
-      <div class="topic-list">
-        <span class="topic-link" style="cursor:default;opacity:.45">
-          <span class="status soon"></span>Coming as I study this domain
-        </span>
-      </div>
+      <div class="topic-list"><span class="topic-link" style="cursor:default;opacity:.45"><span class="status soon"></span>Coming as I study this domain</span></div>
       <p class="topic-count">0 topics</p>
     </div>
-
-    <!-- Domain 4 -->
     <div class="domain-card fade-in" data-domain="4">
       <div class="domain-number">4</div>
       <span class="domain-badge">10–15%</span>
       <h3>Explore and analyze data</h3>
       <p class="domain-desc">Notebooks, Spark, SQL queries, KQL, exploratory analysis.</p>
-      <div class="topic-list">
-        <span class="topic-link" style="cursor:default;opacity:.45">
-          <span class="status soon"></span>Coming as I study this domain
-        </span>
-      </div>
+      <div class="topic-list"><span class="topic-link" style="cursor:default;opacity:.45"><span class="status soon"></span>Coming as I study this domain</span></div>
       <p class="topic-count">0 topics</p>
     </div>
-
-    <!-- Domain 5 -->
     <div class="domain-card fade-in" data-domain="5">
       <div class="domain-number">5</div>
       <span class="domain-badge">5–10%</span>
       <h3>Monitor and optimize</h3>
       <p class="domain-desc">Performance, query optimization, capacity management.</p>
-      <div class="topic-list">
-        <span class="topic-link" style="cursor:default;opacity:.45">
-          <span class="status soon"></span>Coming as I study this domain
-        </span>
-      </div>
+      <div class="topic-list"><span class="topic-link" style="cursor:default;opacity:.45"><span class="status soon"></span>Coming as I study this domain</span></div>
       <p class="topic-count">0 topics</p>
     </div>
-
   </section>
-
   <footer class="footer">
     <p>DP-600 Study Guide · Built with <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> · <a href="https://learn.microsoft.com/en-us/credentials/certifications/fabric-analytics-engineer-associate/" target="_blank" rel="noopener">Official exam page</a></p>
   </footer>
-
 </div>
-
 <script>
 document.addEventListener('DOMContentLoaded',()=>{
-  // reading progress
   const bar=document.querySelector('.reading-progress .bar');
   if(bar)window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=h>0?(window.scrollY/h*100)+'%':'0%'},{passive:true});
-  // fade in
   if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){
     const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}}),{threshold:.1});
     document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
