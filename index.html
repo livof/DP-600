@@ -3,136 +3,1014 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DP-600 Study Guide — Fabric Analytics Engineer</title>
-<meta name="description" content="Visual study guide for the Microsoft DP-600 Fabric Analytics Engineer certification exam. Short pages, big visuals, no walls of text.">
+<title>DP-600 Study Home | Fabric Analytics Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#0c0b0f;--bg2:#161520;--bg3:#1e1d2a;--surface:#252436;--border:#2e2d42;--text:#e8e6f0;--text2:#b5b1c9;--text3:#7e7a95;--accent:#7c6aef;--accent2:#a78bfa;--accent-glow:rgba(124,106,239,.12);--teal:#34d399;--teal-bg:rgba(52,211,153,.08);--teal-border:rgba(52,211,153,.2);--coral:#f87171;--amber:#fbbf24;--amber-bg:rgba(251,191,36,.08);--amber-border:rgba(251,191,36,.2);--green:#4ade80;--pink:#f472b6;--pink-bg:rgba(244,114,182,.08);--blue:#60a5fa;--blue-bg:rgba(96,165,250,.08);--font-display:'Fraunces',serif;--font-body:'DM Sans',sans-serif;--font-mono:'DM Mono',monospace;--ease:cubic-bezier(.4,0,.2,1);--radius:16px;--radius-sm:12px;--radius-pill:100px}
-html{scroll-behavior:smooth;font-size:17px}
-body{background:var(--bg);color:var(--text);font-family:var(--font-body);line-height:1.9;-webkit-font-smoothing:antialiased;overflow-x:hidden;letter-spacing:.01em}
-body::before{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");opacity:.03}
-::selection{background:var(--accent);color:#fff}
-a{color:var(--accent2);text-decoration:none;transition:color .2s}a:hover{color:var(--teal)}
-.container{max-width:680px;margin:0 auto;padding:0 2rem}
-.reading-progress{position:fixed;top:0;left:0;width:100%;height:3px;z-index:100}.reading-progress .bar{height:100%;width:0%;background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .08s linear}
-.badge{display:inline-block;font-family:var(--font-mono);font-size:.75rem;letter-spacing:.08em;color:var(--accent2);border:1px solid var(--border);padding:.4rem 1.1rem;border-radius:var(--radius-pill);text-transform:uppercase}
-.read-time{font-family:var(--font-mono);font-size:.75rem;color:var(--text3)}
-.section{padding:4.5rem 0}.section+.section{border-top:1px solid var(--border)}
-.section-label{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent2);margin-bottom:.5rem}
-.section h2{font-family:var(--font-display);font-weight:600;font-size:clamp(1.6rem,3.5vw,2.2rem);line-height:1.25;margin-bottom:.5rem}
-.section .tldr{font-size:1.08rem;color:var(--teal);margin-bottom:2rem;line-height:1.7;font-weight:500}
-.hero{padding:5rem 0 4rem;position:relative;text-align:center}.hero::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:240px;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}.hero .badge{margin-bottom:1.5rem}.hero h1{font-family:var(--font-display);font-weight:700;font-size:clamp(2.2rem,5.5vw,3.2rem);line-height:1.12;letter-spacing:-.025em;background:linear-gradient(135deg,var(--text) 30%,var(--accent2) 80%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1.25rem;max-width:580px;margin-left:auto;margin-right:auto}.hero .subtitle{font-size:1.1rem;color:var(--text2);max-width:480px;line-height:1.75;margin:0 auto}
-.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:2.5rem 0}.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:1.5rem;text-align:center}.stat .num{font-family:var(--font-display);font-weight:700;font-size:2rem;line-height:1;margin-bottom:.3rem}.stat .label{font-size:.72rem;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;font-family:var(--font-mono)}
-.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1.25rem;margin:1.5rem 0}.how-step{padding:1.5rem;border-radius:var(--radius);border:1px solid var(--border);background:var(--bg2);transition:border-color .3s}.how-step:hover{border-color:var(--accent)}.how-step .step-num{font-family:var(--font-mono);font-size:.72rem;color:var(--accent2);margin-bottom:.6rem;display:block}.how-step h4{font-size:.98rem;font-weight:600;margin-bottom:.35rem}.how-step p{font-size:.88rem;color:var(--text3);line-height:1.7}
-.domain-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;margin-bottom:1.25rem;transition:border-color .3s var(--ease),box-shadow .3s;position:relative;overflow:hidden}.domain-card:hover{border-color:var(--accent);box-shadow:0 0 40px var(--accent-glow)}.domain-card .domain-number{font-family:var(--font-display);font-weight:700;font-size:4rem;line-height:1;position:absolute;top:.75rem;right:1.5rem;opacity:.05;color:var(--text)}.domain-card .domain-badge{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;display:inline-block;padding:.3rem .8rem;border-radius:var(--radius-pill);margin-bottom:.85rem}.domain-card h3{font-size:1.2rem;font-weight:600;margin-bottom:.5rem}.domain-card .domain-desc{font-size:.95rem;color:var(--text2);margin-bottom:1.5rem;line-height:1.75}
-.domain-card[data-domain="1"] .domain-badge{color:var(--accent2);background:var(--accent-glow);border:1px solid rgba(124,106,239,.2)}.domain-card[data-domain="2"] .domain-badge{color:var(--teal);background:var(--teal-bg);border:1px solid var(--teal-border)}.domain-card[data-domain="3"] .domain-badge{color:var(--amber);background:var(--amber-bg);border:1px solid var(--amber-border)}.domain-card[data-domain="4"] .domain-badge{color:var(--pink);background:var(--pink-bg);border:1px solid rgba(244,114,182,.2)}.domain-card[data-domain="5"] .domain-badge{color:var(--blue);background:var(--blue-bg);border:1px solid rgba(96,165,250,.2)}
-.topic-list{display:flex;flex-direction:column;gap:.6rem}.topic-link{display:flex;align-items:center;gap:.85rem;padding:.75rem 1.15rem;border-radius:var(--radius-sm);background:var(--bg3);border:1px solid transparent;font-size:.95rem;color:var(--text2);transition:all .2s var(--ease);text-decoration:none}.topic-link:hover{border-color:var(--accent);color:var(--text);background:var(--surface)}.topic-link .status{width:10px;height:10px;border-radius:50%;flex-shrink:0}.topic-link .status.done{background:var(--teal)}.topic-link .status.soon{background:var(--text3);opacity:.3}.topic-count{font-family:var(--font-mono);font-size:.75rem;color:var(--text3);margin-top:.85rem}
-.footer{text-align:center;padding:3.5rem 0 2.5rem;border-top:1px solid var(--border);margin-top:2rem}.footer p{font-size:.85rem;color:var(--text3);line-height:1.7}
-@media(prefers-reduced-motion:no-preference){.fade-in{opacity:0;transform:translateY(24px);transition:opacity .65s var(--ease),transform .65s var(--ease)}.fade-in.visible{opacity:1;transform:translateY(0)}.fade-in.d1{transition-delay:.1s}.fade-in.d2{transition-delay:.2s}.fade-in.d3{transition-delay:.3s}}
-@media(max-width:600px){.container{padding:0 1.25rem}.section{padding:3rem 0}.stats-row{grid-template-columns:1fr}.how-grid{grid-template-columns:1fr}.hero{padding:3.5rem 0 3rem}}
+:root {
+  --bg: #0d0f1a;
+  --surface: #141626;
+  --surface2: #1c1f35;
+  --border: #252840;
+  --text: #e8eaf0;
+  --muted: #7b7fa8;
+  --accent: #5b8df6;
+  --accent2: #a78bfa;
+  --green: #4ade80;
+  --gold: #fbbf24;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* GRID BACKGROUND */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(91,141,246,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(91,141,246,0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.glow-orb {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+}
+.glow-orb-1 { width: 600px; height: 600px; background: rgba(91,141,246,0.08); top: -200px; left: -200px; }
+.glow-orb-2 { width: 500px; height: 500px; background: rgba(167,139,250,0.06); bottom: 0; right: -100px; }
+
+/* NAV */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 16px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(13,15,26,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-badge {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 24px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover { color: var(--text); }
+.nav-links a.active { color: var(--accent); }
+
+/* MAIN CONTENT */
+main {
+  position: relative;
+  z-index: 1;
+  padding-top: 80px;
+}
+
+/* HERO */
+.hero {
+  padding: 80px 40px 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(91,141,246,0.1);
+  border: 1px solid rgba(91,141,246,0.3);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+}
+
+.hero-eyebrow::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+
+.hero h1 {
+  font-size: clamp(36px, 5vw, 60px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+}
+
+.hero h1 .highlight {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 580px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  font-weight: 400;
+}
+
+/* STATS BAR */
+.stats-bar {
+  display: flex;
+  gap: 40px;
+  padding: 24px 40px;
+  max-width: 1100px;
+  margin: 0 auto 60px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-num {
+  font-size: 32px;
+  font-weight: 700;
+  font-family: 'DM Mono', monospace;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.stat-divider {
+  width: 1px;
+  background: var(--border);
+  align-self: stretch;
+}
+
+/* SECTION */
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px;
+  margin-bottom: 80px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title::before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 20px;
+  background: linear-gradient(to bottom, var(--accent), var(--accent2));
+  border-radius: 2px;
+}
+
+/* TOPIC GRID */
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.topic-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  display: block;
+  color: var(--text);
+}
+
+.topic-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--card-color, var(--accent));
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.topic-card:hover {
+  border-color: rgba(91,141,246,0.4);
+  transform: translateY(-2px);
+  background: var(--surface2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.topic-card:hover::before { opacity: 1; }
+
+.topic-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.topic-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.topic-count {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-family: 'DM Mono', monospace;
+}
+
+.topic-name {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.topic-desc {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* PRACTICE MODE */
+.practice-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.practice-header {
+  padding: 24px 28px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: gap;
+  gap: 16px;
+}
+
+.practice-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.practice-subtitle {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.practice-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: 0.3px;
+}
+
+.filter-btn:hover, .filter-btn.active {
+  background: rgba(91,141,246,0.15);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  color: white;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: opacity 0.2s, transform 0.2s;
+  letter-spacing: 0.3px;
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* QUESTION CARD */
+.question-area {
+  padding: 28px;
+}
+
+.question-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  margin-bottom: 16px;
+  animation: fadeSlideIn 0.3s ease;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.q-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.q-num {
+  background: var(--accent);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: 'DM Mono', monospace;
+}
+
+.q-topic-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  letter-spacing: 0.3px;
+}
+
+.q-discussion {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.q-text {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.answer-reveal {
+  margin-top: 16px;
+}
+
+.reveal-btn {
+  background: transparent;
+  border: 1px dashed var(--border);
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: all 0.2s;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reveal-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+}
+
+.answer-box {
+  margin-top: 12px;
+  background: rgba(74,222,128,0.08);
+  border: 1px solid rgba(74,222,128,0.25);
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: fadeSlideIn 0.25s ease;
+}
+
+.answer-letter {
+  font-size: 22px;
+  font-weight: 800;
+  font-family: 'DM Mono', monospace;
+  color: var(--green);
+}
+
+.answer-label {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.answer-label strong { color: var(--green); }
+
+.q-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+}
+
+.q-nav-btn {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 9px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Space Grotesk', sans-serif;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.q-nav-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.q-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.q-counter {
+  font-size: 13px;
+  font-family: 'DM Mono', monospace;
+  color: var(--muted);
+}
+
+/* PROGRESS BAR */
+.progress-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 40px;
+  margin-bottom: 80px;
+}
+
+.progress-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+
+.progress-info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.progress-label {
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.progress-bar-wrap {
+  background: var(--surface2);
+  border-radius: 20px;
+  height: 8px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  border-radius: 20px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  transition: width 0.6s cubic-bezier(.4,0,.2,1);
+}
+
+.progress-pct {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+}
+
+.progress-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* EXAM TIPS */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.tip-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  transition: border-color 0.2s;
+}
+
+.tip-card:hover { border-color: rgba(91,141,246,0.3); }
+
+.tip-icon {
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+
+.tip-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.tip-text {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* FOOTER */
+footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 32px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.footer-text {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.footer-links {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.footer-links a {
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover { color: var(--accent); }
+
+@media (max-width: 640px) {
+  .hero { padding: 60px 20px 40px; }
+  .stats-bar { padding: 20px; gap: 20px; }
+  .stat-divider { display: none; }
+  .section { padding: 0 20px; }
+  .progress-section { padding: 0 20px; }
+  .topic-grid { grid-template-columns: 1fr; }
+  nav { padding: 14px 20px; }
+  .nav-links { display: none; }
+  footer { padding: 24px 20px; }
+}
 </style>
 </head>
 <body>
-<div class="reading-progress"><div class="bar"></div></div>
-<div class="container">
-  <header class="hero fade-in">
-    <span class="badge">Microsoft DP-600 · Fabric Analytics Engineer</span>
-    <h1>Study guide for visual learners</h1>
-    <p class="subtitle">Short pages. Big visuals. No walls of text.<br>Built one topic at a time — free for everyone.</p>
-    <p class="read-time" style="margin-top:1.25rem">~2 min to explore this page</p>
-  </header>
-  <div class="stats-row fade-in">
-    <div class="stat"><div class="num" style="color:var(--teal)">4</div><div class="label">Topics done</div></div>
-    <div class="stat"><div class="num" style="color:var(--text3)">5</div><div class="label">Domains</div></div>
-    <div class="stat"><div class="num" style="color:var(--accent2)">Growing</div><div class="label">As I study</div></div>
+
+<div class="glow-orb glow-orb-1"></div>
+<div class="glow-orb glow-orb-2"></div>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <span>📘</span>
+    <span>DP-600</span>
+    <span class="nav-badge">STUDY GUIDE</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" class="active">Home</a></li>
+    <li><a href="#">Topics</a></li>
+    <li><a href="#">Practice</a></li>
+    <li><a href="#">Notes</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Microsoft Fabric Analytics Engineer</div>
+  <h1>Your <span class="highlight">DP-600</span><br>Study Command Centre</h1>
+  <p class="hero-sub">198 exam questions, broken down by topic, with community-verified answers. Start practicing below.</p>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <span class="stat-num">198</span>
+    <span class="stat-label">Total Questions</span>
   </div>
-  <section class="section fade-in">
-    <p class="section-label">How this works</p>
-    <h2>Three steps, that's it</h2>
-    <p class="tldr">I study → I make a page → you benefit.</p>
-    <div class="how-grid">
-      <div class="how-step fade-in d1"><span class="step-num">01</span><h4>Study with Claude</h4><p>I work through Microsoft Learn modules and practice questions with AI.</p></div>
-      <div class="how-step fade-in d2"><span class="step-num">02</span><h4>Turn it into a page</h4><p>Each concept gets a visual page with diagrams, analogies, and quizzes.</p></div>
-      <div class="how-step fade-in d3"><span class="step-num">03</span><h4>Share it here</h4><p>Free on GitHub Pages. Use it, share it, pass the exam.</p></div>
-    </div>
-  </section>
-  <section class="section fade-in">
-    <p class="section-label">Every topic page includes</p>
-    <h2>Built for how your brain actually works</h2>
-    <p class="tldr">No 2000-word essays. Just the stuff that sticks.</p>
-    <div class="how-grid">
-      <div class="how-step fade-in d1"><span class="step-num" style="color:var(--teal)">Visual flow</span><h4>See the big picture</h4><p>Diagram showing how things connect — source to destination.</p></div>
-      <div class="how-step fade-in d2"><span class="step-num" style="color:var(--amber)">Plain language</span><h4>Short sentences</h4><p>Analogies, not jargon. "The pipeline is the brain" beats a paragraph.</p></div>
-      <div class="how-step fade-in d1"><span class="step-num" style="color:var(--coral)">Exam traps</span><h4>Wrong answers explained</h4><p>Why each distractor fails — so you never pick it.</p></div>
-      <div class="how-step fade-in d2"><span class="step-num" style="color:var(--accent2)">Tap-to-check quiz</span><h4>Test yourself instantly</h4><p>Real exam questions + practice quizzes with score tracking.</p></div>
-    </div>
-  </section>
-  <section class="section fade-in">
-    <p class="section-label">The 5 exam domains</p>
-    <h2>Tap a green topic to start</h2>
-    <p class="tldr">Green dot = ready. Gray dot = coming soon.</p>
-    <div class="domain-card fade-in" data-domain="1">
-      <div class="domain-number">1</div>
-      <span class="domain-badge">25–30%</span>
-      <h3>Plan, implement, and manage a solution</h3>
-      <p class="domain-desc">Fabric architecture, OneLake, workspaces, capacities, Git integration.</p>
-      <div class="topic-list">
-        <a href="git-integration.html" class="topic-link"><span class="status done"></span>Git integration (Azure DevOps sequence)</a>
-      </div>
-      <p class="topic-count">1 topic</p>
-    </div>
-    <div class="domain-card fade-in" data-domain="2">
-      <div class="domain-number">2</div>
-      <span class="domain-badge">25–30%</span>
-      <h3>Prepare and serve data</h3>
-      <p class="domain-desc">Pipelines, Copy Activity, Dataflows, lakehouses, SQL endpoints.</p>
-      <div class="topic-list">
-        <a href="copy-activity.html" class="topic-link"><span class="status done"></span>Data ingestion with Copy Activity</a>
-        <a href="dynamic-expressions.html" class="topic-link"><span class="status done"></span>Dynamic expression handling</a>
-        <a href="managed-vs-external-tables.html" class="topic-link"><span class="status done"></span>Managed vs external tables</a>
-      </div>
-      <p class="topic-count">3 topics</p>
-    </div>
-    <div class="domain-card fade-in" data-domain="3">
-      <div class="domain-number">3</div>
-      <span class="domain-badge">25–30%</span>
-      <h3>Implement and manage semantic models</h3>
-      <p class="domain-desc">Star schema, DAX, relationships, Direct Lake, optimization.</p>
-      <div class="topic-list"><span class="topic-link" style="cursor:default;opacity:.45"><span class="status soon"></span>Coming as I study this domain</span></div>
-      <p class="topic-count">0 topics</p>
-    </div>
-    <div class="domain-card fade-in" data-domain="4">
-      <div class="domain-number">4</div>
-      <span class="domain-badge">10–15%</span>
-      <h3>Explore and analyze data</h3>
-      <p class="domain-desc">Notebooks, Spark, SQL queries, KQL, exploratory analysis.</p>
-      <div class="topic-list"><span class="topic-link" style="cursor:default;opacity:.45"><span class="status soon"></span>Coming as I study this domain</span></div>
-      <p class="topic-count">0 topics</p>
-    </div>
-    <div class="domain-card fade-in" data-domain="5">
-      <div class="domain-number">5</div>
-      <span class="domain-badge">5–10%</span>
-      <h3>Monitor and optimize</h3>
-      <p class="domain-desc">Performance, query optimization, capacity management.</p>
-      <div class="topic-list"><span class="topic-link" style="cursor:default;opacity:.45"><span class="status soon"></span>Coming as I study this domain</span></div>
-      <p class="topic-count">0 topics</p>
-    </div>
-  </section>
-  <footer class="footer">
-    <p>DP-600 Study Guide · Built with <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> · <a href="https://learn.microsoft.com/en-us/credentials/certifications/fabric-analytics-engineer-associate/" target="_blank" rel="noopener">Official exam page</a></p>
-  </footer>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-num">8</span>
+    <span class="stat-label">Topic Areas</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-num" id="seen-count">0</span>
+    <span class="stat-label">Questions Seen</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-num" id="correct-count">0</span>
+    <span class="stat-label">Correct</span>
+  </div>
+  <div class="stat-divider"></div>
+  <div class="stat">
+    <span class="stat-num">Pearson</span>
+    <span class="stat-label">Exam Provider</span>
+  </div>
 </div>
+
+<!-- PROGRESS -->
+<div class="progress-section">
+  <div class="progress-card">
+    <div class="progress-info">
+      <div class="progress-label">Overall study progress</div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="main-progress-bar" style="width: 0%"></div>
+      </div>
+      <div class="progress-pct" id="progress-text">0 / 198 questions seen</div>
+    </div>
+    <div class="progress-actions">
+      <button class="btn-primary" onclick="resetProgress()">Reset Progress</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOPICS -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">Study by Topic</h2>
+  </div>
+  <div class="topic-grid" id="topic-grid"></div>
+</div>
+
+<!-- PRACTICE -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">Quick Practice</h2>
+  </div>
+  <div class="practice-panel">
+    <div class="practice-header">
+      <div>
+        <div class="practice-title">Question Flashcards</div>
+        <div class="practice-subtitle">Flip through questions and check answers</div>
+      </div>
+      <div class="practice-controls" id="filter-controls"></div>
+    </div>
+    <div class="question-area" id="question-area">
+      <div style="text-align:center; padding: 40px; color: var(--muted); font-size: 14px;">
+        Select a topic filter above to start practising ↑
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TIPS -->
+<div class="section">
+  <div class="section-header">
+    <h2 class="section-title">Exam Tips</h2>
+  </div>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon">🔀</div>
+      <div class="tip-title">Direct Lake vs Import</div>
+      <div class="tip-text">Direct Lake reads Delta files directly from OneLake — no import needed. Switches to DirectQuery when row-level security is active.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🔗</div>
+      <div class="tip-title">Shortcuts vs Pipelines</div>
+      <div class="tip-text">Shortcuts reference data in place — zero copy. Pipelines physically move the data. Key distinction for the exam.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">📦</div>
+      <div class="tip-title">Git Integration</div>
+      <div class="tip-text">Only Azure Repos (same tenant) was supported originally. GitHub support was added in September 2024 — watch out for version of this question.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">⚡</div>
+      <div class="tip-title">Capacity SKUs</div>
+      <div class="tip-text">F-SKUs (F2–F2048) are pay-as-you-go. Research division = on-demand capacity with per-minute billing. Fabric Trial = F64 equivalent.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🏗️</div>
+      <div class="tip-title">Least Privilege</div>
+      <div class="tip-text">A recurring requirement in case studies. Always pick the role that grants minimum needed access — Viewer, not Member; Reader, not Admin.</div>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon">🧊</div>
+      <div class="tip-title">Delta Lake Default</div>
+      <div class="tip-text">Delta is the default and preferred table format in Microsoft Fabric. Managed tables live inside the lakehouse. External tables point outward.</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <div class="footer-text">DP-600 Study Guide · Built with 💙 for Fabric Analytics Engineer Exam</div>
+  <ul class="footer-links">
+    <li><a href="https://learn.microsoft.com/en-us/credentials/certifications/fabric-analytics-engineer-associate/" target="_blank">Microsoft Learn</a></li>
+    <li><a href="https://learn.microsoft.com/en-us/fabric/" target="_blank">Fabric Docs</a></li>
+  </ul>
+</footer>
+
 <script>
-document.addEventListener('DOMContentLoaded',()=>{
-  const bar=document.querySelector('.reading-progress .bar');
-  if(bar)window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-window.innerHeight;bar.style.width=h>0?(window.scrollY/h*100)+'%':'0%'},{passive:true});
-  if(!window.matchMedia('(prefers-reduced-motion:reduce)').matches){
-    const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}}),{threshold:.1});
-    document.querySelectorAll('.fade-in').forEach(el=>obs.observe(el));
+const QUESTION_DATA = {"Lakehouse": [{"n": 1, "a": "C", "t": "Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there ma", "d": 37}, {"n": 3, "a": "A", "t": "You have a Fabric tenant that contains JSON files in OneLake. The files have one billion items. You plan to perform time series analysis of the items. You need ", "d": 3}, {"n": 4, "a": "B", "t": "You have a Fabric tenant that contains customer churn data stored as Parquet files in OneLake. The data contains details about customer demographics and product", "d": 17}, {"n": 8, "a": "B", "t": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the ", "d": 3}, {"n": 9, "a": "B", "t": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the ", "d": 4}, {"n": 13, "a": "?", "t": "HOTSPOT You have a data warehouse that contains a table named Stage.Customers. Stage.Customers contains all the customer record updates from a customer relation", "d": 14}, {"n": 14, "a": "?", "t": "HOTSPOT Case study - This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However", "d": 1}, {"n": 15, "a": "A", "t": "Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there ma", "d": 13}, {"n": 16, "a": "?", "t": "HOTSPOT You have a Fabric workspace that uses the default Spark starter pool and runtime version 1.2. You plan to read a CSV file named Sales_raw.csv in a lakeh", "d": 5}, {"n": 17, "a": "A", "t": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the ", "d": 11}, {"n": 23, "a": "A", "t": "Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there ma", "d": 10}, {"n": 28, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains a warehouse named Warehouse1. Warehouse1 contains a fact table named FactSales that has one billion rows. You run", "d": 8}, {"n": 29, "a": "BD", "t": "You have an Amazon Web Services (AWS) subscription that contains an Amazon Simple Storage Service (Amazon S3) bucket named bucket1. You have a Fabric tenant tha", "d": 4}, {"n": 31, "a": "D", "t": "Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there ma", "d": 3}, {"n": 32, "a": "B", "t": "You have a Fabric tenant that contains a lakehouse named LH1. You create new tables in LH1. You need to ensure that the tables are added automatically to the de", "d": 3}, {"n": 35, "a": "A", "t": "You are the administrator of a Fabric workspace that contains a lakehouse named Lakehouse1. Lakehouse1 contains the following tables: Table1: A Delta table crea", "d": 30}, {"n": 38, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains a PySpark notebook named Notebook1. You define sas_token as a variable in the first cell of Notebook1 and store a", "d": 4}, {"n": 39, "a": "B", "t": "You have a Fabric tenant that contains a warehouse named DW1 and a lakehouse named LH1. DW1 contains a table named Sales.Product. LH1 contains a table named Sal", "d": 3}, {"n": 40, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains the semantic model shown in the following exhibit. Use the drop-down menus to select the answer choice that compl", "d": 5}, {"n": 45, "a": "A", "t": "You have a Fabric workspace named Workspace1 that contains a lakehouse named Lakehouse1. Lakehouse1 contains a table named Table1. Table1 contains the following", "d": 3}, {"n": 47, "a": "B", "t": "You have a Fabric tenant that contains a warehouse. You use a dataflow to load a new dataset from OneLake to the warehouse. You need to add a PowerQuery step to", "d": 52}, {"n": 49, "a": "D", "t": "You have a Fabric tenant that contains a workspace named Workspace1. You plan to deploy a semantic model named Model1 by using the XMLA endpoint. You need to op", "d": 4}, {"n": 51, "a": "D", "t": "You have a Fabric tenant that contains a workspace named Workspace1. Workspace1 uses Pro license mode and contains a semantic model named Model1. You need to en", "d": 2}, {"n": 53, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains a lakehouse named LH1. You need to deploy a new semantic model. The solution must meet the following requirements", "d": 3}, {"n": 56, "a": "B", "t": "Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there ma", "d": 2}, {"n": 57, "a": "?", "t": "HOTSPOT You have a Fabric lakehouse named Lakehouse1 that contains the following data. You need build a T-SQL statement that will return the total sales amount ", "d": 3}, {"n": 63, "a": "C", "t": "You have a Fabric tenant that contains a workspace named Workspace1. Workspace1 contains a data pipeline named Pipeline1 and a lakehouse named Lakehouse1. You p", "d": 11}, {"n": 65, "a": "A", "t": "You have a Fabric tenant that contains the workspaces shown in the following table. You have a deployment pipeline named Pipeline1 that deploys items from Works", "d": 2}, {"n": 68, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains a workspace named Workspace1. Workspace1 contains a lakehouse named LH1 and a warehouse named DW1. LH1 contains a", "d": 1}, {"n": 76, "a": "C", "t": "You plan to use Fabric to store data. You need to create a data store that supports the following: \u2022 Writing data by using T-SQL \u2022 Multi-table transactions \u2022 Dy", "d": 2}, {"n": 81, "a": "C", "t": "You have a Fabric tenant that contains a workspace named Workspace1 and a user named User1. Workspace1 contains a warehouse named DW1. You share DW1 with User1 ", "d": 8}, {"n": 82, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains a workspace named Workspace1 and a user named DBUser. Workspace1 contains a lakehouse named Lakehouse1. DBUser do", "d": 2}, {"n": 84, "a": "B", "t": "You have a Fabric tenant named Tenant1 that contains a lakehouse named Lakehouse1. You need to add data to Lakehouse1 from a CSV file in an Azure Storage accoun", "d": 6}, {"n": 96, "a": "A", "t": "DRAG DROP You have a Fabric lakehouse named Lakehouse1. You have the data sources shown in the following table. You need to ingest data from both data sources i", "d": 2}, {"n": 97, "a": "A", "t": "HOTSPOT You have a Fabric workspace named Workspace1 that uses the Premium Per User (PPU) license mode and contains a semantic model named Model1. Large semanti", "d": 1}, {"n": 103, "a": "D", "t": "You have a Fabric tenant that contains a warehouse. You use a dataflow to load a new dataset from OneLake to the warehouse. You need to add a Power Query step t", "d": 1}, {"n": 105, "a": "C", "t": "You have a Fabric tenant that contains the workspaces shown in the following table. You have a deployment pipeline named Pipeline1 that deploys items from Works", "d": 1}, {"n": 106, "a": "A", "t": "You have a Fabric tenant that contains a workspace named Workspace1 and a user named User1. Workspace1 contains a warehouse named DW1. You share DW1 with User1 ", "d": 2}, {"n": 109, "a": "E", "t": "You have a Fabric tenant that contains 30 CSV files in OneLake. The files are updated daily. You create a Microsoft Power BI semantic model named Model1 that us", "d": 1}, {"n": 112, "a": "?", "t": "HOTSPOT Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, ", "d": 24}, {"n": 118, "a": "AB", "t": "You have a Fabric workspace that contains a DirectQuery semantic model. The model queries a data source that has 500 million rows. You have a Microsoft Power Bi", "d": 18}, {"n": 119, "a": "D", "t": "You have a Fabric tenant that contains 30 CSV files in OneLake. The files are updated daily. You create a Microsoft Power BI semantic model named Model1 that us", "d": 32}, {"n": 121, "a": "A", "t": "You have a Fabric tenant that contains a warehouse. The warehouse uses row-level security (RLS). You create a Direct Lake semantic model that uses the Delta tab", "d": 47}, {"n": 123, "a": "D", "t": "Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there ma", "d": 40}, {"n": 128, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains two lakehouses. You are building a dataflow that will combine data from the lakehouses. The applied steps from on", "d": 8}, {"n": 129, "a": "B", "t": "You have a Fabric tenant that contains a lakehouse named Lakehouse\u2019. Lakehouse1 contains a table named Tablet. You are creating a new data pipeline. You plan to", "d": 10}, {"n": 130, "a": "BD", "t": "You have a Fabric tenant that contains a lakehouse. You plan to query sales data files by using the SQL endpoint. The files will be in an Amazon Simple Storage ", "d": 44}, {"n": 131, "a": "A", "t": "You have a Fabric tenant that contains a lakehouse named Lakehouse1. Lakehouse1 contains a subfolder named Subfolder1 that contains CSV files. You need to conve", "d": 14}, {"n": 132, "a": "D", "t": "You have a Fabric tenant that contains a lakehouse named Lakehouse1. Lakehouse1 contains an unpartitioned table named Table1. You plan to copy data to Table1 an", "d": 20}, {"n": 133, "a": "B", "t": "Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there ma", "d": 35}, {"n": 134, "a": "A", "t": "You have source data in a folder on a local computer. You need to create a solution that will use Fabric to populate a data store. The solution must meet the fo", "d": 18}, {"n": 135, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains a lakehouse. You are using a Fabric notebook to save a large DataFrame by using the following code. df.write.part", "d": 17}, {"n": 139, "a": "?", "t": "HOTSPOT You have a Fabric workspace that uses the default Spark starter pool and runtime version 1.2. You plan to read a CSV file named Sales_raw.csv in a lakeh", "d": 19}, {"n": 142, "a": "?", "t": "DRAG DROP You have a Fabric tenant that contains a lakehouse named Lakehouse1. Readings from 100 IoT devices are appended to a Delta table in Lakehouse1. Each s", "d": 8}, {"n": 144, "a": "?", "t": "HOTSPOT - Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However", "d": 37}, {"n": 145, "a": "?", "t": "HOTSPOT You have a Fabric workspace named Workspace1 and an Azure Data Lake Storage Gen2 account named storage1. Workspace1 contains a lakehouse named Lakehouse", "d": 15}, {"n": 148, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains a lakehouse named Lakehouse1. Lakehouse1 contains a table named Nyctaxi_raw. Nyctaxi_row contains the following t", "d": 8}, {"n": 149, "a": "B", "t": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the ", "d": 6}, {"n": 150, "a": "B", "t": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the ", "d": 7}, {"n": 151, "a": "A", "t": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the ", "d": 15}, {"n": 152, "a": "A", "t": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the ", "d": 6}, {"n": 153, "a": "B", "t": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the ", "d": 4}, {"n": 154, "a": "B", "t": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the ", "d": 6}, {"n": 155, "a": "?", "t": "HOTSPOT Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, ", "d": 16}, {"n": 156, "a": "BE", "t": "Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there ma", "d": 4}, {"n": 157, "a": "?", "t": "HOTSPOT Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, ", "d": 13}, {"n": 158, "a": "AD", "t": "Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there ma", "d": 17}, {"n": 159, "a": "D", "t": "Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there ma", "d": 2}, {"n": 160, "a": "D", "t": "Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there ma", "d": 5}, {"n": 161, "a": "?", "t": "HOTSPOT Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, ", "d": 10}, {"n": 162, "a": "D", "t": "Case study - This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there ", "d": 16}, {"n": 163, "a": "?", "t": "HOTSPOT Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, ", "d": 5}, {"n": 164, "a": "?", "t": "HOTSPOT You have a Fabric tenant. You need to configure OneLake security for users shown in the following table. The solution must follow the principle of least", "d": 5}, {"n": 166, "a": "?", "t": "HOTSPOT Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, ", "d": 41}, {"n": 167, "a": "?", "t": "DRAG DROP You are implementing a medallion architecture in a single Fabric workspace. You have a lakehouse that contains the Bronze and Silver layers and a ware", "d": 10}, {"n": 169, "a": "?", "t": "HOTSPOT You have an Azure Data Lake Storage Gen2 account named storage1 that contains a Parquet file named sales.parquet. You have a Fabric tenant that contains", "d": 19}, {"n": 170, "a": "A", "t": "You have a Fabric workspace named Workspace1 that contains a lakehouse named Lakehouse1. In Workspace1, you create a data pipeline named Pipeline1. You have CSV", "d": 10}, {"n": 171, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains lakehouse named Lakehouse1. Lakehouse1 contains a Delta table with eight columns. You receive new data that conta", "d": 4}, {"n": 173, "a": "B", "t": "You have a Fabric tenant that contains a lakehouse. You plan to use a visual query to merge two tables. You need to ensure that the query returns all the rows i", "d": 6}, {"n": 174, "a": "D", "t": "You have a Fabric tenant that contains a lakehouse named Lakehouse1. Lakehouse1 contains a Delta table that has one million Parquet files. You need to remove fi", "d": 4}, {"n": 177, "a": "D", "t": "Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there ma", "d": 32}, {"n": 178, "a": "C", "t": "You have a Fabric tenant that contains a warehouse named Warehouse1. Warehouse1 contains two schemas name schema1 and schema2 and a table named schema1.city. Yo", "d": 22}, {"n": 179, "a": "B", "t": "You have a Fabric tenant that contains a lakehouse named Lakehouse1. You need to prevent new tables added to Lakehouse1 from being added automatically to the de", "d": 27}, {"n": 180, "a": "?", "t": "HOTSPOT - You have a Fabric tenant that contains a workspace named Workspace1. Workspace1 contains a lakehouse named Lakehouse1 and a warehouse named Warehouse1", "d": 5}, {"n": 181, "a": "D", "t": "You have a Fabric tenant. You are creating an Azure Data Factory pipeline. You have a stored procedure that returns the number of active customers and their ave", "d": 14}, {"n": 182, "a": "A", "t": "You have a Fabric tenant that contains two workspaces named Workspace1 and Workspace2. Workspace1 contains a lakehouse named Lakehouse1. Workspace2 contains a l", "d": 13}, {"n": 188, "a": "C", "t": "Case study This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there ma", "d": 15}], "Warehouse": [{"n": 2, "a": "A", "t": "You have a Fabric warehouse that contains a table named Staging.Sales. Staging.Sales contains the following columns. You need to write a T-SQL query that will r", "d": 26}, {"n": 11, "a": "A", "t": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the ", "d": 15}, {"n": 18, "a": "D", "t": "You have a Fabric tenant. You are creating a Fabric Data Factory pipeline. You have a stored procedure that returns the number of active customers and their ave", "d": 4}, {"n": 20, "a": "?", "t": "DRAG DROP You have a Fabric tenant that contains a data warehouse named DW1. DW1 contains a table named DimCustomer. DimCustomer contains the fields shown in th", "d": 2}, {"n": 21, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains a warehouse named WH1. You run the following T-SQL query against WH1. For each of the following statements, selec", "d": 3}, {"n": 26, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains a warehouse named WH1. You have source data in a CSV file that has the following fields: \u2022 SalesTransactionID \u2022 S", "d": 5}, {"n": 27, "a": "C", "t": "You have a Fabric tenant. You are creating a Fabric Data Factory pipeline. You have a stored procedure that returns the number of active customers and their ave", "d": 2}, {"n": 30, "a": "B", "t": "You have a Fabric tenant that contains a data warehouse. You need to load rows into a large Type 2 slowly changing dimension (SCD). The solution must minimize r", "d": 6}, {"n": 33, "a": "B", "t": "You have a Fabric tenant. You are creating a Fabric Data Factory pipeline. You have a stored procedure that returns the number of active customers and their ave", "d": 2}, {"n": 44, "a": "DE", "t": "You have a Fabric warehouse named Warehouse1 that contains a table named Table1. Table1 contains customer data. You need to implement row-level security (RLS) f", "d": 5}, {"n": 55, "a": "D", "t": "You have a Fabric warehouse that contains a table named SalesOrderDetail, SalesOrderDetail contains three columns named OrderQty, ProductID and SalesOrderlD. Sa", "d": 5}, {"n": 58, "a": "CD", "t": "You have a Fabric tenant that contains a machine learning model registered in a Fabric workspace. You need to use the model to generate predictions by using the", "d": 20}, {"n": 59, "a": "?", "t": "HOTSPOT - You have a Fabric tenant that contains a workspace named Workspace1. Workspace1 contains a warehouse named DW1. DW1 contains two tables named Employee", "d": 2}, {"n": 67, "a": "?", "t": "HOTSPOT You have a Fabric warehouse that contains two tables named DimDate and Trips. DimDate contains the following fields. Trips contains the following fields", "d": 1}, {"n": 70, "a": "C", "t": "You have a Fabric tenant. You are creating a Fabric Data Factory pipeline. You have a stored procedure that returns the number of active customers and their ave", "d": 3}, {"n": 71, "a": "?", "t": "HOTSPOT You have the following T-SQL statement. For each of the following statements, select Yes if the statement is true. Otherwise, select No. NOTE: Each corr", "d": 6}, {"n": 72, "a": "?", "t": "HOTSPOT You have a Fabric warehouse that contains the following data. The data has the following characteristics: \u2022 Each customer is assigned a unique CustomerI", "d": 4}, {"n": 85, "a": "?", "t": "HOTSPOT You have a Fabric warehouse that contains a table named Table1. Table1 contains the following data. You need to create a T-SQL statement that meets the ", "d": 4}, {"n": 86, "a": "?", "t": "DRAG DROP You have a Fabric warehouse named Warehouse1 that contains a table named dbo.Product. dbo.Product contains the following columns. You need to use a T-", "d": 1}, {"n": 87, "a": "B", "t": "You have a Fabric tenant. You are creating a Fabric Data Factory pipeline. You have a stored procedure that returns the number of active customers and their ave", "d": 9}, {"n": 88, "a": "?", "t": "HOTSPOT - You have a Fabric workspace that contains a warehouse named Warehouse1. Warehouse1 contains the following data. You need to create a T-SQL statement t", "d": 1}, {"n": 90, "a": "?", "t": "HOTSPOT - You have a Fabric workspace that contains a warehouse named DW1. DW1 contains the following tables and columns. You need to summarize order quantities", "d": 3}, {"n": 100, "a": "CD", "t": "You have a Fabric warehouse that contains a table named Table1. Table1 contains three columns named SalesAmount, ProductCategory, and TransactionDate. You need ", "d": 2}, {"n": 104, "a": "D", "t": "HOTSPOT You have a Fabric warehouse named Warehouse1 that contains a table named TaxiTrips. TaxiTrips contains the following columns. You need to create a query", "d": 1}, {"n": 110, "a": "?", "t": "DRAG DROP You are implementing two dimension tables named Customers and Products in a Fabric warehouse. You need to create two slowly changing dimensions that m", "d": 1}, {"n": 116, "a": "?", "t": "HOTSPOT - You have a Fabric tenant that contains a warehouse named Warehouse1. Warehouse1 contains three schemas named schemaA, schemaB, and schemaC. You need t", "d": 16}, {"n": 138, "a": "D", "t": "You have a Fabric tenant that contains a warehouse. Several times a day, the performance of all warehouse queries degrades. You suspect that Fabric is throttlin", "d": 6}, {"n": 140, "a": "A", "t": "You have a Fabric tenant that contains a warehouse. A user discovers that a report that usually takes two minutes to render has been running for 45 minutes and ", "d": 14}, {"n": 141, "a": "?", "t": "DRAG DROP You are creating a data flow in Fabric to ingest data from an Azure SQL database by using a T-SQL statement. You need to ensure that any foldable Powe", "d": 6}, {"n": 143, "a": "AD", "t": "You need to create a data loading pattern for a Type 1 slowly changing dimension (SCD). Which two actions should you include in the process? Each correct answer", "d": 13}, {"n": 172, "a": "?", "t": "HOTSPOT You have a Fabric warehouse that contains a table named Sales.Orders. Sales.Orders contains the following columns. You need to write a T-SQL query that ", "d": 6}, {"n": 175, "a": "?", "t": "DRAG DROP You are implementing two dimension tables named Customers and Products in a Fabric warehouse. You need to use slowly changing dimension (SCD) to manag", "d": 4}, {"n": 183, "a": "CDE", "t": "You have a Fabric tenant that contains a warehouse. You are designing a star schema model that will contain a customer dimension. The customer dimension table w", "d": 13}, {"n": 196, "a": "?", "t": "HOTSPOT You have a Fabric warehouse that contains a table named Sales.Products. Sales.Products contains the following columns. You need to write a T-SQL query t", "d": 11}, {"n": 198, "a": "?", "t": "HOTSPOT You have a Fabric warehouse that contains a table named Sales.Orders. Sales.Orders contains the following columns. You need to write a T-SQL query that ", "d": 7}], "Semantic Models": [{"n": 5, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains a semantic model. The model contains data about retail stores. You need to write a DAX query that will be execute", "d": 11}, {"n": 7, "a": "D", "t": "You have a Fabric tenant that contains a Microsoft Power BI report. You are exploring a new semantic model. You need to display the following column statistics:", "d": 2}, {"n": 10, "a": "B", "t": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the ", "d": 9}, {"n": 12, "a": "B", "t": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the ", "d": 7}, {"n": 19, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains a semantic model named model1. The two largest columns in model1 are shown in the following table. You need to op", "d": 2}, {"n": 22, "a": "B", "t": "Note: This question is part of a series of questions that present the same scenario. Each question in the series contains a unique solution that might meet the ", "d": 3}, {"n": 25, "a": "D", "t": "You have a Microsoft Power BI Premium Per User (PPU) workspace that contains a semantic model. You have an Azure App Service app named App1 that modifies row-le", "d": 6}, {"n": 34, "a": "B", "t": "Note: This section contains one or more sets of questions with the same scenario and problem. Each question presents a unique solution to the problem. You must ", "d": 3}, {"n": 36, "a": "A", "t": "Note: This section contains one or more sets of questions with the same scenario and problem. Each question presents a unique solution to the problem. You must ", "d": 2}, {"n": 37, "a": "A", "t": "Note: This section contains one or more sets of questions with the same scenario and problem. Each question presents a unique solution to the problem. You must ", "d": 9}, {"n": 41, "a": "B", "t": "Note: This section contains one or more sets of questions with the same scenario and problem. Each question presents a unique solution to the problem. You must ", "d": 1}, {"n": 46, "a": "?", "t": "DRAG DROP You have a Fabric workspace that contains a Dataflow Gen2 query. The query returns the following data. You need to filter the results to ensure that o", "d": 6}, {"n": 48, "a": "?", "t": "HOTSPOT You have a Microsoft Power Bl project that contains a file named definition.pbir. definition.pbir contains the following JSON. For each of the following", "d": 7}, {"n": 50, "a": "B", "t": "You have a Microsoft Power BI project that contains a semantic model. You plan to use Azure DevOps for version control. You need to modify the .gitignore file t", "d": 8}, {"n": 52, "a": "C", "t": "You have a Fabric tenant that contains a complex semantic model. The model is based on a star schema and contains many tables, including a fact table named Sale", "d": 2}, {"n": 60, "a": "A", "t": "You need to create a Microsoft Power BI file that will be used to create multiple reports. The solution must meet the following requirements: \u2022 The file must in", "d": 3}, {"n": 61, "a": "C", "t": "You have a Fabric tenant that contains a workspace named Workspace1. Workspace1 contains a single semantic model that has two Microsoft Power BI reports. You ha", "d": 4}, {"n": 66, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains a workspace named Workspace_DEV. Workspace_DEV contains the semantic models shown in the following table. Workspa", "d": 12}, {"n": 74, "a": "D", "t": "You have a Fabric tenant that contains a semantic model. You need to modify object-level security (OLS) for the model. What should you use? A. B. C. D. the Fabr", "d": 2}, {"n": 75, "a": "C", "t": "You have a Microsoft Power BI semantic model that contains a measure named TotalSalesAmount. TotalSalesAmount returns a sales revenue amount that is translated ", "d": 2}, {"n": 77, "a": "?", "t": "DRAG DROP You have a Fabric tenant that contains a workspace named Workspace1. Workspace1 uses the Pro license mode and contains a semantic model named Model1. ", "d": 5}, {"n": 78, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains a workspace named Enterprise. Enterprise contains a semantic model named Model1. Model1 contains a date parameter", "d": 2}, {"n": 91, "a": "?", "t": "DRAG DROP You have a Fabric tenant that contains a semantic model. The model contains data about retail stores. You need to write a DAX query that will be execu", "d": 17}, {"n": 92, "a": "B", "t": "You have a Fabric workspace named Workspace1. Workspace1 contains multiple semantic models, including a model named Model1. Model1 is updated by using an XMLA e", "d": 3}, {"n": 93, "a": "AD", "t": "You have a Fabric workspace named Workspace1. You need to create a semantic model named Model1 and publish Model1 to Workspace1. The solution must meet the foll", "d": 4}, {"n": 94, "a": "D", "t": "You have a Fabric workspace named Workspace1 that is assigned to a newly created Fabric capacity named Capacity1. You create a semantic model named Model1 and d", "d": 4}, {"n": 95, "a": "?", "t": "HOTSPOT You are creating a report and a semantic model in Microsoft Power BI Desktop. The Value measure has the expression shown in the following exhibit. Use t", "d": 4}, {"n": 101, "a": "C", "t": "You have a Microsoft Power BI semantic model. You need to identify any surrogate key columns in the model that have the Summarize By property set to a value oth", "d": 1}, {"n": 108, "a": "C", "t": "You have a semantic model named Model1 that contains data that relates to customers and their bank account balances. Model1 has the following tables and columns", "d": 1}, {"n": 113, "a": "C", "t": "You have a Fabric tenant named Tenant1 that contains a workspace named WS1. WS1 uses a capacity named C1 and contains a dataset named DS1. You need to ensure re", "d": 23}, {"n": 114, "a": "ADE", "t": "You have a Fabric tenant that contains a workspace named Workspace1. Workspace1 is assigned to a Fabric capacity. You need to recommend a solution to provide us", "d": 24}, {"n": 115, "a": "A", "t": "You are creating a semantic model in Microsoft Power BI Desktop. You plan to make bulk changes to the model by using the Tabular Model Definition Language (TMDL", "d": 20}, {"n": 117, "a": "BDE", "t": "You plan to deploy Microsoft Power BI items by using Fabric deployment pipelines. You have a deployment pipeline that contains three stages named Development, T", "d": 30}, {"n": 120, "a": "C", "t": "You have a Fabric tenant that uses a Microsoft Power BI Premium capacity. You need to enable scale-out for a semantic model. What should you do first? A. B. C. ", "d": 7}, {"n": 122, "a": "C", "t": "You have a Fabric tenant that contains a complex semantic model. The model is based on a star schema and contains many tables, including a fact table named Sale", "d": 7}, {"n": 124, "a": "BC", "t": "You have a Fabric tenant that contains a semantic model. The model uses Direct Lake mode. You suspect that some DAX queries load unnecessary columns into memory", "d": 10}, {"n": 126, "a": "AD", "t": "You have a Fabric tenant that contains a semantic model named Model1. Model1 uses Import mode. Model1 contains a table named Orders. Orders has 100 million rows", "d": 11}, {"n": 127, "a": "AB", "t": "You have a Fabric tenant that contains a semantic model. You need to prevent report creators from populating visuals by using implicit measures. What are two to", "d": 12}, {"n": 147, "a": "?", "t": "HOTSPOT You have a Microsoft Power BI report and a semantic model that uses Direct Lake mode. From Power BI Desktop, you open Performance analyzer as shown in t", "d": 19}, {"n": 165, "a": "A", "t": "You have an Azure Repos repository named Repo1 and a Fabric-enabled Microsoft Power BI Premium capacity. The capacity contains two workspaces named Workspace1 a", "d": 5}, {"n": 185, "a": "D", "t": "You have a Microsoft Power BI semantic model. You need to identify any surrogate key columns in the model that have the Summarize By property set to a value oth", "d": 7}, {"n": 186, "a": "?", "t": "DRAG DROP You have a Fabric tenant that contains a Microsoft Power BI report named Report1. Report1 is slow to render. You suspect that an inefficient DAX query", "d": 5}, {"n": 187, "a": "C", "t": "You have a Fabric tenant that contains a semantic model. The model contains 15 tables. You need to programmatically change each column that ends in the word Key", "d": 5}, {"n": 189, "a": "?", "t": "HOTSPOT You have a Microsoft Power BI semantic model. You plan to implement calculation groups. You need to create a calculation item that will change the conte", "d": 5}, {"n": 190, "a": "D", "t": "You have a Microsoft Power BI report named Report1 that uses a Fabric semantic model. Users discover that Report1 renders slowly. You open Performance analyzer ", "d": 8}, {"n": 191, "a": "D", "t": "You have a custom Direct Lake semantic model named Model1 that has one billion rows of data. You use Tabular Editor to connect to Model1 by using the XMLA endpo", "d": 5}, {"n": 192, "a": "?", "t": "DRAG DROP You create a semantic model by using Microsoft Power BI Desktop. The model contains one security role named SalesRegionManager and the following table", "d": 4}, {"n": 193, "a": "D", "t": "You have a Microsoft Power BI semantic model that contains measures. The measures use multiple CALCULATE functions and a FILTER function. You are evaluating the", "d": 20}, {"n": 194, "a": "C", "t": "You have a semantic model named Model1. Model1 contains five tables that all use Import mode. Model1 contains a dynamic row-level security (RLS) role named HR. ", "d": 26}, {"n": 195, "a": "ACD", "t": "You have a Microsoft Fabric tenant that contains a dataflow. You are exploring a new semantic model. From Power Query, you need to view column information as sh", "d": 12}], "Pipelines": [{"n": 6, "a": "BCE", "t": "You have a Fabric workspace named Workspace1 that contains a dataflow named Dataflow1. Dataflow1 returns 500 rows of data. You need to identify the min and max ", "d": 8}, {"n": 102, "a": "A", "t": "You have a Fabric workspace named Workspace1 that contains a dataflow named Dataflow1. Dataflow1 has a query that returns 2,000 rows. You view the query in Powe", "d": 13}, {"n": 107, "a": "B", "t": "You have a Fabric tenant that contains two workspaces named Workspace1 and Workspace2. Workspace1 is used as the development environment. Workspace2 is used as ", "d": 1}, {"n": 136, "a": "C", "t": "You have a Fabric workspace named Workspace1 that contains a data flow named Dataflow1 contains a query that returns the data shown in the following exhibit. Yo", "d": 5}, {"n": 137, "a": "C", "t": "You have a Fabric tenant that contains a data pipeline. You need to ensure that the pipeline runs every four hours on Mondays and Fridays. To what should you se", "d": 12}, {"n": 176, "a": "B", "t": "You have a Fabric workspace named Workspace1 and an Azure SQL database. You plan to create a dataflow that will read data from the database, and then transform ", "d": 5}, {"n": 184, "a": "B", "t": "You have a Fabric tenant. You plan to create a data pipeline named Pipeline1. Pipeline1 will include two activities that will execute in sequence. You need to e", "d": 6}], "Spark / Notebooks": [{"n": 24, "a": "?", "t": "HOTSPOT You have a Fabric tenant. You plan to create a Fabric notebook that will use Spark DataFrames to generate Microsoft Power BI visuals. You run the follow", "d": 38}, {"n": 69, "a": "D", "t": "You are analyzing the data in a Fabric notebook. You have a Spark DataFrame assigned to a variable named df. You need to use the Chart view in the notebook to e", "d": 16}, {"n": 80, "a": "C", "t": "You have a Fabric tenant that contains a Microsoft Power BI report named Report1. Report1 includes a Python visual. Data displayed by the visual is grouped auto", "d": 54}, {"n": 146, "a": "A", "t": "You are analyzing customer purchases in a Fabric notebook by using PySpark. You have the following DataFrames: transactions: Contains five columns named transac", "d": 5}, {"n": 168, "a": "?", "t": "DRAG DROP You are building a solution by using a Fabric notebook. You have a Spark DataFrame assigned to a variable named df. The DataFrame returns four columns", "d": 5}, {"n": 197, "a": "A", "t": "You have a Fabric notebook that has the Python code and output shown in the following exhibit. Which type of analytics are you performing? A. B. C. D. descripti", "d": 3}], "Admin & Security": [{"n": 42, "a": "C", "t": "You have a Fabric tenant that contains two workspaces named Workspace1 and Workspace2 and a user named User1. You need to ensure that User1 can perform the foll", "d": 2}, {"n": 43, "a": "?", "t": "HOTSPOT You have a Fabric tenant that contains three users named User1, User2, and User3. The tenant contains a security group named Group1. User1 and User3 are", "d": 3}, {"n": 62, "a": "CD", "t": "You have a Fabric tenant that contains a workspace named Workspace1 and a user named User1. User1 is assigned the Contributor role for Workspace1. You plan to c", "d": 3}, {"n": 64, "a": "AB", "t": "Your company has a finance department. You have a Fabric tenant, an Azure Storage account named storage1, and a Microsoft Entra group named Group1. Group1 conta", "d": 2}, {"n": 79, "a": "?", "t": "HOTSPOT You have two Microsoft Power BI queries named Employee and Retired Roles. You need to merge the Employee query with the Retired Roles query. The solutio", "d": 6}, {"n": 83, "a": "?", "t": "DRAG DROP You have a Fabric workspace named Workspace1. You have three groups named Group1, Group2, and Group3. You need to assign a workspace role to each grou", "d": 8}, {"n": 99, "a": "A", "t": "You have a Fabric workspace named Workspace1 that contains an eventstream named Eventstream1. Eventstream1 reads data from an Azure event hub named Eventhub1. E", "d": 1}], "General": [{"n": 54, "a": "?", "t": "HOTSPOT You have the following KQL query. For each of the following statements, select Yes if the statement is true. Otherwise, select No. NOTE: Each correct se", "d": 5}, {"n": 89, "a": "?", "t": "HOTSPOT You have a KQL database that contains a table named Readings. You need to query Readings and return the results shown in the following table. How should", "d": 2}, {"n": 98, "a": "C", "t": "DRAG DROP You have a Fabric eventhouse named Eventhouse1 that contains a table named Weatherdata. A sample of the data in Weatherdata is shown in the following ", "d": 1}, {"n": 111, "a": "A", "t": "HOTSPOT You have a Fabric eventhouse that contains a KQL database. The database contains a table named TaxiData that stores the following data. You need to crea", "d": 1}], "Power BI": [{"n": 73, "a": "B", "t": "You have a query in Microsoft Power BI Desktop that contains two columns named Order_Date and Shipping_Date. You need to create a column that will calculate the", "d": 2}, {"n": 125, "a": "?", "t": "HOTSPOT You have the source data model shown in the following exhibit. The primary keys of the tables are indicated by a key symbol beside the columns involved ", "d": 34}]};
+
+const TOPIC_META = {
+  'Lakehouse': { icon: '🏠', color: '#4FC3F7', desc: 'Delta tables, shortcuts, OneLake, managed vs external tables' },
+  'Warehouse': { icon: '🏗️', color: '#81C784', desc: 'T-SQL analytics, staging, SQL endpoints, query patterns' },
+  'Semantic Models': { icon: '📊', color: '#FFB74D', desc: 'Direct Lake, Import mode, DAX, RLS, deployment pipelines' },
+  'Pipelines': { icon: '🔄', color: '#CE93D8', desc: 'Dataflows Gen2, Data Factory, orchestration, copy activity' },
+  'Spark / Notebooks': { icon: '⚡', color: '#F48FB1', desc: 'PySpark, DataFrames, Delta Lake, notebook magic commands' },
+  'Admin & Security': { icon: '🛡️', color: '#80DEEA', desc: 'Workspaces, capacities, Git integration, roles & permissions' },
+  'Power BI': { icon: '📈', color: '#FFCC02', desc: 'Reports, visuals, dashboards, PBIX/PBIT formats' },
+  'General': { icon: '🎯', color: '#A5D6A7', desc: 'Mixed Fabric concepts and scenario-based questions' },
+};
+
+// STATE
+let state = JSON.parse(localStorage.getItem('dp600_state') || '{"seen":{},"correct":{}}');
+let activeFilter = 'All';
+let currentQueue = [];
+let currentIdx = 0;
+let answerShown = false;
+
+function saveState() {
+  localStorage.setItem('dp600_state', JSON.stringify(state));
+}
+
+function resetProgress() {
+  if (confirm('Reset all progress? This cannot be undone.')) {
+    state = { seen: {}, correct: {} };
+    saveState();
+    updateProgressUI();
   }
-});
+}
+
+function updateProgressUI() {
+  const seen = Object.keys(state.seen).length;
+  const correct = Object.keys(state.correct).filter(k => state.correct[k]).length;
+  document.getElementById('seen-count').textContent = seen;
+  document.getElementById('correct-count').textContent = correct;
+  const pct = Math.round((seen / 198) * 100);
+  document.getElementById('main-progress-bar').style.width = pct + '%';
+  document.getElementById('progress-text').textContent = seen + ' / 198 questions seen';
+}
+
+// BUILD TOPIC GRID
+function buildTopicGrid() {
+  const grid = document.getElementById('topic-grid');
+  Object.entries(QUESTION_DATA).forEach(([topic, questions]) => {
+    const meta = TOPIC_META[topic] || { icon: '📁', color: '#888', desc: '' };
+    const seenInTopic = questions.filter(q => state.seen[q.n]).length;
+    const pct = Math.round((seenInTopic / questions.length) * 100);
+    
+    const card = document.createElement('div');
+    card.className = 'topic-card';
+    card.style.setProperty('--card-color', meta.color);
+    card.innerHTML = `
+      <div class="topic-card-top">
+        <span class="topic-icon">${meta.icon}</span>
+        <span class="topic-count">${questions.length}Q</span>
+      </div>
+      <div class="topic-name">${topic}</div>
+      <div class="topic-desc">${meta.desc}</div>
+      <div style="margin-top:16px;">
+        <div style="background:var(--surface2);border-radius:20px;height:4px;overflow:hidden;">
+          <div style="height:100%;border-radius:20px;background:${meta.color};width:${pct}%;transition:width 0.6s;"></div>
+        </div>
+        <div style="font-size:11px;color:var(--muted);margin-top:6px;font-family:'DM Mono',monospace;">${seenInTopic}/${questions.length} seen</div>
+      </div>
+    `;
+    card.addEventListener('click', () => setFilter(topic));
+    grid.appendChild(card);
+  });
+}
+
+// BUILD FILTER BUTTONS
+function buildFilters() {
+  const ctrl = document.getElementById('filter-controls');
+  ['All', ...Object.keys(QUESTION_DATA)].forEach(f => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (f === 'All' ? ' active' : '');
+    btn.textContent = f;
+    btn.addEventListener('click', () => setFilter(f));
+    ctrl.appendChild(btn);
+  });
+}
+
+function setFilter(filter) {
+  activeFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => {
+    b.classList.toggle('active', b.textContent === filter);
+  });
+  
+  if (filter === 'All') {
+    currentQueue = Object.values(QUESTION_DATA).flat();
+  } else {
+    currentQueue = QUESTION_DATA[filter] || [];
+  }
+  
+  // Shuffle
+  for (let i = currentQueue.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [currentQueue[i], currentQueue[j]] = [currentQueue[j], currentQueue[i]];
+  }
+  
+  currentIdx = 0;
+  renderQuestion();
+  
+  // Scroll to practice
+  document.querySelector('.practice-panel').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function renderQuestion() {
+  answerShown = false;
+  const area = document.getElementById('question-area');
+  
+  if (!currentQueue.length) {
+    area.innerHTML = '<div style="text-align:center;padding:40px;color:var(--muted);">No questions in this topic.</div>';
+    return;
+  }
+  
+  const q = currentQueue[currentIdx];
+  const topicName = Object.entries(QUESTION_DATA).find(([t, qs]) => qs.find(x => x.n === q.n))?.[0] || 'General';
+  
+  // Mark as seen
+  state.seen[q.n] = true;
+  saveState();
+  updateProgressUI();
+  
+  area.innerHTML = `
+    <div class="question-card">
+      <div class="q-meta">
+        <span class="q-num">Q${q.n}</span>
+        <span class="q-topic-tag">${topicName}</span>
+        ${q.d > 0 ? `<span class="q-discussion">💬 ${q.d} comments</span>` : ''}
+      </div>
+      <div class="q-text">${q.t}...</div>
+      <div class="answer-reveal">
+        <button class="reveal-btn" onclick="revealAnswer('${q.a.replace(/'/g, "\'")}')">
+          <span>👁</span> Reveal Answer
+        </button>
+        <div id="answer-box" style="display:none"></div>
+      </div>
+    </div>
+    <div class="q-nav">
+      <button class="q-nav-btn" onclick="navigate(-1)" ${currentIdx === 0 ? 'disabled' : ''}>← Prev</button>
+      <span class="q-counter">${currentIdx + 1} / ${currentQueue.length}</span>
+      <button class="q-nav-btn" onclick="navigate(1)" ${currentIdx >= currentQueue.length - 1 ? 'disabled' : ''}>Next →</button>
+    </div>
+  `;
+}
+
+function revealAnswer(answer) {
+  const box = document.getElementById('answer-box');
+  if (!box) return;
+  box.style.display = 'flex';
+  box.className = 'answer-box';
+  box.innerHTML = `
+    <span class="answer-letter">${answer}</span>
+    <div class="answer-label"><strong>Correct answer: ${answer}</strong><br>Community verified</div>
+  `;
+  document.querySelector('.reveal-btn').style.display = 'none';
+}
+
+function navigate(dir) {
+  currentIdx = Math.max(0, Math.min(currentQueue.length - 1, currentIdx + dir));
+  renderQuestion();
+}
+
+// INIT
+buildTopicGrid();
+buildFilters();
+updateProgressUI();
 </script>
+
 </body>
 </html>
