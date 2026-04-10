@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Syllabus — DP-600</title>
+<style>
+:root{--bg:#f5f5f7;--surface:#fff;--border:#e2e2e8;--text:#1a1a2e;--muted:#6b6b80;
+  --accent:#5c54e8;--accent-soft:#eeecff;--green:#22c55e;--green-soft:#f0fdf4;
+  --orange:#f59e0b;--orange-soft:#fffbeb;--radius:14px;--shadow:0 2px 12px rgba(0,0,0,.07)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--border:#2a2d42;--text:#e8e8f4;
+  --muted:#8888aa;--accent:#7b75f5;--accent-soft:#1e1c3a;--green:#4ade80;
+  --green-soft:#052e16;--orange:#fbbf24;--orange-soft:#1a1000}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.65;transition:background .25s,color .25s}
+.container{max-width:720px;margin:0 auto;padding:0 20px}
+
+/* Nav */
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--border)}
+.logo{font-size:1rem;font-weight:700;color:var(--accent);text-decoration:none;letter-spacing:-.3px}
+nav a{color:var(--muted);text-decoration:none;font-size:.88rem;margin-left:18px;transition:color .2s}
+nav a:hover,nav a.active{color:var(--accent)}
+#theme-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;cursor:pointer;color:var(--muted);font-size:.85rem;margin-left:14px;transition:border-color .2s}
+#theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Page header */
+.page-header{padding:44px 0 32px}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;font-size:.85rem;margin-bottom:18px;transition:color .2s}
+.back:hover{color:var(--accent)}
+h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;letter-spacing:-1px;margin-bottom:8px}
+h1 span{color:var(--accent)}
+.page-sub{font-size:.9rem;color:var(--muted);max-width:560px}
+
+/* Callout */
+.callout{background:var(--orange-soft);border:1px solid var(--orange);border-radius:var(--radius);padding:14px 18px;margin-bottom:36px;display:flex;gap:12px;align-items:flex-start}
+.callout-icon{font-size:1.2rem;flex-shrink:0;margin-top:1px}
+.callout-text{font-size:.85rem;line-height:1.6}
+.callout-text strong{display:block;margin-bottom:2px;font-size:.9rem}
+
+/* Total bar */
+.total-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:44px}
+.total-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;text-align:center;box-shadow:var(--shadow)}
+.total-num{font-size:1.5rem;font-weight:800;color:var(--accent);letter-spacing:-1px}
+.total-label{font-size:.74rem;color:var(--muted);margin-top:3px}
+
+/* Section label */
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;margin-top:8px}
+
+/* Learning path card */
+.path-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:14px;box-shadow:var(--shadow);overflow:hidden}
+.path-head{padding:18px 20px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px;cursor:pointer;transition:background .15s}
+.path-head:hover{background:var(--accent-soft)}
+.path-left{display:flex;gap:14px;align-items:flex-start;flex:1}
+.path-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.path-meta{}
+.path-title{font-weight:700;font-size:.98rem;margin-bottom:4px}
+.path-tags{display:flex;flex-wrap:wrap;gap:6px}
+.path-tag{font-size:.72rem;color:var(--muted);background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:2px 8px}
+.path-tag.green{color:var(--green);border-color:var(--green);background:var(--green-soft)}
+.path-right{text-align:right;flex-shrink:0}
+.path-time{font-size:.8rem;color:var(--muted);white-space:nowrap}
+.path-chevron{font-size:1.1rem;color:var(--muted);transition:transform .25s;display:block;margin-top:4px;text-align:right}
+.path-card.open .path-chevron{transform:rotate(90deg)}
+
+/* Path body */
+.path-body{display:none;border-top:1px solid var(--border)}
+.path-card.open .path-body{display:block}
+
+/* Module rows */
+.module{border-bottom:1px solid var(--border);padding:14px 20px;display:flex;gap:14px;align-items:flex-start;transition:background .15s}
+.module:last-child{border-bottom:none}
+.module:hover{background:var(--accent-soft)}
+.module-num{width:24px;height:24px;border-radius:6px;background:var(--accent-soft);color:var(--accent);font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.module-body{flex:1}
+.module-title{font-weight:600;font-size:.9rem;margin-bottom:4px}
+.module-plain{font-size:.82rem;color:var(--muted);margin-bottom:8px;line-height:1.55}
+.module-units{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.unit-chip{font-size:.71rem;background:var(--bg);border:1px solid var(--border);border-radius:20px;padding:2px 8px;color:var(--muted)}
+.module-links{display:flex;gap:8px;flex-wrap:wrap}
+.ms-link{display:inline-flex;align-items:center;gap:4px;font-size:.75rem;color:var(--accent);text-decoration:none;border:1px solid var(--border);border-radius:7px;padding:3px 9px;transition:border-color .2s}
+.ms-link:hover{border-color:var(--accent)}
+.study-link{background:var(--accent);color:#fff;border-color:var(--accent)}
+.study-link:hover{opacity:.88;border-color:var(--accent)}
+.module-time{font-size:.73rem;color:var(--muted);white-space:nowrap;flex-shrink:0;margin-top:3px}
+
+/* Why it matters box */
+.why{background:var(--accent-soft);border-radius:10px;padding:10px 13px;margin-top:6px;margin-bottom:8px}
+.why-label{font-size:.67rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);margin-bottom:3px}
+.why-text{font-size:.81rem;color:var(--text);line-height:1.55}
+
+/* Bottom nav */
+.bottom-nav{display:flex;gap:8px;margin:44px 0 0;flex-wrap:wrap}
+.nav-btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:10px 16px;text-decoration:none;color:var(--text);font-size:.85rem;font-weight:500;transition:border-color .2s,transform .15s;flex:1;min-width:140px}
+.nav-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+footer{border-top:1px solid var(--border);padding:24px 0 40px;text-align:center;font-size:.8rem;color:var(--muted);margin-top:44px}
+@media(max-width:500px){.total-bar{grid-template-columns:repeat(2,1fr)}.path-right{display:none}}
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <a class="logo" href="index.html">DP-600</a>
+    <div style="display:flex;align-items:center">
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="topics.html">Topics</a>
+        <a href="syllabus.html" class="active">Syllabus</a>
+        <a href="quiz.html">Quiz</a>
+      </nav>
+      <button id="theme-btn" onclick="toggleTheme()">🌙</button>
+    </div>
+  </header>
+
+  <div class="page-header">
+    <a class="back" href="index.html">← Back to home</a>
+    <h1>The Official <span>Syllabus</span></h1>
+    <p class="page-sub">Everything Microsoft says you need to know. Translated into plain language.</p>
+  </div>
+
+  <div class="callout">
+    <span class="callout-icon">💡</span>
+    <div class="callout-text">
+      <strong>How to use this page</strong>
+      Microsoft Learn has 25 modules across 4 learning paths. This is your map.
+      Each module below has a plain-English summary, what you actually learn inside it, and a direct link to study it — or practice it in our quiz.
+    </div>
+  </div>
+
+  <div class="total-bar">
+    <div class="total-item"><div class="total-num">4</div><div class="total-label">Learning paths</div></div>
+    <div class="total-item"><div class="total-num">25</div><div class="total-label">Modules total</div></div>
+    <div class="total-item"><div class="total-num">~26h</div><div class="total-label">Official study time</div></div>
+    <div class="total-item"><div class="total-num">700</div><div class="total-label">Score to pass</div></div>
+  </div>
+
+  <p class="section-label">All learning paths — click to expand</p>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- PATH 1: Get started with Microsoft Fabric          -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="path-card" id="path1">
+    <div class="path-head" onclick="togglePath('path1')">
+      <div class="path-left">
+        <div class="path-icon" style="background:#e8eaff">🚀</div>
+        <div class="path-meta">
+          <div class="path-title">Get started with Microsoft Fabric</div>
+          <div class="path-tags">
+            <span class="path-tag">Beginner</span>
+            <span class="path-tag">10 modules</span>
+            <span class="path-tag green">Start here</span>
+          </div>
+        </div>
+      </div>
+      <div class="path-right">
+        <div class="path-time">10 hr 6 min</div>
+        <span class="path-chevron">›</span>
+      </div>
+    </div>
+    <div class="path-body">
+
+      <div class="module">
+        <div class="module-num">1</div>
+        <div class="module-body">
+          <div class="module-title">Introduction to end-to-end analytics using Microsoft Fabric</div>
+          <div class="module-plain">The big picture. What Fabric is, why it exists, and how all the pieces connect. If you're new — start here. If you already know Fabric — skim it.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">Exam questions often describe a business scenario and ask which Fabric component to use. You need to know the full map before you zoom in.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">What is Fabric?</span><span class="unit-chip">OneLake</span><span class="unit-chip">Enabling Fabric</span><span class="unit-chip">Data team roles</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/introduction-end-analytics-use-microsoft-fabric/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-ingestion.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">22 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">2</div>
+        <div class="module-body">
+          <div class="module-title">Get started with lakehouses in Microsoft Fabric</div>
+          <div class="module-plain">A Lakehouse is where most of your data lives in Fabric. It combines a data lake (files) with a data warehouse (SQL). You'll learn how to create one, load data in, and query it with both SQL and Spark.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">Lakehouse questions are everywhere. Shortcuts, managed tables, Delta format, SQL endpoints — all come from this module.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Lakehouse architecture</span><span class="unit-chip">Delta tables</span><span class="unit-chip">SQL endpoint</span><span class="unit-chip">Shortcuts</span><span class="unit-chip">Managed vs external tables</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/get-started-lakehouses/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-ingestion.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">58 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">3</div>
+        <div class="module-body">
+          <div class="module-title">Use Apache Spark in Microsoft Fabric</div>
+          <div class="module-plain">Spark is the engine that runs your big data transformations. You write code in a Notebook — in Python (PySpark) or SQL — and Spark distributes the work across a cluster. One billion rows? No problem.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">PySpark vs pandas is a guaranteed question. So is when to use Spark vs SQL. Understand the cluster model and notebook structure.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Spark pools</span><span class="unit-chip">PySpark DataFrames</span><span class="unit-chip">Spark SQL</span><span class="unit-chip">Notebooks</span><span class="unit-chip">Visualise in notebook</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/use-apache-spark-work-files-lakehouse/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-transform.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr 20 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">4</div>
+        <div class="module-body">
+          <div class="module-title">Work with Delta Lake tables in Microsoft Fabric</div>
+          <div class="module-plain">Delta is the file format everything is built on in Fabric. It adds versioning, ACID transactions, and time travel on top of Parquet files. This module goes deep on managing Delta tables well.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">V-Order, OPTIMIZE, VACUUM, table streaming, schema evolution — all come from here. Delta is foundational to every other topic.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Delta format</span><span class="unit-chip">V-Order</span><span class="unit-chip">OPTIMIZE &amp; VACUUM</span><span class="unit-chip">Time travel</span><span class="unit-chip">Streaming tables</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/work-delta-lake-tables-fabric/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-transform.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr 8 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">5</div>
+        <div class="module-body">
+          <div class="module-title">Orchestrate processes and data movement with Microsoft Fabric</div>
+          <div class="module-plain">Pipelines automate the work. You build a series of steps — copy data here, run this notebook, wait for that condition — and schedule it to run on its own. This is Data Factory inside Fabric.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">Copy Activity, pipeline triggers, activity types, monitoring — all examined. Know when a pipeline is the right tool vs a Dataflow vs a Notebook.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Copy Activity</span><span class="unit-chip">Pipeline activities</span><span class="unit-chip">Triggers &amp; scheduling</span><span class="unit-chip">Monitoring runs</span><span class="unit-chip">Parameterisation</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/use-data-factory-pipelines-fabric/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-ingestion.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr 22 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">6</div>
+        <div class="module-body">
+          <div class="module-title">Ingest Data with Dataflows Gen2 in Microsoft Fabric</div>
+          <div class="module-plain">Dataflows let non-coders transform data using a visual Power Query interface — the same one from Excel. You click through steps to clean and shape data, and it outputs to a Lakehouse or Warehouse automatically.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">Table.Profile(), query folding, staging, output destinations — all tested. Know the limits: Dataflows don't scale to billions of rows like Spark does.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Power Query Online</span><span class="unit-chip">Table.Profile()</span><span class="unit-chip">Query folding</span><span class="unit-chip">Staging</span><span class="unit-chip">Output destinations</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/use-dataflow-gen-2-fabric/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-ingestion.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">7</div>
+        <div class="module-body">
+          <div class="module-title">Get started with data warehouses in Microsoft Fabric</div>
+          <div class="module-plain">The Fabric Data Warehouse is a proper SQL engine — T-SQL, schemas, views, stored procedures. It lives alongside the Lakehouse. Use it when your team thinks in SQL, not Spark.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">Know the difference between Warehouse and Lakehouse SQL endpoint. Cross-database queries, T-SQL DDL, and loading strategies are all tested.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">T-SQL in Fabric</span><span class="unit-chip">Create &amp; load tables</span><span class="unit-chip">Views &amp; stored procs</span><span class="unit-chip">Cross-database queries</span><span class="unit-chip">Visual query</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/get-started-data-warehouse/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-transform.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr 16 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">8</div>
+        <div class="module-body">
+          <div class="module-title">Get started with Real-Time Intelligence in Microsoft Fabric</div>
+          <div class="module-plain">Real-time analytics means working with data that's moving right now — stock prices, IoT sensors, clickstreams. This module covers the full stack: Eventstream to capture it, KQL Database to store and query it, and Real-Time Dashboards to show it.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">Eventstream destinations, KQL basics, Eventhouse vs KQL Database — all appear in exam questions. This is the fastest-growing area of Fabric.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Eventstream</span><span class="unit-chip">KQL Database</span><span class="unit-chip">Eventhouse</span><span class="unit-chip">KQL queries</span><span class="unit-chip">Real-time dashboards</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/get-started-kusto-fabric/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-realtime.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr 13 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">9</div>
+        <div class="module-body">
+          <div class="module-title">Get started with data science in Microsoft Fabric</div>
+          <div class="module-plain">ML experiments, model training, and predictions — all inside Fabric. You use notebooks to build models, track experiments with MLflow, and generate predictions that land back in a Lakehouse.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">Lighter coverage on the exam, but data science questions do appear. Know what MLflow does, what df.describe() vs df.summary() returns, and how PREDICT() works.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">MLflow experiments</span><span class="unit-chip">Model training</span><span class="unit-chip">df.describe() vs summary()</span><span class="unit-chip">PREDICT()</span><span class="unit-chip">Data wrangler</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/get-started-data-science-fabric/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-transform.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">46 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">10</div>
+        <div class="module-body">
+          <div class="module-title">Administer a Microsoft Fabric environment</div>
+          <div class="module-plain">Capacities, workspaces, tenant settings, and the admin portal. This is the view from above — how Fabric is set up and managed for a whole organisation, not just one project.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">Capacity types (Fabric vs Premium), workspace governance, admin vs regular user settings — all tested. Small section but easy marks if you know it.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Fabric capacity</span><span class="unit-chip">Workspace settings</span><span class="unit-chip">Admin portal</span><span class="unit-chip">Tenant switches</span><span class="unit-chip">OneLake settings</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/administer-fabric/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-security.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">41 min</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- PATH 2: Implement a data warehouse                 -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="path-card" id="path2">
+    <div class="path-head" onclick="togglePath('path2')">
+      <div class="path-left">
+        <div class="path-icon" style="background:#e8f5e9">🏗️</div>
+        <div class="path-meta">
+          <div class="path-title">Implement a data warehouse with Microsoft Fabric</div>
+          <div class="path-tags">
+            <span class="path-tag">Beginner</span>
+            <span class="path-tag">6 modules</span>
+            <span class="path-tag">SQL focus</span>
+          </div>
+        </div>
+      </div>
+      <div class="path-right">
+        <div class="path-time">6 hr 2 min</div>
+        <span class="path-chevron">›</span>
+      </div>
+    </div>
+    <div class="path-body">
+
+      <div class="module">
+        <div class="module-num">1</div>
+        <div class="module-body">
+          <div class="module-title">Introduction to end-to-end analytics using Microsoft Fabric</div>
+          <div class="module-plain">Same as Path 1 Module 1 — the big picture intro. If you've already done Path 1, skip this.</div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/introduction-end-analytics-use-microsoft-fabric/" target="_blank">📖 Read on MS Learn</a>
+          </div>
+        </div>
+        <div class="module-time">22 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">2</div>
+        <div class="module-body">
+          <div class="module-title">Get started with data warehouses in Microsoft Fabric</div>
+          <div class="module-plain">Same as Path 1 Module 7. The Warehouse intro — T-SQL, creating tables, loading data, querying.</div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/get-started-data-warehouse/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-transform.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr 16 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">3</div>
+        <div class="module-body">
+          <div class="module-title">Load data into a Microsoft Fabric data warehouse</div>
+          <div class="module-plain">Specifically about getting data into the Warehouse — using COPY INTO, pipelines, Dataflows, and cross-warehouse queries. Goes deeper than the intro module on loading strategies.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">COPY INTO syntax, staging tables, best practices for bulk loading — these show up in scenario questions about performance and scale.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">COPY INTO</span><span class="unit-chip">Staging tables</span><span class="unit-chip">Pipeline to Warehouse</span><span class="unit-chip">Dataflow to Warehouse</span><span class="unit-chip">Table clones</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/load-data-into-microsoft-fabric-data-warehouse/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-transform.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr 12 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">4</div>
+        <div class="module-body">
+          <div class="module-title">Query a data warehouse in Microsoft Fabric</div>
+          <div class="module-plain">Advanced SQL in the Fabric Warehouse — JOINs, CTEs, window functions, stored procedures, and the visual query builder for people who prefer drag-and-drop.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">T-SQL scalar vs table-valued functions, OUTER APPLY, cross-database queries — these are specifically tested in the exam questions from your PDF.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">CTEs &amp; window functions</span><span class="unit-chip">Stored procedures</span><span class="unit-chip">Table-valued functions</span><span class="unit-chip">OUTER APPLY</span><span class="unit-chip">Visual query builder</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/query-data-warehouse-microsoft-fabric/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-transform.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr 9 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">5</div>
+        <div class="module-body">
+          <div class="module-title">Monitor a Microsoft Fabric data warehouse</div>
+          <div class="module-plain">How to know what's happening in your Warehouse — query activity, capacity usage, performance metrics. You're the person responsible for keeping it running well.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">Dynamic management views (DMVs), query insights, capacity metrics — lighter exam coverage but appears in admin-type scenario questions.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Dynamic management views</span><span class="unit-chip">Query insights</span><span class="unit-chip">Capacity metrics app</span><span class="unit-chip">Performance monitoring</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/monitor-fabric-data-warehouse/" target="_blank">📖 Read on MS Learn</a>
+          </div>
+        </div>
+        <div class="module-time">~45 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">6</div>
+        <div class="module-body">
+          <div class="module-title">Secure a Microsoft Fabric data warehouse</div>
+          <div class="module-plain">Controlling who can see what inside the Warehouse — column-level security, row-level security, dynamic data masking, and workspace roles applied specifically to Warehouse objects.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">Security questions are guaranteed. Object-level security, column masking, and the difference between workspace roles vs SQL permissions come straight from this module.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Column-level security</span><span class="unit-chip">Row-level security</span><span class="unit-chip">Dynamic data masking</span><span class="unit-chip">Workspace roles</span><span class="unit-chip">Object permissions</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/secure-fabric-data-warehouse/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-security.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr 11 min</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- PATH 3: Work with semantic models                  -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="path-card" id="path3">
+    <div class="path-head" onclick="togglePath('path3')">
+      <div class="path-left">
+        <div class="path-icon" style="background:#fdf4ff">🧠</div>
+        <div class="path-meta">
+          <div class="path-title">Work with semantic models in Microsoft Fabric</div>
+          <div class="path-tags">
+            <span class="path-tag">Intermediate</span>
+            <span class="path-tag">5 modules</span>
+            <span class="path-tag">Power BI + DAX</span>
+          </div>
+        </div>
+      </div>
+      <div class="path-right">
+        <div class="path-time">6 hr 1 min</div>
+        <span class="path-chevron">›</span>
+      </div>
+    </div>
+    <div class="path-body">
+
+      <div class="module">
+        <div class="module-num">1</div>
+        <div class="module-body">
+          <div class="module-title">Create DAX calculations in semantic models</div>
+          <div class="module-plain">DAX is the formula language of Power BI. This module teaches you how to write measures and calculated columns — the building blocks of every Power BI report. CALCULATE, iterators, time intelligence — it's all here.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">DAX questions are everywhere. CALCULATE, SUMX, SAMEPERIODLASTYEAR, implicit vs explicit measures — expect multiple questions directly from this module.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Calculated tables</span><span class="unit-chip">Calculated columns</span><span class="unit-chip">Implicit vs explicit measures</span><span class="unit-chip">CALCULATE</span><span class="unit-chip">Iterator functions (SUMX etc)</span><span class="unit-chip">Time intelligence</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/create-dax-calculations-power-bi-desktop/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-dax.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr 25 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">2</div>
+        <div class="module-body">
+          <div class="module-title">Design scalable semantic models</div>
+          <div class="module-plain">How to design a model that actually performs at scale — star schema, relationships, storage modes (Import, DirectQuery, DirectLake), and composite models. This is architecture-level thinking for Power BI.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">DirectLake mode, when to use Import vs DirectQuery, relationship cardinality, surrogate keys — heavily tested. This module is worth extra time.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Star schema</span><span class="unit-chip">DirectLake</span><span class="unit-chip">Import vs DirectQuery</span><span class="unit-chip">Composite models</span><span class="unit-chip">Calculation groups</span><span class="unit-chip">Field parameters</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/design-scalable-semantic-models/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-semantic-model.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr 9 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">3</div>
+        <div class="module-body">
+          <div class="module-title">Optimize a model for performance in Power BI</div>
+          <div class="module-plain">Your model is built — now make it fast. This module teaches you how to identify what's slow (Performance Analyzer, DAX Studio), fix it (aggregations, query reduction), and understand what Power BI is actually doing behind the scenes.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">NOT ISEMPTY vs COUNTROWS, aggregations, model view for Summarize By settings, DAX Studio vs Performance Analyzer — all come from here.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Performance Analyzer</span><span class="unit-chip">DAX Studio</span><span class="unit-chip">Aggregations</span><span class="unit-chip">Query reduction</span><span class="unit-chip">Model view</span><span class="unit-chip">Summarize By settings</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/optimize-model-power-bi/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-dax.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr 9 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">4</div>
+        <div class="module-body">
+          <div class="module-title">Create and manage Power BI assets</div>
+          <div class="module-plain">File types, templates, deployment pipelines, and endorsement. How you share, version, and maintain the Power BI things you've built. The "what happens after you press Publish" module.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">PBIX vs PBIT vs PBIP vs PBIDS, endorsement (Promoted/Certified), lineage view, deployment pipelines — all tested. Know every file format cold.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">PBIX / PBIT / PBIP / PBIDS</span><span class="unit-chip">Deployment pipelines</span><span class="unit-chip">Endorsed assets</span><span class="unit-chip">Lineage view</span><span class="unit-chip">Reusable templates</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/create-manage-power-bi-assets/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-dax.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">57 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">5</div>
+        <div class="module-body">
+          <div class="module-title">Implement row-level security in Power BI</div>
+          <div class="module-plain">How to make sure different users only see their own slice of the data. Static roles, dynamic RLS with USERPRINCIPALNAME(), and object-level security to hide entire tables or columns.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">RLS questions always appear. Dynamic vs static, how to test roles, USERNAME() vs USERPRINCIPALNAME() — this module covers everything you need.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Static RLS roles</span><span class="unit-chip">Dynamic RLS</span><span class="unit-chip">USERPRINCIPALNAME()</span><span class="unit-chip">Object-level security</span><span class="unit-chip">Testing RLS roles</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/row-level-security-power-bi/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-security.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">~52 min</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- PATH 4: Administer and govern                      -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <div class="path-card" id="path4">
+    <div class="path-head" onclick="togglePath('path4')">
+      <div class="path-left">
+        <div class="path-icon" style="background:#fce4ec">🔐</div>
+        <div class="path-meta">
+          <div class="path-title">Administer and govern Microsoft Fabric</div>
+          <div class="path-tags">
+            <span class="path-tag">Intermediate</span>
+            <span class="path-tag">4 modules</span>
+            <span class="path-tag">Security + Purview</span>
+          </div>
+        </div>
+      </div>
+      <div class="path-right">
+        <div class="path-time">3 hr 29 min</div>
+        <span class="path-chevron">›</span>
+      </div>
+    </div>
+    <div class="path-body">
+
+      <div class="module">
+        <div class="module-num">1</div>
+        <div class="module-body">
+          <div class="module-title">Administer a Microsoft Fabric environment</div>
+          <div class="module-plain">The Fabric admin role — what you can control, what you can't, and how to set up the environment correctly for your organisation. Capacities, domains, workspaces, and tenant settings.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">Fabric Admin vs Domain Admin vs Workspace Admin — the role hierarchy is tested constantly. Domains, capacities, and F-SKU vs P-SKU differences appear too.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Fabric architecture</span><span class="unit-chip">Admin roles hierarchy</span><span class="unit-chip">Domains &amp; subdomains</span><span class="unit-chip">Capacity types</span><span class="unit-chip">Tenant settings</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/administer-fabric/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-security.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">~41 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">2</div>
+        <div class="module-body">
+          <div class="module-title">Secure data access in Microsoft Fabric</div>
+          <div class="module-plain">The multi-layer security model in Fabric — workspace roles, item permissions, sensitivity labels, and workspace identities. How all these layers work together (and override each other).</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">Workspace role matrix (Admin/Member/Contributor/Viewer), workspace identity for storage access, sensitivity label inheritance — all in here.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Workspace roles</span><span class="unit-chip">Item-level permissions</span><span class="unit-chip">Sensitivity labels</span><span class="unit-chip">Workspace identity</span><span class="unit-chip">OneLake security</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/secure-data-access-fabric/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-security.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr 2 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">3</div>
+        <div class="module-body">
+          <div class="module-title">Secure a Microsoft Fabric data warehouse</div>
+          <div class="module-plain">Same as Path 2 Module 6 — warehouse-specific security: column masking, RLS in SQL, object permissions. If you've done Path 2, review rather than redo.</div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/secure-fabric-data-warehouse/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-security.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">1 hr 11 min</div>
+      </div>
+
+      <div class="module">
+        <div class="module-num">4</div>
+        <div class="module-body">
+          <div class="module-title">Govern data in Microsoft Fabric with Purview</div>
+          <div class="module-plain">Microsoft Purview is the governance layer above Fabric — scanning for sensitive data, applying labels automatically, tracking lineage, and setting up data loss prevention policies.</div>
+          <div class="why"><div class="why-label">Why it matters for the exam</div><div class="why-text">Purview scanning, automatic labelling, lineage graph, DLP policies — these appear in governance scenario questions. Know what Purview does vs what Fabric's built-in tools do.</div></div>
+          <div class="module-units">
+            <span class="unit-chip">Purview scanning</span><span class="unit-chip">Auto-labelling</span><span class="unit-chip">Data lineage</span><span class="unit-chip">DLP policies</span><span class="unit-chip">Information protection</span>
+          </div>
+          <div class="module-links">
+            <a class="ms-link" href="https://learn.microsoft.com/training/modules/govern-data-fabric-purview/" target="_blank">📖 Read on MS Learn</a>
+            <a class="ms-link study-link" href="learn-security.html">Study + practice questions →</a>
+          </div>
+        </div>
+        <div class="module-time">~35 min</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <a class="nav-btn" href="topics.html">← Topic overview</a>
+    <a class="nav-btn primary" href="quiz.html">⚡ Test yourself now</a>
+  </div>
+
+</div>
+<footer><div class="container">DP-600 · Microsoft Fabric Analytics Engineer · Based on official Microsoft Learn learning paths</div></footer>
+
+<script>
+function toggleTheme(){
+  const html=document.documentElement;
+  const isDark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('theme-btn').textContent=isDark?'🌙':'☀️';
+  localStorage.setItem('theme',isDark?'light':'dark');
+}
+const saved=localStorage.getItem('theme');
+if(saved){document.documentElement.setAttribute('data-theme',saved);
+  if(saved==='dark')document.getElementById('theme-btn').textContent='☀️';}
+
+function togglePath(id){
+  const card=document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+// Open path 1 by default
+document.getElementById('path1').classList.add('open');
+</script>
+</body>
+</html>
