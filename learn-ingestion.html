@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Data Ingestion — DP-600</title>
+<style>
+    :root {
+      --bg:#f5f5f7;--surface:#fff;--border:#e2e2e8;--text:#1a1a2e;
+      --muted:#6b6b80;--accent:#5c54e8;--accent-soft:#eeecff;
+      --green:#22c55e;--green-soft:#f0fdf4;--radius:14px;
+      --shadow:0 2px 12px rgba(0,0,0,.07);
+    }
+    [data-theme="dark"]{
+      --bg:#0f1117;--surface:#1a1d2e;--border:#2a2d42;--text:#e8e8f4;
+      --muted:#8888aa;--accent:#7b75f5;--accent-soft:#1e1c3a;
+      --green:#4ade80;--green-soft:#052e16;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);color:var(--text);line-height:1.65;
+      transition:background .25s,color .25s}
+    .container{max-width:720px;margin:0 auto;padding:0 20px}
+    header{display:flex;align-items:center;justify-content:space-between;
+      padding:18px 0;border-bottom:1px solid var(--border)}
+    .logo{font-size:1rem;font-weight:700;color:var(--accent);
+      text-decoration:none;letter-spacing:-.3px}
+    nav a{color:var(--muted);text-decoration:none;font-size:.9rem;
+      margin-left:20px;transition:color .2s}
+    nav a:hover,nav a.active{color:var(--accent)}
+    #theme-btn{background:none;border:1px solid var(--border);border-radius:8px;
+      padding:5px 10px;cursor:pointer;color:var(--muted);font-size:.85rem;
+      margin-left:16px;transition:border-color .2s,color .2s}
+    #theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);
+      text-decoration:none;font-size:.85rem;margin-bottom:20px;transition:color .2s}
+    .back:hover{color:var(--accent)}
+    .page-header{padding:48px 0 36px}
+    h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;letter-spacing:-1px;margin-bottom:8px}
+    h1 span{color:var(--accent)}
+    .page-sub{font-size:.95rem;color:var(--muted);max-width:560px}
+    .section-label{font-size:.72rem;font-weight:700;letter-spacing:1.2px;
+      text-transform:uppercase;color:var(--muted);margin-bottom:18px;margin-top:48px}
+    /* concept cards */
+    .concepts{display:grid;gap:10px;margin-bottom:8px}
+    .concept{background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);padding:18px 20px;
+      display:flex;gap:14px;box-shadow:var(--shadow)}
+    .concept-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+    .concept-body strong{display:block;font-size:.95rem;margin-bottom:4px}
+    .concept-body p{font-size:.85rem;color:var(--muted);margin:0}
+    /* question cards */
+    .q-card{background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);margin-bottom:12px;
+      box-shadow:var(--shadow);overflow:hidden}
+    .q-head{padding:18px 20px;cursor:pointer;
+      display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+    .q-head:hover{background:var(--accent-soft)}
+    .q-num{font-size:.72rem;font-weight:700;letter-spacing:.5px;
+      text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+    .q-text{font-size:.9rem;line-height:1.55;flex:1}
+    .q-chevron{color:var(--muted);font-size:1.1rem;flex-shrink:0;
+      transition:transform .25s;margin-top:2px}
+    .q-card.open .q-chevron{transform:rotate(90deg)}
+    .q-body{display:none;border-top:1px solid var(--border);padding:20px}
+    .q-card.open .q-body{display:block}
+    /* options */
+    .options{display:grid;gap:6px;margin-bottom:16px}
+    .opt{background:var(--bg);border:1px solid var(--border);
+      border-radius:10px;padding:10px 14px;font-size:.85rem;display:flex;gap:10px}
+    .opt.correct{background:var(--green-soft);border-color:var(--green);color:var(--text)}
+    .opt-letter{font-weight:700;color:var(--muted);flex-shrink:0;min-width:18px}
+    .opt.correct .opt-letter{color:var(--green)}
+    /* answer block */
+    .answer-block{background:var(--accent-soft);border-radius:10px;
+      padding:14px 16px;margin-bottom:14px}
+    .answer-label{font-size:.72rem;font-weight:700;letter-spacing:.5px;
+      text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+    .answer-text{font-size:.88rem;line-height:1.6}
+    /* learn link */
+    .learn-link{display:inline-flex;align-items:center;gap:6px;
+      font-size:.8rem;color:var(--accent);text-decoration:none;
+      border:1px solid var(--border);border-radius:8px;padding:5px 12px;
+      transition:border-color .2s;margin-top:4px}
+    .learn-link:hover{border-color:var(--accent)}
+    footer{border-top:1px solid var(--border);padding:24px 0 40px;
+      text-align:center;font-size:.8rem;color:var(--muted)}
+    .divider{height:1px;background:var(--border);margin:8px 0}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="logo" href="index.html">DP-600</a>
+  <div style="display:flex;align-items:center">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="topics.html">Topics</a>
+    </nav>
+    <button id="theme-btn" onclick="toggleTheme()">🌙</button>
+  </div>
+</header>
+
+<div class="page-header">
+  <a class="back" href="topics.html">← All topics</a>
+  <h1>⚙️ Data <span>Ingestion</span></h1>
+  <p class="page-sub">How data gets into Fabric — pipelines, dataflows, notebooks, and shortcuts.</p>
+</div>
+
+<p class="section-label">Core concepts first</p>
+<div class="concepts">
+  <div class="concept">
+    <span class="concept-icon">🔗</span>
+    <div class="concept-body">
+      <strong>Shortcuts vs Copy — know the difference</strong>
+      <p>A <b>shortcut</b> doesn't move data — it's a live pointer to data sitting elsewhere (ADLS, S3, another Lakehouse). A <b>pipeline Copy Activity</b> physically moves data. Use shortcuts when you want zero duplication and real-time access. Use copy when you need a snapshot in Fabric.</p>
+    </div>
+  </div>
+  <div class="concept">
+    <span class="concept-icon">🌊</span>
+    <div class="concept-body">
+      <strong>Dataflows Gen2 = Power Query in the cloud</strong>
+      <p>Dataflows let you transform data with a no-code Power Query interface. The output lands in a Lakehouse or Warehouse. They're great for business users, but they don't scale as well as Spark for huge datasets. Know when to use them vs Notebooks.</p>
+    </div>
+  </div>
+  <div class="concept">
+    <span class="concept-icon">⚡</span>
+    <div class="concept-body">
+      <strong>Eventstream = real-time data on a conveyor belt</strong>
+      <p>Eventstream captures live events (from Azure Event Hubs, Kafka, IoT Hub) and routes them to KQL Databases, Lakehouses, or other Eventstreams — with optional transformations in between. Think of it as a real-time pipeline.</p>
+    </div>
+  </div>
+  <div class="concept">
+    <span class="concept-icon">📊</span>
+    <div class="concept-body">
+      <strong>PySpark wins at scale — pandas doesn't</strong>
+      <p>When a question mentions billions of rows, parallel processing, or minimising load time — the answer is PySpark. pandas loads everything into memory on one machine. PySpark distributes the work across a cluster. This distinction comes up constantly in the exam.</p>
+    </div>
+  </div>
+</div>
+
+<p class="section-label">Exam questions — try them yourself</p>
+
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 3</div>
+      <div class="q-text">You have a Fabric tenant that contains JSON files in OneLake. The files have one billion items. You plan to perform time series analysis of the items. You need to transform the data, visualize the data to find insights, perform anomaly detection, and share the insights with other business users. The solution must meet the following requirements: • Use parallel processing. • Minimize the duplicatio</div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt correct"><span class="opt-letter">A ✓</span><span>the PySpark library in a Fabric notebook</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>the pandas library in a Fabric notebook</span></div>
+<div class="opt"><span class="opt-letter">C</span><span>a Microsoft Power BI report that uses core visuals</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">PySpark provides robust capabilities for data transformation and manipulation, making it well-suited for preparing data for time series analysis. You can then use libraries like pandas for further data manipulation if needed and leverage Spark's machine learning capabilities for anomaly detection. IMHO, A) PySpark is winner. Because of parallelization (Pandas is not distributed, PBI - has different doals) orrect</div></div>
+  </div>
+</div>
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 4</div>
+      <div class="q-text">You have a Fabric tenant that contains customer churn data stored as Parquet files in OneLake. The data contains details about customer demographics and product usage. You create a Fabric notebook to read the data into a Spark DataFrame. You then create column charts in the notebook that show the distribution of retained customers as compared to lost customers based on geography, the number of pro</div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>diagnostic</span></div>
+<div class="opt correct"><span class="opt-letter">B ✓</span><span>descriptive</span></div>
+<div class="opt"><span class="opt-letter">C</span><span>prescriptive</span></div>
+<div class="opt correct"><span class="opt-letter">D ✓</span><span>predictive</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">year ago escriptive analytics tells what happened in the past, presenting it as numbers and visuals in reports and dashboards. Diagnostic analytics gives the reason why something happened. Predictive analytics determines the potential outcomes of present and past actions and trends. Prescriptive analytics offers decision support for the best course of action. Given the scenario in the question where data is read into a Spark DataFrame and column charts are created to show the distribution of retained customers compared to lost customers based on various factors, this falls under the definition...</div></div>
+  </div>
+</div>
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 6</div>
+      <div class="q-text">You have a Fabric workspace named Workspace1 that contains a dataflow named Dataflow1. Dataflow1 returns 500 rows of data. You need to identify the min and max values for each column in the query results. Which three Data view options should you select? Each correct answer presents part of the solution. NOTE: Each correct answer is worth one point.</div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Show column value distribution</span></div>
+<div class="opt correct"><span class="opt-letter">B ✓</span><span>Enable column profile</span></div>
+<div class="opt correct"><span class="opt-letter">C ✓</span><span>Show column profile in details pane</span></div>
+<div class="opt"><span class="opt-letter">D</span><span>Show column quality details</span></div>
+<div class="opt correct"><span class="opt-letter">E ✓</span><span>Enable details pane</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">B Enable column profile E Enable details pane C Show column profile in details pane answer is BEC praticewizards 1 point3 months ago Show column value distribution (A): Displays a visual representation of data values, which helps in identifying minimum and maximum values along with overall distribution. Enable column profile (B): Provides detailed statistics for each column, including min, max, distinct values, and row count. Show column profile in details pane (C): Allows viewing the column profile information within the details pane, ensuring easy access to min and max values. Why not the ot...</div></div>
+  </div>
+</div>
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 15</div>
+      <div class="q-text">Case study - This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there may be additional case studies and sections on this exam. You must manage your time to ensure that you are able to complete all questions included on this exam in the time provided. To answer the questions included in a case study, you will</div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt correct"><span class="opt-letter">A ✓</span><span>spark.read.format(“delta”).load(“Files/ResearchProduct”)</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>spark.sql(“SELECT * FROM Lakehouse1.ResearchProduct ”)</span></div>
+<div class="opt"><span class="opt-letter">C</span><span>spark.sql(“SELECT * FROM Lakehouse1.Tables.ResearchProduct ”)</span></div>
+<div class="opt"><span class="opt-letter">D</span><span>external_table(ResearchProduct)</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">The main reason why options B and C are incorrect is that they assume “ResearchProduct” has already been registered as a table in Lakehouse1. In this scenario, however, “ResearchProduct” is simply a shortcut (folder) pointing to Delta files. Because no managed table has been created for that folder yet, you cannot use SQL syntax like • spark.sql("SELECT * FROM Lakehouse1.ResearchProduct") or • spark.sql("SELECT * FROM Lakehouse1.Tables.ResearchProduct") to query the data. Instead, you must read directly from the underlying Delta files by referencing the “Files/ResearchProduct” path. That is wh...</div></div>
+  </div>
+</div>
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 18</div>
+      <div class="q-text">You have a Fabric tenant. You are creating a Fabric Data Factory pipeline. You have a stored procedure that returns the number of active customers and their average sales for the current month. You need to add an activity that will execute the stored procedure in a warehouse. The returned values must be available to the downstream activities of the pipeline. Which type of activity should you add?</div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Switch</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>KQL</span></div>
+<div class="opt"><span class="opt-letter">C</span><span>Append variable</span></div>
+<div class="opt correct"><span class="opt-letter">D ✓</span><span>Lookup</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">nappi1 1 point8 months ago Lookup is correct Script or Lookup activity https://learn.microsoft.com/en-us/fabric/data-factory/lookup-activity https://blog.fabric.microsoft.com/id-id/blog/automate-fabric-data-warehouse-queries-and-commands-with-data-factory? ft=All to execute a stored procedure in a Fabric Data Factory pipeline and make the returned values available for downstream activities, you should use the Lookup activity. the Lookup activity allows you to execute a query or stored procedure and retrieve the results, which can then be used in subsequent activities within the pipeline. D is ...</div></div>
+  </div>
+</div>
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 23</div>
+      <div class="q-text">Case study - This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there may be additional case studies and sections on this exam. You must manage your time to ensure that you are able to complete all questions included on this exam in the time provided. To answer the questions included in a case study, you will</div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt correct"><span class="opt-letter">A ✓</span><span>spark.read.format(“delta”).load(“Tables/ResearchProduct”)</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>spark.read.format(“delta”).load(“Files/ResearchProduct”)</span></div>
+<div class="opt"><span class="opt-letter">C</span><span>external_table(‘Tables/ResearchProduct)</span></div>
+<div class="opt"><span class="opt-letter">D</span><span>external_table(ResearchProduct)</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">mishravikas7 1 point2 months ago "df = spark.read.format("delta").load("Tables/MyShortcut")" or "df = spark.sql("SELECT * FROM MyLakehouse.MyShortcut")" zxc01 1 point3 months ago both A and B can match requirement because we can build both table and file shourtcuts with delta format file. However, I tend to choose A because we can also use other method, such as SQL endpoint. Or even build semantic model on it directly. joedxb 1 point3 months ago efinitely B! In Lakehouse1, there's a shortcut to external storage (storage1) named ResearchProduct. Shortcuts appear under the Files section in a lak...</div></div>
+  </div>
+</div>
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 27</div>
+      <div class="q-text">You have a Fabric tenant. You are creating a Fabric Data Factory pipeline. You have a stored procedure that returns the number of active customers and their average sales for the current month. You need to add an activity that will execute the stored procedure in a warehouse. The returned values must be available to the downstream activities of the pipeline. Which type of activity should you add?</div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Get metadata</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>Copy data</span></div>
+<div class="opt correct"><span class="opt-letter">C ✓</span><span>Lookup</span></div>
+<div class="opt"><span class="opt-letter">D</span><span>Append variable</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">The Lookup activity allows you to execute a stored procedure and retrieve the results, which can then be used in subsequent activities within the pipeline. Lookup activity</div></div>
+  </div>
+</div>
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 29</div>
+      <div class="q-text">You have an Amazon Web Services (AWS) subscription that contains an Amazon Simple Storage Service (Amazon S3) bucket named bucket1. You have a Fabric tenant that contains a lakehouse named LH1. In LH1, you plan to create a OneLake shortcut to bucket1. You need to configure authentication for the connection. Which two values should you provide? Each correct answer presents part of the solution. NOT</div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>the shared access signature (SAS) token</span></div>
+<div class="opt correct"><span class="opt-letter">B ✓</span><span>the secret access key</span></div>
+<div class="opt"><span class="opt-letter">C</span><span>the access ID</span></div>
+<div class="opt correct"><span class="opt-letter">D ✓</span><span>the access key ID</span></div>
+<div class="opt"><span class="opt-letter">E</span><span>the certificate thumbprint</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">b8ef1c5 1 point3 months ago https://learn.microsoft.com/en-au/fabric/onelake/create-s3-compatible- shortcut#:~:text=Access%20Key%20ID,Your%20secret%20key. https://learn.microsoft.com/en-us/fabric/onelake/create-s3-shortcut https://learn.microsoft.com/sl-si/fabric/onelake/create-s3-compatible-shortcut Correct Answer BD https://learn.microsoft.com/sl-si/fabric/onelake/create-s3-compatible-shortcut</div></div>
+  </div>
+</div>
+</div>
+<footer><div class="container">DP-600 Microsoft Fabric Analytics Engineer</div></footer>
+<script>
+  function toggleTheme(){
+    const html=document.documentElement;
+    const isDark=html.getAttribute('data-theme')==='dark';
+    html.setAttribute('data-theme',isDark?'light':'dark');
+    document.getElementById('theme-btn').textContent=isDark?'🌙':'☀️';
+    localStorage.setItem('theme',isDark?'light':'dark');
+  }
+  const saved=localStorage.getItem('theme');
+  if(saved){document.documentElement.setAttribute('data-theme',saved);
+    if(saved==='dark')document.getElementById('theme-btn').textContent='☀️';}
+  function toggleQ(el){
+    const card=el.closest('.q-card');
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

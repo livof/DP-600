@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Security & Governance — DP-600</title>
+<style>
+    :root {
+      --bg:#f5f5f7;--surface:#fff;--border:#e2e2e8;--text:#1a1a2e;
+      --muted:#6b6b80;--accent:#5c54e8;--accent-soft:#eeecff;
+      --green:#22c55e;--green-soft:#f0fdf4;--radius:14px;
+      --shadow:0 2px 12px rgba(0,0,0,.07);
+    }
+    [data-theme="dark"]{
+      --bg:#0f1117;--surface:#1a1d2e;--border:#2a2d42;--text:#e8e8f4;
+      --muted:#8888aa;--accent:#7b75f5;--accent-soft:#1e1c3a;
+      --green:#4ade80;--green-soft:#052e16;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      background:var(--bg);color:var(--text);line-height:1.65;
+      transition:background .25s,color .25s}
+    .container{max-width:720px;margin:0 auto;padding:0 20px}
+    header{display:flex;align-items:center;justify-content:space-between;
+      padding:18px 0;border-bottom:1px solid var(--border)}
+    .logo{font-size:1rem;font-weight:700;color:var(--accent);
+      text-decoration:none;letter-spacing:-.3px}
+    nav a{color:var(--muted);text-decoration:none;font-size:.9rem;
+      margin-left:20px;transition:color .2s}
+    nav a:hover,nav a.active{color:var(--accent)}
+    #theme-btn{background:none;border:1px solid var(--border);border-radius:8px;
+      padding:5px 10px;cursor:pointer;color:var(--muted);font-size:.85rem;
+      margin-left:16px;transition:border-color .2s,color .2s}
+    #theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);
+      text-decoration:none;font-size:.85rem;margin-bottom:20px;transition:color .2s}
+    .back:hover{color:var(--accent)}
+    .page-header{padding:48px 0 36px}
+    h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;letter-spacing:-1px;margin-bottom:8px}
+    h1 span{color:var(--accent)}
+    .page-sub{font-size:.95rem;color:var(--muted);max-width:560px}
+    .section-label{font-size:.72rem;font-weight:700;letter-spacing:1.2px;
+      text-transform:uppercase;color:var(--muted);margin-bottom:18px;margin-top:48px}
+    /* concept cards */
+    .concepts{display:grid;gap:10px;margin-bottom:8px}
+    .concept{background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);padding:18px 20px;
+      display:flex;gap:14px;box-shadow:var(--shadow)}
+    .concept-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+    .concept-body strong{display:block;font-size:.95rem;margin-bottom:4px}
+    .concept-body p{font-size:.85rem;color:var(--muted);margin:0}
+    /* question cards */
+    .q-card{background:var(--surface);border:1px solid var(--border);
+      border-radius:var(--radius);margin-bottom:12px;
+      box-shadow:var(--shadow);overflow:hidden}
+    .q-head{padding:18px 20px;cursor:pointer;
+      display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+    .q-head:hover{background:var(--accent-soft)}
+    .q-num{font-size:.72rem;font-weight:700;letter-spacing:.5px;
+      text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+    .q-text{font-size:.9rem;line-height:1.55;flex:1}
+    .q-chevron{color:var(--muted);font-size:1.1rem;flex-shrink:0;
+      transition:transform .25s;margin-top:2px}
+    .q-card.open .q-chevron{transform:rotate(90deg)}
+    .q-body{display:none;border-top:1px solid var(--border);padding:20px}
+    .q-card.open .q-body{display:block}
+    /* options */
+    .options{display:grid;gap:6px;margin-bottom:16px}
+    .opt{background:var(--bg);border:1px solid var(--border);
+      border-radius:10px;padding:10px 14px;font-size:.85rem;display:flex;gap:10px}
+    .opt.correct{background:var(--green-soft);border-color:var(--green);color:var(--text)}
+    .opt-letter{font-weight:700;color:var(--muted);flex-shrink:0;min-width:18px}
+    .opt.correct .opt-letter{color:var(--green)}
+    /* answer block */
+    .answer-block{background:var(--accent-soft);border-radius:10px;
+      padding:14px 16px;margin-bottom:14px}
+    .answer-label{font-size:.72rem;font-weight:700;letter-spacing:.5px;
+      text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+    .answer-text{font-size:.88rem;line-height:1.6}
+    /* learn link */
+    .learn-link{display:inline-flex;align-items:center;gap:6px;
+      font-size:.8rem;color:var(--accent);text-decoration:none;
+      border:1px solid var(--border);border-radius:8px;padding:5px 12px;
+      transition:border-color .2s;margin-top:4px}
+    .learn-link:hover{border-color:var(--accent)}
+    footer{border-top:1px solid var(--border);padding:24px 0 40px;
+      text-align:center;font-size:.8rem;color:var(--muted)}
+    .divider{height:1px;background:var(--border);margin:8px 0}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <a class="logo" href="index.html">DP-600</a>
+  <div style="display:flex;align-items:center">
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="topics.html">Topics</a>
+    </nav>
+    <button id="theme-btn" onclick="toggleTheme()">🌙</button>
+  </div>
+</header>
+
+<div class="page-header">
+  <a class="back" href="topics.html">← All topics</a>
+  <h1>🔐 Security <span>&amp; Governance</span></h1>
+  <p class="page-sub">Workspace roles, RLS, sensitivity labels, domains, and Purview.</p>
+</div>
+
+<p class="section-label">Core concepts first</p>
+<div class="concepts">
+  <div class="concept">
+    <span class="concept-icon">🏢</span>
+    <div class="concept-body">
+      <strong>Workspace roles: Admin &gt; Member &gt; Contributor &gt; Viewer</strong>
+      <p><b>Admin</b>: full control, can add/remove users, delete workspace. <b>Member</b>: can publish and share. <b>Contributor</b>: can create and edit items (like a Lakehouse or shortcut) but can't share. <b>Viewer</b>: read-only. The exam often tests the minimum role needed for a specific task — always go for the least-privilege answer.</p>
+    </div>
+  </div>
+  <div class="concept">
+    <span class="concept-icon">🔒</span>
+    <div class="concept-body">
+      <strong>RLS = filter rows based on who's asking</strong>
+      <p>Row-Level Security limits what rows a user sees in a semantic model. You define a role with a DAX filter expression. Dynamic RLS uses <code>USERNAME()</code> or <code>USERPRINCIPALNAME()</code> to filter based on the logged-in user's email — so one role handles all users automatically.</p>
+    </div>
+  </div>
+  <div class="concept">
+    <span class="concept-icon">🏛️</span>
+    <div class="concept-body">
+      <strong>Domains group workspaces — only Fabric Admins can create them</strong>
+      <p>Fabric Domains let you logically group workspaces (e.g. by department). Only a <b>Fabric Admin</b> can create a domain. A <b>Domain Admin</b> (assigned by the Fabric Admin) can then manage that domain — but cannot create new ones. This hierarchy trips up a lot of exam candidates.</p>
+    </div>
+  </div>
+  <div class="concept">
+    <span class="concept-icon">🏷️</span>
+    <div class="concept-body">
+      <strong>Sensitivity labels travel with the data</strong>
+      <p>Microsoft Purview sensitivity labels (Confidential, Highly Confidential, etc.) apply to Fabric items and carry over when data is exported — to Excel, PDF, or elsewhere. Endorsement (Promoted/Certified) is different — it's about data quality and trust, not confidentiality. Know the difference.</p>
+    </div>
+  </div>
+</div>
+
+<p class="section-label">Exam questions — try them yourself</p>
+
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 42</div>
+      <div class="q-text">You have a Fabric tenant that contains two workspaces named Workspace1 and Workspace2 and a user named User1. You need to ensure that User1 can perform the following tasks: • Create a new domain. • Create two subdomains named subdomain1 and subdomain2. • Assign Workspace1 to subdomain1. • Assign Workspace2 to subdomain2. The solution must follow the principle of least privilege. Which role should </div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>domain admin</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>domain contributor</span></div>
+<div class="opt correct"><span class="opt-letter">C ✓</span><span>Fabric admin</span></div>
+<div class="opt"><span class="opt-letter">D</span><span>workspace Admin</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">You can only create a new domain as a fabric admin https://learn.microsoft.com/en-us/fabric/governance/domains#create-a-domain (third line under "Create a domain" section)</div></div>
+  </div>
+</div>
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 64</div>
+      <div class="q-text">Your company has a finance department. You have a Fabric tenant, an Azure Storage account named storage1, and a Microsoft Entra group named Group1. Group1 contains the users in the finance department. You need to create a new workspace named Workspace1 in the tenant. The solution must meet the following requirements: • Ensure that the finance department users can create and edit items in Workspace</div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt correct"><span class="opt-letter">A ✓</span><span>Assign the Contributor role to Group1.</span></div>
+<div class="opt correct"><span class="opt-letter">B ✓</span><span>Create a workspace identity.</span></div>
+<div class="opt"><span class="opt-letter">C</span><span>Assign the Admin role to yourself.</span></div>
+<div class="opt"><span class="opt-letter">D</span><span>Assign the Contributor role to each finance department user.</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">ssign the Contributor role to Group1: This ensures that all finance department users can create and edit items in Workspace1 with minimal administrative effort1. Create a workspace identity: This allows Workspace1 to securely access storage1 for reading and writing data. These actions will help you maintain control as the sole admin while enabling the finance department to work efficiently. correct : A. Assign the Contributor role to Group1: Since Group1 already contains all finance department users, assigning the Contributor role to the group grants them the necessary permissions (create and ...</div></div>
+  </div>
+</div>
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 156</div>
+      <div class="q-text">Case study - This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there may be additional case studies and sections on this exam. You must manage your time to ensure that you are able to complete all questions included on this exam in the time provided. To answer the questions included in a case study, you will</div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Enable the Users can try Microsoft Fabric paid features option for the entire organization.</span></div>
+<div class="opt correct"><span class="opt-letter">B ✓</span><span>Enable the Users can try Microsoft Fabric paid features option for specific security groups.</span></div>
+<div class="opt"><span class="opt-letter">C</span><span>Enable the Allow Azure Active Directory guest users to access Microsoft Fabric option for specific security groups.</span></div>
+<div class="opt"><span class="opt-letter">D</span><span>Enable the Users can create Fabric items option and exclude specific security groups.</span></div>
+<div class="opt correct"><span class="opt-letter">E ✓</span><span>Enable the Users can create Fabric items option for specific security groups.</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">nable the Users can try Microsoft Fabric paid features option for specific security groups: This will allow specific security groups (like the AnalyticsTeam, DataAnalysts, DataScientists, DataEngineers, and AnalyticsEngineers) to access and use the paid features of Microsoft Fabric necessary for the PoC. This is important to ensure that only the relevant team members can utilize these advanced features while preventing unnecessary access for other users. Enable the Users can create Fabric items option for specific security groups: This will allow only specific security groups to create Fabric ...</div></div>
+  </div>
+</div>
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 25</div>
+      <div class="q-text">You have a Microsoft Power BI Premium Per User (PPU) workspace that contains a semantic model. You have an Azure App Service app named App1 that modifies row-level security (RLS) for the model by using the XMLA endpoint. App1 requires users to sign in by using their Microsoft Entra credentials to access the XMLA endpoint. You need to configure App1 to use a service account to access the model. Wha</div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt correct"><span class="opt-letter">A ✓</span><span>Add a managed identity to the workspace.</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>Modify the XMLA Endpoint setting.</span></div>
+<div class="opt"><span class="opt-letter">C</span><span>Upgrade the workspace to Premium capacity.</span></div>
+<div class="opt correct"><span class="opt-letter">D ✓</span><span>Add a managed identity to App1.</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">dding a managed identity to App1 will allow it to authenticate and access resources securely without needing to manage credentials explicitly. This is the first step in configuring the app to use a service account for accessing the model via the XMLA endpoint. https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-connect-tools For Premium workspaces, the application can use either a service account or app identity on behalf of end users without requiring each user to sign in to Power BI. aks2304 1 point5 months ago To configure App1 to use a service account to access the model,...</div></div>
+  </div>
+</div>
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 34</div>
+      <div class="q-text">Note: This section contains one or more sets of questions with the same scenario and problem. Each question presents a unique solution to the problem. You must determine whether the solution meets the stated goals. More than one solution in the set might solve the problem. It is also possible that none of the solutions in the set solve the problem. After you answer a question in this section, you </div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Yes</span></div>
+<div class="opt correct"><span class="opt-letter">B ✓</span><span>No</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">user principal name (UPN) of a user is returned by the USERPRINCIPALNAME() function USERPRINCIPALNAME() is the correct answer. So B is correct nswer is correct. you should use USERPRINCIPALNAME()</div></div>
+  </div>
+</div>
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 36</div>
+      <div class="q-text">Note: This section contains one or more sets of questions with the same scenario and problem. Each question presents a unique solution to the problem. You must determine whether the solution meets the stated goals. More than one solution in the set might solve the problem. It is also possible that none of the solutions in the set solve the problem. After you answer a question in this section, you </div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt correct"><span class="opt-letter">A ✓</span><span>Yes</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>No</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">nappi1 1 point8 months ago user principal name (UPN) of a user is returned by the USERPRINCIPALNAME() function nswer is correct. you should use USERPRINCIPALNAME()</div></div>
+  </div>
+</div>
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 37</div>
+      <div class="q-text">Note: This section contains one or more sets of questions with the same scenario and problem. Each question presents a unique solution to the problem. You must determine whether the solution meets the stated goals. More than one solution in the set might solve the problem. It is also possible that none of the solutions in the set solve the problem. After you answer a question in this section, you </div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt correct"><span class="opt-letter">A ✓</span><span>Yes</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>No</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">Key Points for Evaluation: The USERNAME() function in Power BI returns the UPN of the logged-in user, which corresponds to the user's identity in Microsoft Entra ID (Azure AD). If the query returns a blank result, it indicates: Either the UPN is not properly synced between AD DS and Microsoft Entra ID. Or the user object is missing from the sync configuration. By adding the user objects to the list of synced objects in Microsoft Entra Connect: The UPNs for the users will be synced from AD DS to Microsoft Entra ID. This ensures that the USERNAME() function can retrieve the UPN correctly. Does t...</div></div>
+  </div>
+</div>
+<div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div>
+      <div class="q-num">Question 41</div>
+      <div class="q-text">Note: This section contains one or more sets of questions with the same scenario and problem. Each question presents a unique solution to the problem. You must determine whether the solution meets the stated goals. More than one solution in the set might solve the problem. It is also possible that none of the solutions in the set solve the problem. After you answer a question in this section, you </div>
+    </div>
+    <span class="q-chevron">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Yes</span></div>
+<div class="opt correct"><span class="opt-letter">B ✓</span><span>No</span></div>
+</div>
+    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">reating role will not solve the purpose , will have to use Userprincipalname()</div></div>
+  </div>
+</div>
+</div>
+<footer><div class="container">DP-600 Microsoft Fabric Analytics Engineer</div></footer>
+<script>
+  function toggleTheme(){
+    const html=document.documentElement;
+    const isDark=html.getAttribute('data-theme')==='dark';
+    html.setAttribute('data-theme',isDark?'light':'dark');
+    document.getElementById('theme-btn').textContent=isDark?'🌙':'☀️';
+    localStorage.setItem('theme',isDark?'light':'dark');
+  }
+  const saved=localStorage.getItem('theme');
+  if(saved){document.documentElement.setAttribute('data-theme',saved);
+    if(saved==='dark')document.getElementById('theme-btn').textContent='☀️';}
+  function toggleQ(el){
+    const card=el.closest('.q-card');
+    card.classList.toggle('open');
+  }
+</script>
+</body>
+</html>

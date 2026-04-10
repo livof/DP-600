@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Topics — DP-600 Study Guide</title>
+  <style>
+    /* ── Design tokens ───────────────────────────── */
+    :root {
+      --bg:        #f5f5f7;
+      --surface:   #ffffff;
+      --border:    #e2e2e8;
+      --text:      #1a1a2e;
+      --muted:     #6b6b80;
+      --accent:    #5c54e8;
+      --accent-soft: #eeecff;
+      --radius:    14px;
+      --shadow:    0 2px 12px rgba(0,0,0,.07);
+    }
+    [data-theme="dark"] {
+      --bg:        #0f1117;
+      --surface:   #1a1d2e;
+      --border:    #2a2d42;
+      --text:      #e8e8f4;
+      --muted:     #8888aa;
+      --accent:    #7b75f5;
+      --accent-soft: #1e1c3a;
+    }
+
+    /* ── Reset ───────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      transition: background .25s, color .25s;
+    }
+
+    /* ── Layout ──────────────────────────────────── */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* ── Header / nav ────────────────────────────── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .logo {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -.3px;
+    }
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .9rem;
+      margin-left: 20px;
+      transition: color .2s;
+    }
+    nav a:hover, nav a.active { color: var(--accent); }
+    #theme-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 5px 10px;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: .85rem;
+      margin-left: 16px;
+      transition: border-color .2s, color .2s;
+    }
+    #theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ── Page title ──────────────────────────────── */
+    .page-header {
+      padding: 48px 0 36px;
+    }
+    .back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .85rem;
+      margin-bottom: 20px;
+      transition: color .2s;
+    }
+    .back:hover { color: var(--accent); }
+    h1 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+    .page-sub {
+      font-size: .95rem;
+      color: var(--muted);
+    }
+
+    /* ── Progress bar ────────────────────────────── */
+    .progress-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px 20px;
+      margin-bottom: 36px;
+      box-shadow: var(--shadow);
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: .8rem;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+    .progress-bar {
+      height: 6px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 99px;
+      width: 0%;
+      transition: width .6s ease;
+    }
+    .progress-note {
+      font-size: .78rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+
+    /* ── Domain section ──────────────────────────── */
+    .domain-section {
+      margin-bottom: 48px;
+      scroll-margin-top: 80px;
+    }
+    .domain-heading {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .domain-icon-large {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+    .domain-meta {}
+    .domain-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .study-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent);
+      color: #fff;
+      text-decoration: none;
+      font-size: .78rem;
+      font-weight: 600;
+      padding: 5px 13px;
+      border-radius: 8px;
+      margin-top: 10px;
+      transition: opacity .2s;
+    }
+    .study-btn:hover { opacity: .85; }
+    .domain-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .weight-badge {
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: .72rem;
+      font-weight: 700;
+      padding: 2px 9px;
+      border-radius: 20px;
+    }
+    .topic-count {
+      font-size: .78rem;
+      color: var(--muted);
+    }
+
+    /* ── Topic cards ─────────────────────────────── */
+    .topics {
+      display: grid;
+      gap: 8px;
+    }
+    .topic-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: border-color .2s;
+      box-shadow: var(--shadow);
+    }
+    .topic-card:hover { border-color: var(--accent); }
+    .topic-card.done { border-color: #4caf50; background: rgba(76,175,80,.04); }
+    .topic-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .topic-title {
+      font-weight: 600;
+      font-size: .95rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .check {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .7rem;
+      transition: background .2s, border-color .2s;
+      cursor: pointer;
+    }
+    .topic-card.done .check {
+      background: #4caf50;
+      border-color: #4caf50;
+      color: #fff;
+    }
+    .topic-desc {
+      font-size: .83rem;
+      color: var(--muted);
+      margin-top: 8px;
+      padding-left: 30px;
+    }
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+      padding-left: 30px;
+    }
+    .tag {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-size: .72rem;
+      color: var(--muted);
+      padding: 2px 9px;
+      font-weight: 500;
+    }
+
+    /* ── Divider ─────────────────────────────────── */
+    .divider { height: 1px; background: var(--border); margin: 8px 0 40px; }
+
+    /* ── Footer ──────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px 0 40px;
+      text-align: center;
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    /* ── Mobile ──────────────────────────────────── */
+    @media (max-width: 480px) {
+      .domain-icon-large { width: 38px; height: 38px; font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- ── Header ── -->
+  <header>
+    <a class="logo" href="index.html">DP-600</a>
+    <div style="display:flex; align-items:center;">
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="topics.html" class="active">Topics</a>
+      </nav>
+      <button id="theme-btn" onclick="toggleTheme()" title="Toggle dark mode">🌙</button>
+    </div>
+  </header>
+
+  <!-- ── Page header ── -->
+  <div class="page-header">
+    <a class="back" href="index.html">← Back to home</a>
+    <h1>Exam Topics</h1>
+    <p class="page-sub">Tick off topics as you go. Progress is saved in your browser.</p>
+  </div>
+
+  <!-- ── Progress ── -->
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Your progress</span>
+      <span id="progress-text">0 of 16 topics</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <p class="progress-note">Click any topic to mark it as studied ✓</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- DOMAIN 1: Data Ingestion                   -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="domain-section" id="data-ingestion">
+    <div class="domain-heading">
+      <div class="domain-icon-large" style="background:#fff3e0;">⚙️</div>
+      <div class="domain-meta">
+        <div class="domain-name">Plan &amp; Implement Data Ingestion</div>
+        <div class="domain-info">
+          <span class="weight-badge">~25% of exam</span>
+          <span class="topic-count">4 topics</span>
+        </div>
+        <a class="study-btn" href="learn-ingestion.html">Study with exam questions →</a>
+      </div>
+    </div>
+
+    <div class="topics">
+      <div class="topic-card" onclick="toggle(this)" data-id="t1">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Data Factory Pipelines
+          </div>
+        </div>
+        <p class="topic-desc">Build and orchestrate pipelines to move data between sources and destinations. Understand activities, triggers, and monitoring.</p>
+        <div class="tags"><span class="tag">Pipeline</span><span class="tag">Copy Activity</span><span class="tag">Triggers</span><span class="tag">Monitoring</span></div>
+      </div>
+
+      <div class="topic-card" onclick="toggle(this)" data-id="t2">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Dataflows Gen2
+          </div>
+        </div>
+        <p class="topic-desc">Use Power Query to transform and load data with a no-code/low-code approach. Know when to use Dataflows vs Pipelines.</p>
+        <div class="tags"><span class="tag">Power Query</span><span class="tag">M language</span><span class="tag">Staging</span></div>
+      </div>
+
+      <div class="topic-card" onclick="toggle(this)" data-id="t3">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Lakehouse Ingestion Patterns
+          </div>
+        </div>
+        <p class="topic-desc">Ingest data into a Fabric Lakehouse using shortcuts, COPY INTO, or Notebooks. Understand OneLake storage and Delta format.</p>
+        <div class="tags"><span class="tag">Lakehouse</span><span class="tag">Delta Lake</span><span class="tag">Shortcuts</span><span class="tag">OneLake</span></div>
+      </div>
+
+      <div class="topic-card" onclick="toggle(this)" data-id="t4">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Eventstream &amp; Real-Time Ingestion
+          </div>
+        </div>
+        <p class="topic-desc">Capture and route streaming events using Eventstream. Connect to Kafka, Event Hubs, or custom sources into KQL or Lakehouse destinations.</p>
+        <div class="tags"><span class="tag">Eventstream</span><span class="tag">Event Hubs</span><span class="tag">Streaming</span><span class="tag">KQL</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- DOMAIN 2: Transform & Model               -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="domain-section" id="data-transformation">
+    <div class="domain-heading">
+      <div class="domain-icon-large" style="background:#e8f5e9;">🔄</div>
+      <div class="domain-meta">
+        <div class="domain-name">Transform &amp; Model Data</div>
+        <div class="domain-info">
+          <span class="weight-badge">~30% of exam</span>
+          <span class="topic-count">5 topics</span>
+        </div>
+        <a class="study-btn" href="learn-transform.html">Study with exam questions →</a>
+      </div>
+    </div>
+
+    <div class="topics">
+      <div class="topic-card" onclick="toggle(this)" data-id="t5">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Apache Spark &amp; Notebooks
+          </div>
+        </div>
+        <p class="topic-desc">Transform data at scale using PySpark or Spark SQL in Fabric Notebooks. Know V-Order, optimise Delta tables, use display() and visualisations.</p>
+        <div class="tags"><span class="tag">PySpark</span><span class="tag">Spark SQL</span><span class="tag">Delta</span><span class="tag">V-Order</span></div>
+      </div>
+
+      <div class="topic-card" onclick="toggle(this)" data-id="t6">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Data Warehouse &amp; SQL
+          </div>
+        </div>
+        <p class="topic-desc">Build and query a Fabric Data Warehouse. Write T-SQL, manage schemas, create views and stored procedures, understand cross-database queries.</p>
+        <div class="tags"><span class="tag">T-SQL</span><span class="tag">Warehouse</span><span class="tag">Views</span><span class="tag">Cross-DB</span></div>
+      </div>
+
+      <div class="topic-card" onclick="toggle(this)" data-id="t7">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Semantic Model Design
+          </div>
+        </div>
+        <p class="topic-desc">Design star schemas with dimension and fact tables. Set up relationships, hierarchies, and choose the right storage mode (Import / DirectQuery / DirectLake).</p>
+        <div class="tags"><span class="tag">Star Schema</span><span class="tag">Relationships</span><span class="tag">DirectLake</span><span class="tag">Storage Mode</span></div>
+      </div>
+
+      <div class="topic-card" onclick="toggle(this)" data-id="t8">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            DAX Fundamentals
+          </div>
+        </div>
+        <p class="topic-desc">Write DAX measures and calculated columns. Understand evaluation context, filter context, CALCULATE, time intelligence, and common patterns.</p>
+        <div class="tags"><span class="tag">Measures</span><span class="tag">CALCULATE</span><span class="tag">Time Intelligence</span><span class="tag">Context</span></div>
+      </div>
+
+      <div class="topic-card" onclick="toggle(this)" data-id="t9">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Medallion Architecture
+          </div>
+        </div>
+        <p class="topic-desc">Implement Bronze → Silver → Gold layers in a Lakehouse. Know when to use each layer, how to manage schema evolution, and best practices.</p>
+        <div class="tags"><span class="tag">Bronze</span><span class="tag">Silver</span><span class="tag">Gold</span><span class="tag">Delta Lake</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- DOMAIN 3: Analytics Workloads             -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="domain-section" id="analytics-workloads">
+    <div class="domain-heading">
+      <div class="domain-icon-large" style="background:#e3f2fd;">📈</div>
+      <div class="domain-meta">
+        <div class="domain-name">Implement Analytics Workloads</div>
+        <div class="domain-info">
+          <span class="weight-badge">~25% of exam</span>
+          <span class="topic-count">4 topics</span>
+        </div>
+        <a class="study-btn" href="learn-dax.html">Study with exam questions →</a>
+      </div>
+    </div>
+
+    <div class="topics">
+      <div class="topic-card" onclick="toggle(this)" data-id="t10">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Power BI Report Design
+          </div>
+        </div>
+        <p class="topic-desc">Build effective, accessible reports. Use field parameters, calculation groups, bookmarks, and understand when to use which visual type.</p>
+        <div class="tags"><span class="tag">Visuals</span><span class="tag">Bookmarks</span><span class="tag">Field Parameters</span><span class="tag">Tooltips</span></div>
+      </div>
+
+      <div class="topic-card" onclick="toggle(this)" data-id="t11">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Report Performance Optimisation
+          </div>
+        </div>
+        <p class="topic-desc">Identify bottlenecks using Performance Analyser, DAX Studio, and Fabric Capacity Metrics. Apply query reduction, aggregations, and DirectLake tuning.</p>
+        <div class="tags"><span class="tag">DAX Studio</span><span class="tag">Aggregations</span><span class="tag">Query Folding</span></div>
+      </div>
+
+      <div class="topic-card" onclick="toggle(this)" data-id="t12">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Real-Time Analytics (KQL)
+          </div>
+        </div>
+        <p class="topic-desc">Query streaming data with KQL (Kusto Query Language). Create KQL Databases, use Eventstream outputs, build real-time dashboards.</p>
+        <div class="tags"><span class="tag">KQL</span><span class="tag">KQL Database</span><span class="tag">Real-Time Dashboard</span></div>
+      </div>
+
+      <div class="topic-card" onclick="toggle(this)" data-id="t13">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Deployment Pipelines &amp; CI/CD
+          </div>
+        </div>
+        <p class="topic-desc">Promote content from Dev → Test → Prod using Fabric Deployment Pipelines or Azure DevOps. Manage workspace environments and Git integration.</p>
+        <div class="tags"><span class="tag">Deployment Pipelines</span><span class="tag">Git</span><span class="tag">Azure DevOps</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- DOMAIN 4: Security & Governance           -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="domain-section" id="security">
+    <div class="domain-heading">
+      <div class="domain-icon-large" style="background:#fce4ec;">🔐</div>
+      <div class="domain-meta">
+        <div class="domain-name">Secure &amp; Govern Workloads</div>
+        <div class="domain-info">
+          <span class="weight-badge">~20% of exam</span>
+          <span class="topic-count">3 topics</span>
+        </div>
+        <a class="study-btn" href="learn-security.html">Study with exam questions →</a>
+      </div>
+    </div>
+
+    <div class="topics">
+      <div class="topic-card" onclick="toggle(this)" data-id="t14">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Row-Level &amp; Object-Level Security
+          </div>
+        </div>
+        <p class="topic-desc">Restrict data access at row or column level in semantic models. Define roles in Power BI Desktop, test them, and understand dynamic RLS with USERNAME().</p>
+        <div class="tags"><span class="tag">RLS</span><span class="tag">OLS</span><span class="tag">Roles</span><span class="tag">USERNAME()</span></div>
+      </div>
+
+      <div class="topic-card" onclick="toggle(this)" data-id="t15">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Workspace &amp; Item Permissions
+          </div>
+        </div>
+        <p class="topic-desc">Manage Fabric workspace roles (Admin, Member, Contributor, Viewer) and item-level sharing. Understand the difference between workspace roles and item permissions.</p>
+        <div class="tags"><span class="tag">Workspace Roles</span><span class="tag">Sharing</span><span class="tag">Item Permissions</span></div>
+      </div>
+
+      <div class="topic-card" onclick="toggle(this)" data-id="t16">
+        <div class="topic-header">
+          <div class="topic-title">
+            <div class="check">✓</div>
+            Data Governance with Purview
+          </div>
+        </div>
+        <p class="topic-desc">Apply sensitivity labels, set up endorsement (Certified / Promoted), configure data lineage, and scan Fabric items in Microsoft Purview.</p>
+        <div class="tags"><span class="tag">Sensitivity Labels</span><span class="tag">Purview</span><span class="tag">Endorsement</span><span class="tag">Lineage</span></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<footer>
+  <div class="container">
+    Built for focused learners · DP-600 Microsoft Fabric Analytics Engineer
+  </div>
+</footer>
+
+<script>
+  const TOTAL = 16;
+
+  function toggle(card) {
+    card.classList.toggle('done');
+    saveProgress();
+    updateProgress();
+  }
+
+  function updateProgress() {
+    const done = document.querySelectorAll('.topic-card.done').length;
+    const pct = Math.round((done / TOTAL) * 100);
+    document.getElementById('progress-text').textContent = `${done} of ${TOTAL} topics`;
+    document.getElementById('progress-fill').style.width = pct + '%';
+  }
+
+  function saveProgress() {
+    const done = [];
+    document.querySelectorAll('.topic-card.done').forEach(c => done.push(c.dataset.id));
+    localStorage.setItem('dp600-progress', JSON.stringify(done));
+  }
+
+  function loadProgress() {
+    const saved = JSON.parse(localStorage.getItem('dp600-progress') || '[]');
+    saved.forEach(id => {
+      const el = document.querySelector(`[data-id="${id}"]`);
+      if (el) el.classList.add('done');
+    });
+    updateProgress();
+  }
+
+  // Theme
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('theme-btn').textContent = isDark ? '🌙' : '☀️';
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+  }
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    if (saved === 'dark') document.getElementById('theme-btn').textContent = '☀️';
+  }
+
+  // Init
+  loadProgress();
+</script>
+</body>
+</html>
