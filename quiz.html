@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Quiz - DP-600</title>
+<style>
+:root{--bg:#f5f5f7;--surface:#fff;--border:#e2e2e8;--text:#1a1a2e;--muted:#6b6b80;
+  --accent:#5c54e8;--accent-soft:#eeecff;--green:#22c55e;--green-soft:#f0fdf4;
+  --red:#ef4444;--red-soft:#fff1f1;--orange:#f59e0b;--radius:14px;--shadow:0 2px 12px rgba(0,0,0,.07)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--border:#2a2d42;--text:#e8e8f4;
+  --muted:#8888aa;--accent:#7b75f5;--accent-soft:#1e1c3a;--green:#4ade80;
+  --green-soft:#052e16;--red:#f87171;--red-soft:#2d0505}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.65;transition:background .25s,color .25s}
+.container{max-width:680px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--border)}
+.logo{font-size:1rem;font-weight:700;color:var(--accent);text-decoration:none;letter-spacing:-.3px}
+nav a{color:var(--muted);text-decoration:none;font-size:.9rem;margin-left:20px;transition:color .2s}
+nav a:hover,nav a.active{color:var(--accent)}
+#theme-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;
+  cursor:pointer;color:var(--muted);font-size:.85rem;margin-left:16px;transition:border-color .2s}
+#theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Start screen */
+#start-screen{padding:60px 0;text-align:center}
+.start-icon{font-size:3rem;margin-bottom:16px}
+#start-screen h1{font-size:2rem;font-weight:800;letter-spacing:-1px;margin-bottom:10px}
+#start-screen h1 span{color:var(--accent)}
+#start-screen p{color:var(--muted);font-size:.95rem;max-width:400px;margin:0 auto 28px}
+.mode-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:28px}
+.mode-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--radius);
+  padding:16px;cursor:pointer;transition:border-color .2s,transform .15s;text-align:left}
+.mode-card:hover,.mode-card.selected{border-color:var(--accent);transform:translateY(-2px)}
+.mode-card.selected{background:var(--accent-soft)}
+.mode-title{font-weight:700;font-size:.9rem;margin-bottom:4px}
+.mode-sub{font-size:.78rem;color:var(--muted)}
+.start-btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:#fff;
+  border:none;padding:13px 32px;border-radius:var(--radius);font-weight:700;font-size:1rem;
+  cursor:pointer;transition:opacity .2s,transform .15s}
+.start-btn:hover{opacity:.88;transform:translateY(-1px)}
+
+/* Quiz screen */
+#quiz-screen{display:none;padding:32px 0 60px}
+.quiz-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:8px}
+.q-counter{font-size:.8rem;color:var(--muted);font-weight:500}
+.q-score{font-size:.8rem;font-weight:700;color:var(--accent)}
+.q-category{font-size:.72rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;
+  background:var(--accent-soft);color:var(--accent);padding:3px 10px;border-radius:20px}
+.quiz-progress{height:5px;background:var(--border);border-radius:99px;overflow:hidden;margin-bottom:28px}
+.quiz-progress-fill{height:100%;background:var(--accent);border-radius:99px;transition:width .4s ease}
+.question-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:22px;margin-bottom:18px;box-shadow:var(--shadow)}
+.question-text{font-size:.95rem;line-height:1.6;font-weight:500}
+.options-grid{display:grid;gap:8px;margin-top:18px}
+.opt-btn{background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:12px 16px;
+  text-align:left;cursor:pointer;font-size:.88rem;display:flex;align-items:center;gap:12px;
+  transition:border-color .15s,background .15s;width:100%;color:var(--text)}
+.opt-btn:hover:not(:disabled){border-color:var(--accent);background:var(--accent-soft)}
+.opt-btn .letter{font-weight:700;color:var(--muted);width:20px;flex-shrink:0}
+.opt-btn.correct{border-color:var(--green);background:var(--green-soft)}
+.opt-btn.correct .letter{color:var(--green)}
+.opt-btn.wrong{border-color:var(--red);background:var(--red-soft)}
+.opt-btn.wrong .letter{color:var(--red)}
+.opt-btn:disabled{cursor:default}
+.feedback{border-radius:var(--radius);padding:14px 16px;margin-top:16px;font-size:.88rem;line-height:1.6;display:none}
+.feedback.show{display:block}
+.feedback.correct-fb{background:var(--green-soft);border:1px solid var(--green)}
+.feedback.wrong-fb{background:var(--red-soft);border:1px solid var(--red)}
+.fb-label{font-size:.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px}
+.feedback.correct-fb .fb-label{color:var(--green)}
+.feedback.wrong-fb .fb-label{color:var(--red)}
+.next-btn{display:flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--accent);color:#fff;border:none;border-radius:var(--radius);
+  padding:12px 28px;font-weight:700;font-size:.95rem;cursor:pointer;
+  width:100%;margin-top:16px;transition:opacity .2s;display:none}
+.next-btn.show{display:flex}
+.next-btn:hover{opacity:.88}
+
+/* Results screen */
+#results-screen{display:none;padding:60px 0;text-align:center}
+.score-ring{width:120px;height:120px;border-radius:50%;border:6px solid var(--border);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 20px;
+  font-size:1.6rem;font-weight:800;color:var(--accent);position:relative}
+.score-ring.great{border-color:var(--green)}
+.score-ring.ok{border-color:var(--orange)}
+.score-ring.low{border-color:var(--red)}
+#results-screen h2{font-size:1.6rem;font-weight:800;letter-spacing:-0.5px;margin-bottom:8px}
+#results-screen p{color:var(--muted);font-size:.9rem;max-width:380px;margin:0 auto 28px}
+.results-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:28px}
+.r-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;text-align:center}
+.r-num{font-size:1.5rem;font-weight:800;color:var(--accent)}
+.r-label{font-size:.75rem;color:var(--muted);margin-top:3px}
+.result-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.r-btn{display:inline-flex;align-items:center;gap:6px;padding:11px 22px;
+  border-radius:var(--radius);font-weight:600;font-size:.9rem;cursor:pointer;
+  text-decoration:none;transition:opacity .2s,transform .15s;border:none}
+.r-btn:hover{opacity:.88;transform:translateY(-1px)}
+.r-btn.primary{background:var(--accent);color:#fff}
+.r-btn.ghost{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+
+footer{border-top:1px solid var(--border);padding:24px 0 40px;text-align:center;font-size:.8rem;color:var(--muted)}
+@media(max-width:480px){.mode-cards{grid-template-columns:1fr}.results-stats{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <a class="logo" href="index.html">DP-600</a>
+    <div style="display:flex;align-items:center">
+      <nav><a href="index.html">Home</a><a href="topics.html">Topics</a><a href="quiz.html" class="active">Quiz</a></nav>
+      <button id="theme-btn" onclick="toggleTheme()">🌙</button>
+    </div>
+  </header>
+
+  <!-- START SCREEN -->
+  <div id="start-screen">
+    <div class="start-icon">⚡</div>
+    <h1>Quick <span>Quiz</span></h1>
+    <p>Real exam questions. Instant feedback. See what you know right now.</p>
+    <div class="mode-cards">
+      <div class="mode-card selected" onclick="selectMode(this,'10')" data-count="10">
+        <div class="mode-title">Quick — 10 questions</div>
+        <div class="mode-sub">About 5 minutes</div>
+      </div>
+      <div class="mode-card" onclick="selectMode(this,'20')" data-count="20">
+        <div class="mode-title">Standard — 20 questions</div>
+        <div class="mode-sub">About 10 minutes</div>
+      </div>
+      <div class="mode-card" onclick="selectMode(this,'40')" data-count="40">
+        <div class="mode-title">Deep — 40 questions</div>
+        <div class="mode-sub">About 20 minutes</div>
+      </div>
+      <div class="mode-card" onclick="selectMode(this,'all')" data-count="all">
+        <div class="mode-title">Full — all questions</div>
+        <div class="mode-sub">Full exam practice</div>
+      </div>
+    </div>
+    <button class="start-btn" onclick="startQuiz()">Start quiz →</button>
+  </div>
+
+  <!-- QUIZ SCREEN -->
+  <div id="quiz-screen">
+    <div class="quiz-top">
+      <span class="q-counter" id="q-counter">Question 1 of 10</span>
+      <span class="q-category" id="q-category">Topic</span>
+      <span class="q-score" id="q-score">Score: 0</span>
+    </div>
+    <div class="quiz-progress"><div class="quiz-progress-fill" id="quiz-fill" style="width:0%"></div></div>
+    <div class="question-card">
+      <div class="question-text" id="question-text"></div>
+      <div class="options-grid" id="options-grid"></div>
+    </div>
+    <div class="feedback" id="feedback">
+      <div class="fb-label" id="fb-label"></div>
+      <div id="fb-text"></div>
+    </div>
+    <button class="next-btn" id="next-btn" onclick="nextQuestion()">Next question →</button>
+  </div>
+
+  <!-- RESULTS SCREEN -->
+  <div id="results-screen">
+    <div class="score-ring" id="score-ring">
+      <span id="score-pct"></span>
+    </div>
+    <h2 id="results-heading"></h2>
+    <p id="results-sub"></p>
+    <div class="results-stats">
+      <div class="r-stat"><div class="r-num" id="r-correct"></div><div class="r-label">Correct</div></div>
+      <div class="r-stat"><div class="r-num" id="r-wrong"></div><div class="r-label">Wrong</div></div>
+      <div class="r-stat"><div class="r-num" id="r-pct"></div><div class="r-label">Score</div></div>
+    </div>
+    <div class="result-actions">
+      <button class="r-btn primary" onclick="restartQuiz()">Try again</button>
+      <a class="r-btn ghost" href="topics.html">Study topics</a>
+    </div>
+  </div>
+</div>
+<footer><div class="container">DP-600 Microsoft Fabric Analytics Engineer</div></footer>
+
+<script>
+const QUESTIONS = [{"num": 3, "text": "You have a Fabric tenant that contains JSON files in OneLake. The files have one billion items. You plan to perform time series analysis of the items. You need to transform the data, visualize the data to find insights, perform anomaly detection, and share the insights with other business users. The solution must meet the following requirements: • Use parallel processing. • Minimize the duplicatio", "options": [{"letter": "A", "text": "the PySpark library in a Fabric notebook"}, {"letter": "B", "text": "the pandas library in a Fabric notebook"}, {"letter": "C", "text": "a Microsoft Power BI report that uses core visuals"}], "correct": ["A"], "explanation": "PySpark provides robust capabilities for data transformation and manipulation, making it well-suited for preparing data for time series analysis. You can then use libraries like pandas for further data manipulation if needed and leverage Spark's machine learning capabilities for anomaly detection. IMHO, A) PySpark is winner. Because of parallelization (Pandas is not distributed, PBI - has differen", "category": "Data Ingestion"}, {"num": 4, "text": "You have a Fabric tenant that contains customer churn data stored as Parquet files in OneLake. The data contains details about customer demographics and product usage. You create a Fabric notebook to read the data into a Spark DataFrame. You then create column charts in the notebook that show the distribution of retained customers as compared to lost customers based on geography, the number of pro", "options": [{"letter": "A", "text": "diagnostic"}, {"letter": "B", "text": "descriptive"}, {"letter": "C", "text": "prescriptive"}, {"letter": "D", "text": "predictive"}], "correct": ["B", "D"], "explanation": "year ago escriptive analytics tells what happened in the past, presenting it as numbers and visuals in reports and dashboards. Diagnostic analytics gives the reason why something happened. Predictive analytics determines the potential outcomes of present and past actions and trends. Prescriptive analytics offers decision support for the best course of action. Given the scenario in the question whe", "category": "Data Ingestion"}, {"num": 6, "text": "You have a Fabric workspace named Workspace1 that contains a dataflow named Dataflow1. Dataflow1 returns 500 rows of data. You need to identify the min and max values for each column in the query results. Which three Data view options should you select? Each correct answer presents part of the solution. NOTE: Each correct answer is worth one point.", "options": [{"letter": "A", "text": "Show column value distribution"}, {"letter": "B", "text": "Enable column profile"}, {"letter": "C", "text": "Show column profile in details pane"}, {"letter": "D", "text": "Show column quality details"}, {"letter": "E", "text": "Enable details pane"}], "correct": ["B", "C", "E"], "explanation": "B Enable column profile E Enable details pane C Show column profile in details pane answer is BEC Show column value distribution (A): Displays a visual representation of data values, which helps in identifying minimum and maximum values along with overall distribution. Enable column profile (B): Provides detailed statistics for each column, including min, max, distinct values, and row count. Show ", "category": "Data Ingestion"}, {"num": 7, "text": "You have a Fabric tenant that contains a Microsoft Power BI report. You are exploring a new semantic model. You need to display the following column statistics: • Count • Average • Null count • Distinct count • Standard deviation Which Power Query function should you run?", "options": [{"letter": "A", "text": "Table.schema"}, {"letter": "B", "text": "Table.view"}, {"letter": "C", "text": "Table.FuzzyGroup"}, {"letter": "D", "text": "Table.Profile"}], "correct": ["D"], "explanation": "Ans D correct-The Table.Profile function provides an overview of the data in a table, including basic statistics like count, average, null count, distinct count, and standard deviation for numerical columns. T IMHO, D Returns a profile for the columns in table. Because: Table.Profile(table as table... The following information is returned for each column (when applicable): minimum maximum average ", "category": "Transform & Model"}, {"num": 18, "text": "You have a Fabric tenant. You are creating a Fabric Data Factory pipeline. You have a stored procedure that returns the number of active customers and their average sales for the current month. You need to add an activity that will execute the stored procedure in a warehouse. The returned values must be available to the downstream activities of the pipeline. Which type of activity should you add?", "options": [{"letter": "A", "text": "Switch"}, {"letter": "B", "text": "KQL"}, {"letter": "C", "text": "Append variable"}, {"letter": "D", "text": "Lookup"}], "correct": ["D"], "explanation": "Lookup is correct Script or Lookup activity https://learn.microsoft.com/en-us/fabric/data-factory/lookup-activity https://blog.fabric.microsoft.com/id-id/blog/automate-fabric-data-warehouse-queries-and-commands-with-data-factory? ft=All to execute a stored procedure in a Fabric Data Factory pipeline and make the returned values available for downstream activities, you should use the Lookup activit", "category": "Data Ingestion"}, {"num": 25, "text": "You have a Microsoft Power BI Premium Per User (PPU) workspace that contains a semantic model. You have an Azure App Service app named App1 that modifies row-level security (RLS) for the model by using the XMLA endpoint. App1 requires users to sign in by using their Microsoft Entra credentials to access the XMLA endpoint. You need to configure App1 to use a service account to access the model. Wha", "options": [{"letter": "A", "text": "Add a managed identity to the workspace."}, {"letter": "B", "text": "Modify the XMLA Endpoint setting."}, {"letter": "C", "text": "Upgrade the workspace to Premium capacity."}, {"letter": "D", "text": "Add a managed identity to App1."}], "correct": ["D", "A"], "explanation": "dding a managed identity to App1 will allow it to authenticate and access resources securely without needing to manage credentials explicitly. This is the first step in configuring the app to use a service account for accessing the model via the XMLA endpoint. https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-connect-tools For Premium workspaces, the application can use either ", "category": "Semantic Models"}, {"num": 27, "text": "You have a Fabric tenant. You are creating a Fabric Data Factory pipeline. You have a stored procedure that returns the number of active customers and their average sales for the current month. You need to add an activity that will execute the stored procedure in a warehouse. The returned values must be available to the downstream activities of the pipeline. Which type of activity should you add?", "options": [{"letter": "A", "text": "Get metadata"}, {"letter": "B", "text": "Copy data"}, {"letter": "C", "text": "Lookup"}, {"letter": "D", "text": "Append variable"}], "correct": ["C"], "explanation": "The Lookup activity allows you to execute a stored procedure and retrieve the results, which can then be used in subsequent activities within the pipeline. Lookup activity", "category": "Data Ingestion"}, {"num": 29, "text": "You have an Amazon Web Services (AWS) subscription that contains an Amazon Simple Storage Service (Amazon S3) bucket named bucket1. You have a Fabric tenant that contains a lakehouse named LH1. In LH1, you plan to create a OneLake shortcut to bucket1. You need to configure authentication for the connection. Which two values should you provide? Each correct answer presents part of the solution. NOT", "options": [{"letter": "A", "text": "the shared access signature (SAS) token"}, {"letter": "B", "text": "the secret access key"}, {"letter": "C", "text": "the access ID"}, {"letter": "D", "text": "the access key ID"}, {"letter": "E", "text": "the certificate thumbprint"}], "correct": ["B", "D"], "explanation": "https://learn.microsoft.com/en-au/fabric/onelake/create-s3-compatible- shortcut#:~:text=Access%20Key%20ID,Your%20secret%20key. https://learn.microsoft.com/en-us/fabric/onelake/create-s3-shortcut https://learn.microsoft.com/sl-si/fabric/onelake/create-s3-compatible-shortcut Correct Answer BD https://learn.microsoft.com/sl-si/fabric/onelake/create-s3-compatible-shortcut", "category": "Data Ingestion"}, {"num": 30, "text": "You have a Fabric tenant that contains a data warehouse. You need to load rows into a large Type 2 slowly changing dimension (SCD). The solution must minimize resource usage. Which T-SQL statement should you use?", "options": [{"letter": "A", "text": "UPDATE AND INSERT"}, {"letter": "B", "text": "MERGE"}, {"letter": "C", "text": "TRUNCATE TABLE and INSERT"}, {"letter": "D", "text": "CREATE TABLE AS SELECT"}], "correct": ["A"], "explanation": "MERGE is not currently supported in Fabric: https://learn.microsoft.com/en-us/fabric/data-warehouse/tsql-surface- area#limitations so it must be UPDATE and INSERT C – TRUNCATE TABLE AND INSERT would eliminate history (which is the whole point of SCD Type 2) D – CREATE TABLE AS SELECT – this can be used for an initial load if the table doesnʼt exist, but it wonʼt work for an SCD Type 2 because it w", "category": "Transform & Model"}, {"num": 32, "text": "You have a Fabric tenant that contains a lakehouse named LH1. You create new tables in LH1. You need to ensure that the tables are added automatically to the default semantic model. What should you do?", "options": [{"letter": "A", "text": "Disable Query Caching for the default semantic model."}, {"letter": "B", "text": "From the settings pane of LH1, enable Sync the default Power BI semantic model."}, {"letter": "C", "text": "Enable Refresh for the default semantic model."}, {"letter": "D", "text": "From the Endorsement and discovery settings of LH1, select Make discoverable."}], "correct": ["B", "A"], "explanation": "Manually enable the Sync the default Power BI semantic model setting that will automatically add objects to the semantic model. For more information, see Sync the default Power BI semantic model. Manually add objects to the semantic model. The auto detect experience determines any tables or views and opportunistically adds them. The manually detect option in the ribbon allows fine grained control ", "category": "Transform & Model"}, {"num": 33, "text": "You have a Fabric tenant. You are creating a Fabric Data Factory pipeline. You have a stored procedure that returns the number of active customers and their average sales for the current month. You need to add an activity that will execute the stored procedure in a warehouse. The returned values must be available to the downstream activities of the pipeline. Which type of activity should you add?", "options": [{"letter": "A", "text": "Append variable"}, {"letter": "B", "text": "Lookup"}, {"letter": "C", "text": "Copy data"}, {"letter": "D", "text": "KQL"}], "correct": ["B", "A"], "explanation": "sked multiple times Lookup activity is the correct answer", "category": "Data Ingestion"}, {"num": 34, "text": "Note: This section contains one or more sets of questions with the same scenario and problem. Each question presents a unique solution to the problem. You must determine whether the solution meets the stated goals. More than one solution in the set might solve the problem. It is also possible that none of the solutions in the set solve the problem. After you answer a question in this section, you ", "options": [{"letter": "A", "text": "Yes"}, {"letter": "B", "text": "No"}], "correct": ["B"], "explanation": "user principal name (UPN) of a user is returned by the USERPRINCIPALNAME() function USERPRINCIPALNAME() is the correct answer. So B is correct nswer is correct. you should use USERPRINCIPALNAME()", "category": "Transform & Model"}, {"num": 35, "text": "You are the administrator of a Fabric workspace that contains a lakehouse named Lakehouse1. Lakehouse1 contains the following tables: Table1: A Delta table created by using a shortcut Table2: An external table created by using Spark Table3: A managed table - You plan to connect to Lakehouse1 by using its SQL endpoint. What will you be able to do after connecting to Lakehouse1?", "options": [{"letter": "A", "text": "Read Table3."}, {"letter": "B", "text": "Update the data Table3."}, {"letter": "C", "text": "Read Table2."}, {"letter": "D", "text": "Update the data in Table1."}], "correct": ["A", "B"], "explanation": "year ago & D is out as you canʼt update a table in lakehouse using SQL endpoint as this is read only. You will need to use spark or dataflows. C is out because when you create external table using spark, you can see the table from the lakehouse but you canʼt see the table from SQL endpoint let alone ready. A is the answer, as I was able to see and read a managed table using SQL Endpoint year ago I", "category": "Data Ingestion"}, {"num": 36, "text": "Note: This section contains one or more sets of questions with the same scenario and problem. Each question presents a unique solution to the problem. You must determine whether the solution meets the stated goals. More than one solution in the set might solve the problem. It is also possible that none of the solutions in the set solve the problem. After you answer a question in this section, you ", "options": [{"letter": "A", "text": "Yes"}, {"letter": "B", "text": "No"}], "correct": ["A"], "explanation": "user principal name (UPN) of a user is returned by the USERPRINCIPALNAME() function nswer is correct. you should use USERPRINCIPALNAME()", "category": "Transform & Model"}, {"num": 37, "text": "Note: This section contains one or more sets of questions with the same scenario and problem. Each question presents a unique solution to the problem. You must determine whether the solution meets the stated goals. More than one solution in the set might solve the problem. It is also possible that none of the solutions in the set solve the problem. After you answer a question in this section, you ", "options": [{"letter": "A", "text": "Yes"}, {"letter": "B", "text": "No"}], "correct": ["A"], "explanation": "Key Points for Evaluation: The USERNAME() function in Power BI returns the UPN of the logged-in user, which corresponds to the user's identity in Microsoft Entra ID (Azure AD). If the query returns a blank result, it indicates: Either the UPN is not properly synced between AD DS and Microsoft Entra ID. Or the user object is missing from the sync configuration. By adding the user objects to the lis", "category": "Transform & Model"}, {"num": 39, "text": "You have a Fabric tenant that contains a warehouse named DW1 and a lakehouse named LH1. DW1 contains a table named Sales.Product. LH1 contains a table named Sales.Orders. You plan to schedule an automated process that will create a new point-in-time (PIT) table named Sales.ProductOrder in DW1. Sales.ProductOrder will be built by using the results of a query that will join Sales.Product and Sales.O", "options": [{"letter": "A", "text": "INSERT INTO"}, {"letter": "B", "text": "CREATE TABLE AS SELECT (CTAS)"}, {"letter": "C", "text": "CREATE TABLE AS CLONE OF"}, {"letter": "D", "text": "CREATE MATERIALIZED VIEW AS SELECT"}], "correct": ["B"], "explanation": "since it must be a table and it comes from a join, it cannot be a clone, it must be B. B: CTAS. I was thinking CLONE as it minimizes operations and allows for point in time, but you're right, you can't clone a query that uses a join. You can only clone a table. The CREATE TABLE AS SELECT (CTAS) statement allows you to create a new table directly from the results of a query, including joining table", "category": "Transform & Model"}, {"num": 41, "text": "Note: This section contains one or more sets of questions with the same scenario and problem. Each question presents a unique solution to the problem. You must determine whether the solution meets the stated goals. More than one solution in the set might solve the problem. It is also possible that none of the solutions in the set solve the problem. After you answer a question in this section, you ", "options": [{"letter": "A", "text": "Yes"}, {"letter": "B", "text": "No"}], "correct": ["B", "C"], "explanation": "reating role will not solve the purpose , will have to use Userprincipalname()", "category": "Transform & Model"}, {"num": 42, "text": "You have a Fabric tenant that contains two workspaces named Workspace1 and Workspace2 and a user named User1. You need to ensure that User1 can perform the following tasks: • Create a new domain. • Create two subdomains named subdomain1 and subdomain2. • Assign Workspace1 to subdomain1. • Assign Workspace2 to subdomain2. The solution must follow the principle of least privilege. Which role should ", "options": [{"letter": "A", "text": "domain admin"}, {"letter": "B", "text": "domain contributor"}, {"letter": "C", "text": "Fabric admin"}, {"letter": "D", "text": "workspace Admin"}], "correct": ["C"], "explanation": "You can only create a new domain as a fabric admin https://learn.microsoft.com/en-us/fabric/governance/domains#create-a-domain (third line under \"Create a domain\" section)", "category": "Security"}, {"num": 44, "text": "You have a Fabric warehouse named Warehouse1 that contains a table named Table1. Table1 contains customer data. You need to implement row-level security (RLS) for Table1. The solution must ensure that users can see only their respective data. Which two objects should you create? Each correct answer presents part of the solution. NOTE: Each correct selection is worth one point.", "options": [{"letter": "A", "text": "DATABASE ROLE"}, {"letter": "B", "text": "STORED PROCEDURE"}, {"letter": "C", "text": "CONSTRAINT"}, {"letter": "D", "text": "FUNCTION"}, {"letter": "E", "text": "SECURITY POLICY"}], "correct": ["D", "E"], "explanation": "To implement RLS for Table1 in Fabric, create a FUNCTION to define row-filtering logic and a SECURITY POLICY to enforce it. This ensures users only see the rows they are permitted to access. : You don't actually create a DB Role, but you do have to think about what kind of roles you want to use. You create a FUNCTION to define the security predicate, then create a SECURITY POLICY to implement the ", "category": "Transform & Model"}, {"num": 45, "text": "You have a Fabric workspace named Workspace1 that contains a lakehouse named Lakehouse1. Lakehouse1 contains a table named Table1. Table1 contains the following data. You need to perform the following actions: • Load the data from Table1 into a star schema. • Create a product dimension table named DimProduct and a fact table named FactSales. Which three columns should you include in DimProduct?", "options": [{"letter": "A", "text": "ProductColor, ProductID, and ProductName."}, {"letter": "B", "text": "ProductName, SalesAmount, and TransactionlD."}, {"letter": "C", "text": "Date, ProductID, and TransactionlD."}, {"letter": "D", "text": "ProductID, ProductName, and SalesAmount"}], "correct": ["A", "A"], "explanation": "is the only suggestion that does not have columns that should be part of facts tables = salesAmount, Date. They are the Dimension(Characteristics) of the product correct", "category": "Data Ingestion"}, {"num": 47, "text": "You have a Fabric tenant that contains a warehouse. You use a dataflow to load a new dataset from OneLake to the warehouse. You need to add a PowerQuery step to identify the maximum values for the numeric columns. Which function should you include in the step?", "options": [{"letter": "A", "text": "Table.MaxN"}, {"letter": "B", "text": "Table.Max"}, {"letter": "C", "text": "Table.Range"}, {"letter": "D", "text": "Table.Profile"}], "correct": ["D", "D"], "explanation": "year ago . Table.Profile https://learn.microsoft.com/en-us/powerquery-m/table-profile year ago Not correct, will not add another step. year ago you will get summary in that max will include but it doesn't add as power query step so i think it is option b year ago Table.Max provides only a row with the max value per a single column. We have multiple of columns. It's d year ago guys, \"you need to ad", "category": "Data Ingestion"}, {"num": 49, "text": "You have a Fabric tenant that contains a workspace named Workspace1. You plan to deploy a semantic model named Model1 by using the XMLA endpoint. You need to optimize the deployment of Model1. The solution must minimize how long it takes to deploy Model1. What should you do in Workspace1?", "options": [{"letter": "A", "text": "Select Small semantic model storage format."}, {"letter": "B", "text": "Select Users can edit data models in the Power BI service."}, {"letter": "C", "text": "Set Enable Cache for Shortcuts to On."}, {"letter": "D", "text": "Select Large semantic model storage format."}], "correct": ["D"], "explanation": "From Microsoft learn : If you're planning to use XMLA endpoint-based tools for semantic model write operations, be sure to enable the setting, even for semantic models that you wouldn't necessarily characterize as a large semantic model. When enabled, the large semantic model storage format can improve XMLA write operations performance. https://learn.microsoft.com/en-us/power-bi/enterprise/service", "category": "Semantic Models"}, {"num": 50, "text": "You have a Microsoft Power BI project that contains a semantic model. You plan to use Azure DevOps for version control. You need to modify the .gitignore file to prevent the data values from the data sources from being pushed to the repository. Which file should you reference?", "options": [{"letter": "A", "text": "unappliedChanges.json"}, {"letter": "B", "text": "cache.abf"}, {"letter": "C", "text": "localSettings.json"}, {"letter": "D", "text": "model.bim"}], "correct": ["B"], "explanation": "month ago When you save as a project, Power BI Desktop saves report and semantic model items as folders, each containing text files that define the item: Project/ ├── AdventureWorks.Report/ ├── AdventureWorks.SemanticModel/ ├── .gitignore └── AdventureWorks.pbip .gitIgnore Specifies intentionally untracked files Git should ignore for Power BI Project files, such as the cache.abf and localSettings.", "category": "Semantic Models"}, {"num": 51, "text": "You have a Fabric tenant that contains a workspace named Workspace1. Workspace1 uses Pro license mode and contains a semantic model named Model1. You need to ensure that Model1 supports XMLA connections. Which setting should modify?", "options": [{"letter": "A", "text": "Users can edit data models in the Power BI service"}, {"letter": "B", "text": "Enforce strict access control for all data connection types"}, {"letter": "C", "text": "Enable Cache for Shortcuts"}, {"letter": "D", "text": "License mode"}], "correct": ["D"], "explanation": "\"Power BI Premium, Premium Per User, and Power BI Embedded workspaces use an XMLA endpoint to support open- platform connectivity from Microsoft and third-party client applications and tools.\" XMLA Endpoints are only supported on Premium, Premium Per User, and Power BI Embedded workspaces. https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-connect-tools", "category": "Semantic Models"}, {"num": 52, "text": "You have a Fabric tenant that contains a complex semantic model. The model is based on a star schema and contains many tables, including a fact table named Sales. You need to visualize a diagram of the model. The diagram must contain only the Sales table and related tables. What should you use from Microsoft Power BI Desktop?", "options": [{"letter": "A", "text": "data categories"}, {"letter": "B", "text": "Data view"}, {"letter": "C", "text": "Model view"}, {"letter": "D", "text": "DAX query view"}], "correct": ["C", "A"], "explanation": "nswer: C https://learn.microsoft.com/en-us/power-bi/transform-model/desktop-modeling-view#create-separate-diagrams \"With Model view, you can create diagrams of your model that contain only a subset of the tables in your model.\" hatGPT: The correct answer is C. Model view Explanation: The Model view in Microsoft Power BI Desktop allows you to visualize the relationships between tables in a semantic", "category": "Transform & Model"}, {"num": 58, "text": "You have a Fabric tenant that contains a machine learning model registered in a Fabric workspace. You need to use the model to generate predictions by using the PREDICT function in a Fabric notebook. Which two languages can you use to perform model scoring? Each correct answer presents a complete solution. NOTE: Each correct answer is worth one point.", "options": [{"letter": "A", "text": "T-SQL"}, {"letter": "B", "text": "DAX"}, {"letter": "C", "text": "Spark SQL"}, {"letter": "D", "text": "PySpark"}], "correct": ["C", "D"], "explanation": "year ago Notebook only accepts the languages: PySpark, Spark, Spark SQL and SparkR year ago yes but you can use \"%%sql\" in a notebook year ago that indicates to use spark sql language. Thank you for that. I had the same question DarioReymago had. Notebook only accepts the languages: PySpark, Spark, Spark SQL and SparkR PySpark, Spark Notebook only accepts the languages: PySpark, Spark, Spark SQL a", "category": "Transform & Model"}, {"num": 60, "text": "You need to create a Microsoft Power BI file that will be used to create multiple reports. The solution must meet the following requirements: • The file must include predefined data source connections. • The file must include the report structure and formatting. • The file must NOT contain any data. Which file format should you use?", "options": [{"letter": "A", "text": "PBIT"}, {"letter": "B", "text": "PBIDS"}, {"letter": "C", "text": "PBIX"}, {"letter": "D", "text": "PBIP"}], "correct": ["A"], "explanation": "PBIT (Power BI Template File) ✅ Why? A PBIT (Power BI Template file): ✔ Includes predefined data source connections. ✔ Includes report structure and formatting. ✔ Does NOT contain any actual data—only metadata (queries, measures, visual PBIT is the answer for sure. PBIT is a Power BI Template file, which is designed to meet the requirements specified in your question", "category": "DAX & Power BI"}, {"num": 61, "text": "You have a Fabric tenant that contains a workspace named Workspace1. Workspace1 contains a single semantic model that has two Microsoft Power BI reports. You have a Microsoft 365 subscription that contains a data loss prevention (DLP) policy named DLP1. You need to apply DLP1 to the items in Workspace1. What should you do?", "options": [{"letter": "A", "text": "Create a workspace identity."}, {"letter": "B", "text": "Apply a certified endorsement to the semantic model."}, {"letter": "C", "text": "Apply sensitivity labels to the semantic model and reports."}, {"letter": "D", "text": "Apply a master data endorsement to the semantic model."}], "correct": ["C", "A"], "explanation": "nswer: C https://learn.microsoft.com/en-us/purview/dlp-powerbi-get-started#how-dlp-policies-for-fabric-and-power-bi-work \"You define a DLP policy in the data loss prevention section of the Microsoft Purview portal. In the policy, you specify the conditions, such as which sensitivity labels and/or sensitive info types you want to detect.\" Apply sensitivity labels to the semantic model and reports. ", "category": "Transform & Model"}, {"num": 63, "text": "You have a Fabric tenant that contains a workspace named Workspace1. Workspace1 contains a data pipeline named Pipeline1 and a lakehouse named Lakehouse1. You perform the following actions: • Create a workspace named Workspace2. • Create a deployment pipeline named DeployPipeline1 that will deploy items from Workspace1 to Workspace2. • Add a folder named Folder1 to Workspace1. • Move Lakehouse1 to", "options": [{"letter": "A", "text": "\\Folder1\\Pipeline1 \\Folder1\\Lakehouse1"}, {"letter": "B", "text": "\\Pipeline1 \\Lakehouse1"}, {"letter": "C", "text": "\\Pipeline1 \\Folder1\\Lakehouse1"}, {"letter": "D", "text": "\\Folder1\\Lakehouse1"}], "correct": ["C", "A"], "explanation": "nswer: C. \\Pipeline1 and \\Folder1\\Lakehouse1 Reference from Microsoft Documentation: https://learn.microsoft.com/en-us/fabric/cicd/deployment-pipelines/understand-the-deployment-process?tabs=new-ui Under the \"Folders in deployment pipelines (preview)\" section in the provided text: Folders representation: \"Folders are considered part of an itemʼs name (an item name includes its full path). When an ", "category": "Data Ingestion"}, {"num": 65, "text": "You have a Fabric tenant that contains the workspaces shown in the following table. You have a deployment pipeline named Pipeline1 that deploys items from Workspace_DEV to Workspace_TEST. In Pipeline1, all items that have matching names are paired. You deploy the contents of Workspace_DEV to Workspace_TEST by using Pipeline1. What will the contents of Workspace_TEST be once the deployment is compl", "options": [{"letter": "A", "text": "Lakehouse1 - Lakehouse2 - Notebook1 - Notebook2 - Pipeline1 - SemanticModel1"}, {"letter": "B", "text": "Lakehouse1 - Notebook1 - Pipeline1 - SemanticModel1"}, {"letter": "C", "text": "Lakehouse2 - Notebook2 - SemanticModel1"}, {"letter": "D", "text": "Lakehouse2 - Notebook2 - Pipeline1 - SemanticModel1"}], "correct": ["A"], "explanation": "you are right @testtaker45. to find the solution, just think of elements that are currently in DEV + elements already in TEST. Add them and this is Answer A. This is a silly question. In the pipeline, you can copy the contents if desired, from items like Lakehouse1 to Lakehouse2, you could even rename them if you wanted. This is very specific to say the names of the matching items will be paired. ", "category": "Data Ingestion"}, {"num": 73, "text": "You have a query in Microsoft Power BI Desktop that contains two columns named Order_Date and Shipping_Date. You need to create a column that will calculate the number of days between Order_Date and Shipping_Date for each row. Which Power Query function should you use?", "options": [{"letter": "A", "text": "DateTime.LocalNow"}, {"letter": "B", "text": "Duration.Days"}, {"letter": "C", "text": "Duration.From"}, {"letter": "D", "text": "Date.AddDays"}], "correct": ["B", "D"], "explanation": "uration.Days(duration) ✅ Extracts the number of days from a duration value. 🔹 Example: Convert a duration to the number of days. powerquery Copy Edit Duration.Days(#duration(5, 12, 30, 0)) 🔹 Output: 5 (because the duration represents 5 days, 12 hours, 30 minutes, and 0 seconds) 📌 Use Case: Used when working with time differences and you only care about the number of days. uration.Days([Shipping_Da", "category": "DAX & Power BI"}, {"num": 74, "text": "You have a Fabric tenant that contains a semantic model. You need to modify object-level security (OLS) for the model. What should you use?", "options": [{"letter": "A", "text": "the Fabric service"}, {"letter": "B", "text": "Microsoft Power BI Desktop"}, {"letter": "C", "text": "ALM Toolkit"}, {"letter": "D", "text": "Tabular Editor"}], "correct": ["D", "A"], "explanation": "nswer: D https://learn.microsoft.com/en-us/fabric/security/service-admin-object-level-security?tabs=table#create-a-report-that- uses-ols \"Like row-level security (RLS), OLS is also defined within model roles. Currently, you can't create OLS definitions natively in Power BI Desktop. To create roles on Power BI Desktop semantic models, use external tools such as Tabular Editor.\" To modify object-lev", "category": "Semantic Models"}, {"num": 75, "text": "You have a Microsoft Power BI semantic model that contains a measure named TotalSalesAmount. TotalSalesAmount returns a sales revenue amount that is translated into a selected currency. You need to ensure that the value returned by TotalSalesAmount is formatted to use the correct currency symbol. What should you include in the solution?", "options": [{"letter": "A", "text": "a field parameter"}, {"letter": "B", "text": "a linguistic schema"}, {"letter": "C", "text": "a dynamic format string"}, {"letter": "D", "text": "the WINDOW DAX function"}], "correct": ["C", "A"], "explanation": "nswer: C https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-dynamic-format-strings \"With dynamic format strings for measures, you can determine how measures appear in visuals by conditionally applying a format string with a separate DAX formula.\" To format the value returned by TotalSalesAmount with the correct currency symbol in your semantic model, you can use a dynamic format str", "category": "DAX & Power BI"}, {"num": 92, "text": "You have a Fabric workspace named Workspace1. Workspace1 contains multiple semantic models, including a model named Model1. Model1 is updated by using an XMLA endpoint. You need to increase the speed of the write operations of the XMLA endpoint. What should you do?", "options": [{"letter": "A", "text": "Delete any unused semantic models from Workspace1."}, {"letter": "B", "text": "Select Large semantic model storage format for Workspace1."}, {"letter": "C", "text": "Configure Model 1 to use the Direct Lake storage format."}, {"letter": "D", "text": "Delete any unused columns from Model1."}], "correct": ["B"], "explanation": "What is the Large semantic model storage format? When you select the Large semantic model storage format, it allows higher compression and optimizations that improve write performance for XMLA endpoint operations. It is especially beneficial for large datasets, as it increases the capacity limit and enhances processing efficiency. Why not the other options? A. Delete any unused semantic models fro", "category": "Semantic Models"}, {"num": 94, "text": "You have a Fabric workspace named Workspace1 that is assigned to a newly created Fabric capacity named Capacity1. You create a semantic model named Model1 and deploy Model1 to Workspace1. You need to publish changes to Model1 directly from Tabular Editor. What should you do?", "options": [{"letter": "A", "text": "For Workspace1, enable Git integration."}, {"letter": "B", "text": "For Model1, enable external sharing."}, {"letter": "C", "text": "For Workspace1, create a managed private endpoint."}, {"letter": "D", "text": "For Capacity1, set XMLA Endpoint to Read Write."}], "correct": ["D"], "explanation": "answer: D https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-connect-tools#client-applications-and-tools Tabular Editor - An open-source tool ... Requires XMLA read-only for query operations. Requires read-write for metadata operations. 100% agree and thank you for sharing the source. is right You need Git for publishing changes", "category": "Semantic Models"}, {"num": 101, "text": "You have a Microsoft Power BI semantic model. You need to identify any surrogate key columns in the model that have the Summarize By property set to a value other than to None. The solution must minimize effort. What should you use?", "options": [{"letter": "A", "text": "Performance Analyzer in Power BI Desktop"}, {"letter": "B", "text": "Model explorer in Microsoft Power BI Desktop"}, {"letter": "C", "text": "Model view in Microsoft Power BI Desktop"}, {"letter": "D", "text": "DAX Formatter in DAX Studio"}], "correct": ["C"], "explanation": "Iʼm cool with C, unless someoneʼs got a better take based on the docs.", "category": "DAX & Power BI"}, {"num": 108, "text": "You have a semantic model named Model1 that contains data that relates to customers and their bank account balances. Model1 has the following tables and columns. A customer can have one or more accounts. Each account can be associated to multiple customers. You need to ensure that users can query Model1 to identify the total transaction amounts by customer. What should you add to Model1?", "options": [{"letter": "A", "text": "a many-to-many relationship between FactTransaction and Dim Customer"}, {"letter": "B", "text": "a bridge table with relationships to DimCustomer and DimAccount"}, {"letter": "C", "text": "a bridge table with relationships to FactTransaction and DimCustomer"}, {"letter": "D", "text": "the CustomerKey column in FactTransaction and a relationship to DimCustomer"}], "correct": ["C"], "explanation": "Well, [Option A] and [Option C] are definitely wrong. Between the other two, C is the better fit.", "category": "Semantic Models"}, {"num": 113, "text": "You have a Fabric tenant named Tenant1 that contains a workspace named WS1. WS1 uses a capacity named C1 and contains a dataset named DS1. You need to ensure read-write access to DS1 is available by using XMLA endpoint. What should be modified first?", "options": [{"letter": "A", "text": "the DS1 settings"}, {"letter": "B", "text": "the WS1 settings"}, {"letter": "C", "text": "the C1 settings"}, {"letter": "D", "text": "the Tenant1 settings"}], "correct": ["C", "A"], "explanation": "year ago s XMLA is set to Read-Only first, you must go to the capacity settings to enable read-write. https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-connect-tools#enable-xmla-read-write year ago The question concerns changing from read-only to read-write (in the Capacity settings), not about enabling XMLA endpoints (in the Tenant settings), which, as per the query, are alrea", "category": "Semantic Models"}, {"num": 120, "text": "You have a Fabric tenant that uses a Microsoft Power BI Premium capacity. You need to enable scale-out for a semantic model. What should you do first?", "options": [{"letter": "A", "text": "At the semantic model level, set Large dataset storage format to Off."}, {"letter": "B", "text": "At the tenant level, set Create and use Metrics to Enabled."}, {"letter": "C", "text": "At the semantic model level, set Large dataset storage format to On."}, {"letter": "D", "text": "At the tenant level, set Data Activator to Enabled."}], "correct": ["C"], "explanation": "year ago https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-scale-out-configure https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-scale-out \"The Scale-out queries for large semantic models setting for your tenant is enabled (default).\" . At the semantic model level, set Large dataset storage format to On. To enable scale-out for a semantic model in Power BI P", "category": "Semantic Models"}, {"num": 173, "text": "You have a Fabric tenant that contains a lakehouse. You plan to use a visual query to merge two tables. You need to ensure that the query returns all the rows in both tables. Which type of join should you use?", "options": [{"letter": "A", "text": "inner"}, {"letter": "B", "text": "full outer"}, {"letter": "C", "text": "left outer"}, {"letter": "D", "text": "right anti"}, {"letter": "E", "text": "right outer F. left anti"}], "correct": ["B"], "explanation": "since there is no other information on the tables, the answer is the academical one year ago Just making it more obvious, but yea... all other options wouldn't return all the rows in both tables but exclude some. year ago IMHO, 1st grage of SQL school - FULL OUTER JOIN. Because - ALL rows, not from left, right, ... table(s) year ago B. Left or right will only return one table all rows and other ta", "category": "DAX & Power BI"}, {"num": 187, "text": "You have a Fabric tenant that contains a semantic model. The model contains 15 tables. You need to programmatically change each column that ends in the word Key to meet the following requirements: • Hide the column. • Set Nullable to False • Set Summarize By to None. • Set Available in MDX to False. • Mark the column as a key column. What should you use?", "options": [{"letter": "A", "text": "Microsoft Power BI Desktop"}, {"letter": "B", "text": "ALM Toolkit"}, {"letter": "C", "text": "Tabular Editor"}, {"letter": "D", "text": "DAX Studio"}], "correct": ["C"], "explanation": "IMHO, C) Tabulr Editor is good. Here's why the other options are not ideal for this scenario: 1) Microsoft Power BI Desktop: doesn't offer functionalities for bulk programmatic changes based on naming conventions. 2) ALM Toolkit: it's not specifically designed for modifying the structure of semantic models within the tool itself. 3) DAX Studio doesn't provide functionalities for directly modifying", "category": "DAX & Power BI"}, {"num": 190, "text": "You have a Microsoft Power BI report named Report1 that uses a Fabric semantic model. Users discover that Report1 renders slowly. You open Performance analyzer and identify that a visual named Orders By Date is the slowest to render. The duration breakdown for Orders By Date is shown in the following table. What will provide the greatest reduction in the rendering duration of Report1?", "options": [{"letter": "A", "text": "Enable automatic page refresh."}, {"letter": "B", "text": "Optimize the DAX query of Orders By Date by using DAX Studio."}, {"letter": "C", "text": "Change the visual type of Orders By Date."}, {"letter": "D", "text": "Reduce the number of visuals in Report1."}], "correct": ["D"], "explanation": "year ago https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer#display-the-performance- analyzer-pane \"Other - This is the time required by the visual for preparing queries, waiting for other visuals to complete, or performing other background processing.\" year ago While optimizing the DAX query could slightly improve performance, the DAX query duration (27 ms) is ", "category": "DAX & Power BI"}, {"num": 193, "text": "You have a Microsoft Power BI semantic model that contains measures. The measures use multiple CALCULATE functions and a FILTER function. You are evaluating the performance of the measures. In which use case will replacing the FILTER function with the KEEPFILTERS function reduce execution time?", "options": [{"letter": "A", "text": "when the FILTER function uses a nested calculate function"}, {"letter": "B", "text": "when the FILTER function references a measure"}, {"letter": "C", "text": "when the FILTER function references columns from multiple tables"}, {"letter": "D", "text": "when the FILTER function references a column from a single table that uses Import mode"}], "correct": ["D", "E"], "explanation": "year ago xplanation here: https://learn.microsoft.com/en-us/dax/best-practices/dax-avoid-avoid-filter-as-filter-argument FILTER returns a table whereas KEEPFILTERS returns a Boolean. So, A, B and C are limitations of uses of Boolean expressions. Correct Answer is D Reference: \"It's recommended you pass filter arguments as Boolean expressions, whenever possible. It's because Import model tables are", "category": "DAX & Power BI"}];
+
+let quizQuestions = [];
+let currentIndex = 0;
+let score = 0;
+let answered = 0;
+let selectedCount = 10;
+
+function toggleTheme(){
+  const html=document.documentElement;
+  const isDark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('theme-btn').textContent=isDark?'🌙':'☀️';
+  localStorage.setItem('theme',isDark?'light':'dark');
+}
+const saved=localStorage.getItem('theme');
+if(saved){document.documentElement.setAttribute('data-theme',saved);
+  if(saved==='dark')document.getElementById('theme-btn').textContent='☀️';}
+
+function selectMode(el, count){
+  document.querySelectorAll('.mode-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedCount = count === 'all' ? QUESTIONS.length : parseInt(count);
+}
+
+function shuffle(arr){
+  const a=[...arr];
+  for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}
+  return a;
+}
+
+function startQuiz(){
+  quizQuestions = shuffle(QUESTIONS).slice(0, selectedCount);
+  currentIndex = 0;
+  score = 0;
+  answered = 0;
+  document.getElementById('start-screen').style.display='none';
+  document.getElementById('quiz-screen').style.display='block';
+  showQuestion();
+}
+
+function showQuestion(){
+  const q = quizQuestions[currentIndex];
+  const total = quizQuestions.length;
+  document.getElementById('q-counter').textContent = `Question ${currentIndex+1} of ${total}`;
+  document.getElementById('q-category').textContent = q.category;
+  document.getElementById('q-score').textContent = `Score: ${score}`;
+  document.getElementById('quiz-fill').style.width = ((currentIndex/total)*100)+'%';
+  document.getElementById('question-text').textContent = q.text;
+  document.getElementById('feedback').className = 'feedback';
+  document.getElementById('next-btn').className = 'next-btn';
+
+  const grid = document.getElementById('options-grid');
+  grid.innerHTML = '';
+  q.options.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-btn';
+    btn.innerHTML = `<span class="letter">${opt.letter}</span><span>${escHtml(opt.text)}</span>`;
+    btn.onclick = () => answer(opt.letter, q);
+    grid.appendChild(btn);
+  });
+}
+
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function answer(letter, q){
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach(b => b.disabled = true);
+  const isCorrect = q.correct.includes(letter);
+  answered++;
+
+  btns.forEach(b => {
+    const l = b.querySelector('.letter').textContent;
+    if(q.correct.includes(l)) b.classList.add('correct');
+    else if(l === letter && !isCorrect) b.classList.add('wrong');
+  });
+
+  const fb = document.getElementById('feedback');
+  const fbLabel = document.getElementById('fb-label');
+  const fbText = document.getElementById('fb-text');
+
+  if(isCorrect){
+    score++;
+    fb.className = 'feedback correct-fb show';
+    fbLabel.textContent = 'Correct!';
+  } else {
+    fb.className = 'feedback wrong-fb show';
+    fbLabel.textContent = 'Not quite — correct answer: ' + q.correct.join(', ');
+  }
+  fbText.textContent = q.explanation || '';
+  document.getElementById('q-score').textContent = 'Score: '+score;
+  document.getElementById('next-btn').className = 'next-btn show';
+}
+
+function nextQuestion(){
+  currentIndex++;
+  if(currentIndex >= quizQuestions.length){
+    showResults();
+  } else {
+    showQuestion();
+  }
+}
+
+function showResults(){
+  document.getElementById('quiz-screen').style.display='none';
+  document.getElementById('results-screen').style.display='block';
+  const total = quizQuestions.length;
+  const pct = Math.round((score/total)*100);
+  const ring = document.getElementById('score-ring');
+  document.getElementById('score-pct').textContent = pct+'%';
+  ring.className = 'score-ring ' + (pct>=80?'great':pct>=60?'ok':'low');
+  document.getElementById('r-correct').textContent = score;
+  document.getElementById('r-wrong').textContent = total-score;
+  document.getElementById('r-pct').textContent = pct+'%';
+  if(pct>=80){
+    document.getElementById('results-heading').textContent = 'Excellent work!';
+    document.getElementById('results-sub').textContent = 'You are well on your way. Keep reviewing the topics you found tricky.';
+  } else if(pct>=60){
+    document.getElementById('results-heading').textContent = 'Good progress!';
+    document.getElementById('results-sub').textContent = 'Solid foundation. Focus on the questions you got wrong and revisit those topic pages.';
+  } else {
+    document.getElementById('results-heading').textContent = 'Keep going!';
+    document.getElementById('results-sub').textContent = 'Review the concept pages first, then come back and try again. You will improve fast.';
+  }
+  localStorage.setItem('dp600-last-score', pct);
+}
+
+function restartQuiz(){
+  document.getElementById('results-screen').style.display='none';
+  document.getElementById('start-screen').style.display='block';
+}
+</script>
+</body>
+</html>

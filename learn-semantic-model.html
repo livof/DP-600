@@ -3,299 +3,339 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Semantic Models — DP-600</title>
+<title>Semantic Models - DP-600</title>
 <style>
-    :root {
-      --bg:#f5f5f7;--surface:#fff;--border:#e2e2e8;--text:#1a1a2e;
-      --muted:#6b6b80;--accent:#5c54e8;--accent-soft:#eeecff;
-      --green:#22c55e;--green-soft:#f0fdf4;--radius:14px;
-      --shadow:0 2px 12px rgba(0,0,0,.07);
-    }
-    [data-theme="dark"]{
-      --bg:#0f1117;--surface:#1a1d2e;--border:#2a2d42;--text:#e8e8f4;
-      --muted:#8888aa;--accent:#7b75f5;--accent-soft:#1e1c3a;
-      --green:#4ade80;--green-soft:#052e16;
-    }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:var(--bg);color:var(--text);line-height:1.65;
-      transition:background .25s,color .25s}
-    .container{max-width:720px;margin:0 auto;padding:0 20px}
-    header{display:flex;align-items:center;justify-content:space-between;
-      padding:18px 0;border-bottom:1px solid var(--border)}
-    .logo{font-size:1rem;font-weight:700;color:var(--accent);
-      text-decoration:none;letter-spacing:-.3px}
-    nav a{color:var(--muted);text-decoration:none;font-size:.9rem;
-      margin-left:20px;transition:color .2s}
-    nav a:hover,nav a.active{color:var(--accent)}
-    #theme-btn{background:none;border:1px solid var(--border);border-radius:8px;
-      padding:5px 10px;cursor:pointer;color:var(--muted);font-size:.85rem;
-      margin-left:16px;transition:border-color .2s,color .2s}
-    #theme-btn:hover{border-color:var(--accent);color:var(--accent)}
-    .back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);
-      text-decoration:none;font-size:.85rem;margin-bottom:20px;transition:color .2s}
-    .back:hover{color:var(--accent)}
-    .page-header{padding:48px 0 36px}
-    h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;letter-spacing:-1px;margin-bottom:8px}
-    h1 span{color:var(--accent)}
-    .page-sub{font-size:.95rem;color:var(--muted);max-width:560px}
-    .section-label{font-size:.72rem;font-weight:700;letter-spacing:1.2px;
-      text-transform:uppercase;color:var(--muted);margin-bottom:18px;margin-top:48px}
-    /* concept cards */
-    .concepts{display:grid;gap:10px;margin-bottom:8px}
-    .concept{background:var(--surface);border:1px solid var(--border);
-      border-radius:var(--radius);padding:18px 20px;
-      display:flex;gap:14px;box-shadow:var(--shadow)}
-    .concept-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
-    .concept-body strong{display:block;font-size:.95rem;margin-bottom:4px}
-    .concept-body p{font-size:.85rem;color:var(--muted);margin:0}
-    /* question cards */
-    .q-card{background:var(--surface);border:1px solid var(--border);
-      border-radius:var(--radius);margin-bottom:12px;
-      box-shadow:var(--shadow);overflow:hidden}
-    .q-head{padding:18px 20px;cursor:pointer;
-      display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-    .q-head:hover{background:var(--accent-soft)}
-    .q-num{font-size:.72rem;font-weight:700;letter-spacing:.5px;
-      text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-    .q-text{font-size:.9rem;line-height:1.55;flex:1}
-    .q-chevron{color:var(--muted);font-size:1.1rem;flex-shrink:0;
-      transition:transform .25s;margin-top:2px}
-    .q-card.open .q-chevron{transform:rotate(90deg)}
-    .q-body{display:none;border-top:1px solid var(--border);padding:20px}
-    .q-card.open .q-body{display:block}
-    /* options */
-    .options{display:grid;gap:6px;margin-bottom:16px}
-    .opt{background:var(--bg);border:1px solid var(--border);
-      border-radius:10px;padding:10px 14px;font-size:.85rem;display:flex;gap:10px}
-    .opt.correct{background:var(--green-soft);border-color:var(--green);color:var(--text)}
-    .opt-letter{font-weight:700;color:var(--muted);flex-shrink:0;min-width:18px}
-    .opt.correct .opt-letter{color:var(--green)}
-    /* answer block */
-    .answer-block{background:var(--accent-soft);border-radius:10px;
-      padding:14px 16px;margin-bottom:14px}
-    .answer-label{font-size:.72rem;font-weight:700;letter-spacing:.5px;
-      text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-    .answer-text{font-size:.88rem;line-height:1.6}
-    /* learn link */
-    .learn-link{display:inline-flex;align-items:center;gap:6px;
-      font-size:.8rem;color:var(--accent);text-decoration:none;
-      border:1px solid var(--border);border-radius:8px;padding:5px 12px;
-      transition:border-color .2s;margin-top:4px}
-    .learn-link:hover{border-color:var(--accent)}
-    footer{border-top:1px solid var(--border);padding:24px 0 40px;
-      text-align:center;font-size:.8rem;color:var(--muted)}
-    .divider{height:1px;background:var(--border);margin:8px 0}
+:root{--bg:#f5f5f7;--surface:#fff;--border:#e2e2e8;--text:#1a1a2e;--muted:#6b6b80;
+  --accent:#5c54e8;--accent-soft:#eeecff;--green:#22c55e;--green-soft:#f0fdf4;
+  --radius:14px;--shadow:0 2px 12px rgba(0,0,0,.07)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--border:#2a2d42;--text:#e8e8f4;
+  --muted:#8888aa;--accent:#7b75f5;--accent-soft:#1e1c3a;--green:#4ade80;--green-soft:#052e16}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.65;transition:background .25s,color .25s}
+.container{max-width:720px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--border)}
+.logo{font-size:1rem;font-weight:700;color:var(--accent);text-decoration:none;letter-spacing:-.3px}
+nav a{color:var(--muted);text-decoration:none;font-size:.9rem;margin-left:20px;transition:color .2s}
+nav a:hover,nav a.active{color:var(--accent)}
+#theme-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;
+  cursor:pointer;color:var(--muted);font-size:.85rem;margin-left:16px;transition:border-color .2s,color .2s}
+#theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;
+  font-size:.85rem;margin-bottom:18px;transition:color .2s}
+.back:hover{color:var(--accent)}
+.page-header{padding:44px 0 28px}
+.page-title-row{display:flex;align-items:baseline;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;letter-spacing:-1px}
+h1 span{color:var(--accent)}
+.time-badge{font-size:.75rem;font-weight:600;color:var(--muted);border:1px solid var(--border);
+  padding:2px 9px;border-radius:20px;white-space:nowrap}
+.page-sub{font-size:.9rem;color:var(--muted);max-width:560px}
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:14px;margin-top:44px}
+.page-progress{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 18px;margin-bottom:8px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow)}
+.pp-label{font-size:.8rem;color:var(--muted);white-space:nowrap;flex-shrink:0}
+.pp-bar{flex:1;height:5px;background:var(--border);border-radius:99px;overflow:hidden}
+.pp-fill{height:100%;background:var(--accent);border-radius:99px;width:0%;transition:width .4s ease}
+.pp-count{font-size:.8rem;color:var(--muted);white-space:nowrap;flex-shrink:0}
+.concepts{display:grid;gap:8px}
+.concept{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 18px;display:flex;gap:14px;box-shadow:var(--shadow);transition:border-color .2s}
+.concept:hover{border-color:var(--accent)}
+.concept-icon{font-size:1.3rem;flex-shrink:0;margin-top:2px}
+.concept-body strong{display:block;font-size:.92rem;margin-bottom:3px}
+.concept-body p{font-size:.83rem;color:var(--muted);margin:0;line-height:1.55}
+code{background:var(--border);border-radius:4px;padding:1px 5px;font-size:.85em;font-family:monospace}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  margin-bottom:10px;box-shadow:var(--shadow);overflow:hidden;transition:border-color .2s}
+.q-card.seen{border-left:3px solid var(--green)}
+.q-head{padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:flex-start;gap:12px;transition:background .15s}
+.q-head:hover{background:var(--accent-soft)}
+.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.q-num{font-size:.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--accent)}
+.q-seen-dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:none}
+.q-card.seen .q-seen-dot{display:block}
+.q-text{font-size:.88rem;line-height:1.55;flex:1}
+.q-›{color:var(--muted);font-size:1.1rem;flex-shrink:0;transition:transform .25s;margin-top:2px}
+.q-card.open .q-›{transform:rotate(90deg)}
+.q-body{display:none;border-top:1px solid var(--border);padding:18px}
+.q-card.open .q-body{display:block}
+.options{display:grid;gap:6px;margin-bottom:14px}
+.opt{background:var(--bg);border:1px solid var(--border);border-radius:10px;
+  padding:9px 13px;font-size:.84rem;display:flex;gap:10px;align-items:flex-start}
+.opt.correct{background:var(--green-soft);border-color:var(--green)}
+.opt-letter{font-weight:700;color:var(--muted);flex-shrink:0;min-width:16px}
+.opt.correct .opt-letter{color:var(--green)}
+.disc{background:var(--accent-soft);border-radius:10px;padding:13px 15px;margin-bottom:12px}
+.disc-label{font-size:.68rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+.disc-text{font-size:.84rem;line-height:1.6}
+.page-nav{display:flex;gap:8px;margin:44px 0 0;flex-wrap:wrap}
+.nav-btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--radius);padding:10px 16px;
+  text-decoration:none;color:var(--text);font-size:.85rem;font-weight:500;
+  transition:border-color .2s,transform .15s;flex:1;min-width:140px}
+.nav-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav-btn.primary:hover{opacity:.88}
+.done-banner{display:none;background:var(--green-soft);border:1px solid var(--green);
+  border-radius:var(--radius);padding:16px 20px;text-align:center;margin-top:20px}
+.done-banner.show{display:block}
+.done-banner p{font-size:.95rem;font-weight:600;color:var(--green)}
+.done-banner small{font-size:.8rem;color:var(--muted);display:block;margin-top:4px}
+footer{border-top:1px solid var(--border);padding:24px 0 40px;text-align:center;font-size:.8rem;color:var(--muted)}
 </style>
 </head>
 <body>
 <div class="container">
-
 <header>
   <a class="logo" href="index.html">DP-600</a>
   <div style="display:flex;align-items:center">
     <nav>
       <a href="index.html">Home</a>
       <a href="topics.html">Topics</a>
+      <a href="quiz.html">Quiz</a>
     </nav>
     <button id="theme-btn" onclick="toggleTheme()">🌙</button>
   </div>
 </header>
-
 <div class="page-header">
   <a class="back" href="topics.html">← All topics</a>
-  <h1>🧠 Semantic <span>Models</span></h1>
-  <p class="page-sub">DirectLake, storage modes, XMLA, relationships — the engine behind Power BI.</p>
+  <div class="page-title-row"><h1>🧠 Semantic <span>Models</span></h1><span class="time-badge">⏱ ~10 min</span></div>
+  <p class="page-sub">The engine behind Power BI - DirectLake, storage modes, and XMLA.</p>
 </div>
-
-<p class="section-label">Core concepts first</p>
+<div class="page-progress">
+  <span class="pp-label">Progress</span>
+  <div class="pp-bar"><div class="pp-fill" id="pp-fill"></div></div>
+  <span class="pp-count" id="pp-count">0 / 10</span>
+</div>
+<p class="section-label">Concepts - read these first</p>
 <div class="concepts">
-  <div class="concept">
-    <span class="concept-icon">⚡</span>
-    <div class="concept-body">
-      <strong>DirectLake = the best of both worlds</strong>
-      <p>DirectLake reads Delta files directly from OneLake — no data import, no DirectQuery latency. It's the magic mode that makes Fabric special. It falls back to DirectQuery if a file isn't framed yet. The exam loves asking <em>when</em> DirectLake falls back and what triggers it.</p>
-    </div>
-  </div>
-  <div class="concept">
-    <span class="concept-icon">📦</span>
-    <div class="concept-body">
-      <strong>Large semantic model storage = needed for XMLA writes</strong>
-      <p>To use the XMLA endpoint for <em>write</em> operations (deploying models, scripting changes), the workspace must have Large semantic model storage format enabled. Small format = read-only XMLA. This is a common trap question.</p>
-    </div>
-  </div>
-  <div class="concept">
-    <span class="concept-icon">🗂️</span>
-    <div class="concept-body">
-      <strong>Star schema: dimensions surround facts</strong>
-      <p>A fact table holds measurements (sales amount, quantity). Dimension tables hold context (dates, customers, products). They join on surrogate keys. Always set surrogate key columns' "Summarize By" to <b>None</b> — you never want Power BI summing a key column by accident.</p>
-    </div>
-  </div>
-  <div class="concept">
-    <span class="concept-icon">🔀</span>
-    <div class="concept-body">
-      <strong>cache.abf is the data file — keep it out of Git</strong>
-      <p>When you save a Power BI project (.pbip), the semantic model folder contains a <code>cache.abf</code> file which holds cached data. Add it to <code>.gitignore</code> — you don't want actual data values committed to a repository.</p>
-    </div>
-  </div>
+  <div class="concept"><span class="concept-icon">⚡</span><div class="concept-body"><strong>DirectLake = no import, no DirectQuery lag</strong><p>DirectLake reads Delta files directly from OneLake. Data stays where it is but Power BI reads it as fast as an import model. It falls ← to DirectQuery when a Delta table is not yet framed. The exam tests when the fall← happens.</p></div></div>
+  <div class="concept"><span class="concept-icon">📦</span><div class="concept-body"><strong>Large storage format unlocks XMLA write operations</strong><p>To use the XMLA endpoint for write operations like scripted deployments, the workspace needs Large semantic model storage format enabled. Small format gives read-only XMLA. This is a common trap - people assume Premium capacity alone is enough.</p></div></div>
+  <div class="concept"><span class="concept-icon">🗃️</span><div class="concept-body"><strong>Star schema: fact tables hold numbers, dimensions hold context</strong><p>A fact table stores measurements like sales amount. Dimension tables store context like dates and customers. They connect on surrogate 🔑s. Always set surrogate 🔑 columns Summarize By to None - you never want Power BI summing an ID column by accident.</p></div></div>
+  <div class="concept"><span class="concept-icon">🔀</span><div class="concept-body"><strong>cache.abf holds cached data - keep it out of Git</strong><p>When you save a .pbip project, the semantic model 🗃️ contains cache.abf which holds actual data values. Add it to .gitignore. The model.bim file holds the schema definition - that is fine to commit.</p></div></div>
+  <div class="concept"><span class="concept-icon">🔑</span><div class="concept-body"><strong>Add managed identity to the app, not the workspace</strong><p>When an Azure app needs to access the XMLA endpoint using its own identity, you add a managed identity to the app and grant that identity workspace access. Adding it to the workspace alone does not give the app its own credential.</p></div></div>
 </div>
-
-<p class="section-label">Exam questions — try them yourself</p>
-
+<p class="section-label">Exam questions - click to reveal answers</p>
 <div class="q-card">
   <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 25</div>
-      <div class="q-text">You have a Microsoft Power BI Premium Per User (PPU) workspace that contains a semantic model. You have an Azure App Service app named App1 that modifies row-level security (RLS) for the model by using the XMLA endpoint. App1 requires users to sign in by using their Microsoft Entra credentials to access the XMLA endpoint. You need to configure App1 to use a service account to access the model. Wha</div>
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q25</span><span class="q-seen-dot"></span></div>
+      <div class="q-text">You have a Microsoft Power BI Premium Per User (PPU) workspace that contains a semantic model. You have an Azure App Service app named App1 that modifies row-level security (RLS) for the model by using the XMLA endpoint. App1 requires users to sign in by using their Microsoft Entra credentials to access the XMLA endpoint. You need to configure App1 to use a service account to access the model. What should you do first?</div>
     </div>
-    <span class="q-chevron">›</span>
+    <span class="q-›">›</span>
   </div>
   <div class="q-body">
-    <div class="options"><div class="opt correct"><span class="opt-letter">A ✓</span><span>Add a managed identity to the workspace.</span></div>
+    <div class="options"><div class="opt correct"><span class="opt-letter">A  ✓</span><span>Add a managed identity to the workspace.</span></div>
 <div class="opt"><span class="opt-letter">B</span><span>Modify the XMLA Endpoint setting.</span></div>
 <div class="opt"><span class="opt-letter">C</span><span>Upgrade the workspace to Premium capacity.</span></div>
-<div class="opt correct"><span class="opt-letter">D ✓</span><span>Add a managed identity to App1.</span></div>
+<div class="opt correct"><span class="opt-letter">D  ✓</span><span>Add a managed identity to App1.</span></div>
 </div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">dding a managed identity to App1 will allow it to authenticate and access resources securely without needing to manage credentials explicitly. This is the first step in configuring the app to use a service account for accessing the model via the XMLA endpoint. https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-connect-tools For Premium workspaces, the application can use either a service account or app identity on behalf of end users without requiring each user to sign in to Power BI. aks2304 1 point5 months ago To configure App1 to use a service account to access the model,...</div></div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">dding a managed identity to App1 will allow it to authenticate and access resources securely without needing to manage credentials explicitly. This is the first step in configuring the app to use a service account for accessing the model via the XMLA endpoint. https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-connect-tools For Premium workspaces, the application can use either a service account or app identity on behalf of end users without requiring each user to sign in to P...</div></div>
   </div>
-</div>
-<div class="q-card">
+</div><div class="q-card">
   <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 49</div>
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q49</span><span class="q-seen-dot"></span></div>
       <div class="q-text">You have a Fabric tenant that contains a workspace named Workspace1. You plan to deploy a semantic model named Model1 by using the XMLA endpoint. You need to optimize the deployment of Model1. The solution must minimize how long it takes to deploy Model1. What should you do in Workspace1?</div>
     </div>
-    <span class="q-chevron">›</span>
+    <span class="q-›">›</span>
   </div>
   <div class="q-body">
     <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Select Small semantic model storage format.</span></div>
 <div class="opt"><span class="opt-letter">B</span><span>Select Users can edit data models in the Power BI service.</span></div>
 <div class="opt"><span class="opt-letter">C</span><span>Set Enable Cache for Shortcuts to On.</span></div>
-<div class="opt correct"><span class="opt-letter">D ✓</span><span>Select Large semantic model storage format.</span></div>
+<div class="opt correct"><span class="opt-letter">D  ✓</span><span>Select Large semantic model storage format.</span></div>
 </div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">From Microsoft learn : If you're planning to use XMLA endpoint-based tools for semantic model write operations, be sure to enable the setting, even for semantic models that you wouldn't necessarily characterize as a large semantic model. When enabled, the large semantic model storage format can improve XMLA write operations performance. https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-large-models To optimize the deployment of Model1 using the XMLA endpoint and minimize the deployment time, you should select Large semantic model storage format. This format is designed to h...</div></div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">From Microsoft learn : If you&#x27;re planning to use XMLA endpoint-based tools for semantic model write operations, be sure to enable the setting, even for semantic models that you wouldn&#x27;t necessarily characterize as a large semantic model. When enabled, the large semantic model storage format can improve XMLA write operations performance. https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-large-models To optimize the deployment of Model1 using the XMLA endpoint and minimize the ...</div></div>
   </div>
-</div>
-<div class="q-card">
+</div><div class="q-card">
   <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 50</div>
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q50</span><span class="q-seen-dot"></span></div>
       <div class="q-text">You have a Microsoft Power BI project that contains a semantic model. You plan to use Azure DevOps for version control. You need to modify the .gitignore file to prevent the data values from the data sources from being pushed to the repository. Which file should you reference?</div>
     </div>
-    <span class="q-chevron">›</span>
+    <span class="q-›">›</span>
   </div>
   <div class="q-body">
     <div class="options"><div class="opt"><span class="opt-letter">A</span><span>unappliedChanges.json</span></div>
-<div class="opt correct"><span class="opt-letter">B ✓</span><span>cache.abf</span></div>
+<div class="opt correct"><span class="opt-letter">B  ✓</span><span>cache.abf</span></div>
 <div class="opt"><span class="opt-letter">C</span><span>localSettings.json</span></div>
 <div class="opt"><span class="opt-letter">D</span><span>model.bim</span></div>
 </div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">CamiU 1 pointabout 1 month ago When you save as a project, Power BI Desktop saves report and semantic model items as folders, each containing text files that define the item: Project/ ├── AdventureWorks.Report/ ├── AdventureWorks.SemanticModel/ ├── .gitignore └── AdventureWorks.pbip .gitIgnore Specifies intentionally untracked files Git should ignore for Power BI Project files, such as the cache.abf and localSettings.json. **/.pbi/localSettings.json **/.pbi/cache.abf zxc01 1 point3 months ago I think both B and C are correct answers. this is content from default setting from .gitignore: **/.pb...</div></div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">month ago When you save as a project, Power BI Desktop saves report and semantic model items as 🗃️s, each containing text files that define the item: Project/ ├── AdventureWorks.Report/ ├── AdventureWorks.SemanticModel/ ├── .gitignore └── AdventureWorks.pbip .gitIgnore Specifies intentionally untracked files Git should ignore for Power BI Project files, such as the cache.abf and localSettings.json. **/.pbi/localSettings.json **/.pbi/cache.abf I think both B and C are correct answers. this is...</div></div>
   </div>
-</div>
-<div class="q-card">
+</div><div class="q-card">
   <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 51</div>
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q51</span><span class="q-seen-dot"></span></div>
       <div class="q-text">You have a Fabric tenant that contains a workspace named Workspace1. Workspace1 uses Pro license mode and contains a semantic model named Model1. You need to ensure that Model1 supports XMLA connections. Which setting should modify?</div>
     </div>
-    <span class="q-chevron">›</span>
+    <span class="q-›">›</span>
   </div>
   <div class="q-body">
     <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Users can edit data models in the Power BI service</span></div>
 <div class="opt"><span class="opt-letter">B</span><span>Enforce strict access control for all data connection types</span></div>
 <div class="opt"><span class="opt-letter">C</span><span>Enable Cache for Shortcuts</span></div>
-<div class="opt correct"><span class="opt-letter">D ✓</span><span>License mode</span></div>
+<div class="opt correct"><span class="opt-letter">D  ✓</span><span>License mode</span></div>
 </div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">JuanGonzalezT 1 point4 months ago "Power BI Premium, Premium Per User, and Power BI Embedded workspaces use an XMLA endpoint to support open- platform connectivity from Microsoft and third-party client applications and tools." XMLA Endpoints are only supported on Premium, Premium Per User, and Power BI Embedded workspaces. https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-connect-tools</div></div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">&quot;Power BI Premium, Premium Per User, and Power BI Embedded workspaces use an XMLA endpoint to support open- platform connectivity from Microsoft and third-party client applications and tools.&quot; XMLA Endpoints are only supported on Premium, Premium Per User, and Power BI Embedded workspaces. https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-connect-tools</div></div>
   </div>
-</div>
-<div class="q-card">
+</div><div class="q-card">
   <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 74</div>
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q74</span><span class="q-seen-dot"></span></div>
       <div class="q-text">You have a Fabric tenant that contains a semantic model. You need to modify object-level security (OLS) for the model. What should you use?</div>
     </div>
-    <span class="q-chevron">›</span>
+    <span class="q-›">›</span>
   </div>
   <div class="q-body">
-    <div class="options"><div class="opt correct"><span class="opt-letter">A ✓</span><span>the Fabric service</span></div>
+    <div class="options"><div class="opt correct"><span class="opt-letter">A  ✓</span><span>the Fabric service</span></div>
 <div class="opt"><span class="opt-letter">B</span><span>Microsoft Power BI Desktop</span></div>
 <div class="opt"><span class="opt-letter">C</span><span>ALM Toolkit</span></div>
-<div class="opt correct"><span class="opt-letter">D ✓</span><span>Tabular Editor</span></div>
+<div class="opt correct"><span class="opt-letter">D  ✓</span><span>Tabular Editor</span></div>
 </div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">JuanGonzalezT 1 point4 months ago nswer: D https://learn.microsoft.com/en-us/fabric/security/service-admin-object-level-security?tabs=table#create-a-report-that- uses-ols "Like row-level security (RLS), OLS is also defined within model roles. Currently, you can't create OLS definitions natively in Power BI Desktop. To create roles on Power BI Desktop semantic models, use external tools such as Tabular Editor." Rataxe 1 point4 months ago To modify object-level security (OLS) for a semantic model in Microsoft Fabric, you can use Tabular Editor. This tool allows you to define roles and set permis...</div></div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">nswer: D https://learn.microsoft.com/en-us/fabric/security/service-admin-object-level-security?tabs=table#create-a-report-that- uses-ols &quot;Like row-level security (RLS), OLS is also defined within model roles. Currently, you can&#x27;t create OLS definitions natively in Power BI Desktop. To create roles on Power BI Desktop semantic models, use external tools such as Tabular Editor.&quot; To modify object-level security (OLS) for a semantic model in Microsoft Fabric, you can use Tabular Editor. This tool al...</div></div>
   </div>
-</div>
-<div class="q-card">
+</div><div class="q-card">
   <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 92</div>
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q92</span><span class="q-seen-dot"></span></div>
       <div class="q-text">You have a Fabric workspace named Workspace1. Workspace1 contains multiple semantic models, including a model named Model1. Model1 is updated by using an XMLA endpoint. You need to increase the speed of the write operations of the XMLA endpoint. What should you do?</div>
     </div>
-    <span class="q-chevron">›</span>
+    <span class="q-›">›</span>
   </div>
   <div class="q-body">
     <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Delete any unused semantic models from Workspace1.</span></div>
-<div class="opt correct"><span class="opt-letter">B ✓</span><span>Select Large semantic model storage format for Workspace1.</span></div>
+<div class="opt correct"><span class="opt-letter">B  ✓</span><span>Select Large semantic model storage format for Workspace1.</span></div>
 <div class="opt"><span class="opt-letter">C</span><span>Configure Model 1 to use the Direct Lake storage format.</span></div>
 <div class="opt"><span class="opt-letter">D</span><span>Delete any unused columns from Model1.</span></div>
 </div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">4390015 1 point4 months ago What is the Large semantic model storage format? When you select the Large semantic model storage format, it allows higher compression and optimizations that improve write performance for XMLA endpoint operations. It is especially beneficial for large datasets, as it increases the capacity limit and enhances processing efficiency. Why not the other options? A. Delete any unused semantic models from Workspace1 ❌ This might free up resources but does not directly improve XMLA write performance. The performance is tied to the individual model's processing efficiency ra...</div></div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">What is the Large semantic model storage format? When you select the Large semantic model storage format, it allows higher compression and optimizations that improve write performance for XMLA endpoint operations. It is especially beneficial for large datasets, as it increases the capacity limit and enhances processing efficiency. Why not the other options? A. Delete any unused semantic models from Workspace1 ❌ This might free up resources but does not directly improve XMLA write performance. Th...</div></div>
   </div>
-</div>
-<div class="q-card">
+</div><div class="q-card">
   <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 93</div>
-      <div class="q-text">You have a Fabric workspace named Workspace1. You need to create a semantic model named Model1 and publish Model1 to Workspace1. The solution must meet the following requirements: • Can revert to previous versions of Model1 as required. • Identifies differences between saved versions of Model1. • Uses Microsoft Power Bl=I Desktop to publish to Workspace1. • Can edit item definition files by using </div>
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q93</span><span class="q-seen-dot"></span></div>
+      <div class="q-text">You have a Fabric workspace named Workspace1. You need to create a semantic model named Model1 and publish Model1 to Workspace1. The solution must meet the following requirements: • Can revert to previous versions of Model1 as required. • Identifies differences between saved versions of Model1. • Uses Microsoft Power Bl=I Desktop to publish to Workspace1. • Can edit item definition files by using Microsoft Visual Studio Code. Which two actions sh</div>
     </div>
-    <span class="q-chevron">›</span>
+    <span class="q-›">›</span>
   </div>
   <div class="q-body">
-    <div class="options"><div class="opt correct"><span class="opt-letter">A ✓</span><span>Enable Git integration for Workspace1.</span></div>
+    <div class="options"><div class="opt correct"><span class="opt-letter">A  ✓</span><span>Enable Git integration for Workspace1.</span></div>
 <div class="opt"><span class="opt-letter">B</span><span>Save Model1 in Power BI Desktop as a PBIT file.</span></div>
 <div class="opt"><span class="opt-letter">C</span><span>Enable users to edit data models in the Power BI service.</span></div>
-<div class="opt correct"><span class="opt-letter">D ✓</span><span>Save Model1 in Power BI Desktop as a PBIP file.</span></div>
+<div class="opt correct"><span class="opt-letter">D  ✓</span><span>Save Model1 in Power BI Desktop as a PBIP file.</span></div>
 </div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">KalinT 1 point2 months ago and D orrect Option The correct orrect! A. Enable Git integration for Workspace1: Git integration allows version control, enabling you to revert to previous versions of Model1 and identify differences between saved versions. This meets the requirement for managing and tracking changes. D. Save Model1 in Power BI Desktop as a PBIP file: PBIP format is ideal for development workflows. It supports editing item definition files using tools like Visual Studio Code, making it suitable for collaborative and detailed editing. Why not the other options? B. Save Model1 in Powe...</div></div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">and D orrect Option The correct orrect! A. Enable Git integration for Workspace1: Git integration allows version control, enabling you to revert to previous versions of Model1 and identify differences between saved versions. This meets the requirement for managing and tracking changes. D. Save Model1 in Power BI Desktop as a PBIP file: PBIP format is ideal for development workflows. It supports editing item definition files using tools like Visual Studio Code, making it suitable for collaborativ...</div></div>
   </div>
-</div>
-<div class="q-card">
+</div><div class="q-card">
   <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 94</div>
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q94</span><span class="q-seen-dot"></span></div>
       <div class="q-text">You have a Fabric workspace named Workspace1 that is assigned to a newly created Fabric capacity named Capacity1. You create a semantic model named Model1 and deploy Model1 to Workspace1. You need to publish changes to Model1 directly from Tabular Editor. What should you do?</div>
     </div>
-    <span class="q-chevron">›</span>
+    <span class="q-›">›</span>
   </div>
   <div class="q-body">
     <div class="options"><div class="opt"><span class="opt-letter">A</span><span>For Workspace1, enable Git integration.</span></div>
 <div class="opt"><span class="opt-letter">B</span><span>For Model1, enable external sharing.</span></div>
 <div class="opt"><span class="opt-letter">C</span><span>For Workspace1, create a managed private endpoint.</span></div>
-<div class="opt correct"><span class="opt-letter">D ✓</span><span>For Capacity1, set XMLA Endpoint to Read Write.</span></div>
+<div class="opt correct"><span class="opt-letter">D  ✓</span><span>For Capacity1, set XMLA Endpoint to Read Write.</span></div>
 </div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">answer: D https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-connect-tools#client-applications-and-tools Tabular Editor - An open-source tool ... Requires XMLA read-only for query operations. Requires read-write for metadata operations. hecke 1 point4 months ago 100% agree and thank you for sharing the source. is right Azure_2023 1 point5 months ago You need Git for publishing changes</div></div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">answer: D https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-connect-tools#client-applications-and-tools Tabular Editor - An open-source tool ... Requires XMLA read-only for query operations. Requires read-write for metadata operations. 100% agree and thank you for sharing the source. is right You need Git for publishing changes</div></div>
+  </div>
+</div><div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q108</span><span class="q-seen-dot"></span></div>
+      <div class="q-text">You have a semantic model named Model1 that contains data that relates to customers and their bank account balances. Model1 has the following tables and columns. A customer can have one or more accounts. Each account can be associated to multiple customers. You need to ensure that users can query Model1 to identify the total transaction amounts by customer. What should you add to Model1?</div>
+    </div>
+    <span class="q-›">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>a many-to-many relationship between FactTransaction and Dim Customer</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>a bridge table with relationships to DimCustomer and DimAccount</span></div>
+<div class="opt correct"><span class="opt-letter">C  ✓</span><span>a bridge table with relationships to FactTransaction and DimCustomer</span></div>
+<div class="opt"><span class="opt-letter">D</span><span>the CustomerKey column in FactTransaction and a relationship to DimCustomer</span></div>
+</div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">Well, [Option A] and [Option C] are definitely wrong. Between the other two, C is the better fit.</div></div>
+  </div>
+</div><div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q113</span><span class="q-seen-dot"></span></div>
+      <div class="q-text">You have a Fabric tenant named Tenant1 that contains a workspace named WS1. WS1 uses a capacity named C1 and contains a dataset named DS1. You need to ensure read-write access to DS1 is available by using XMLA endpoint. What should be modified first?</div>
+    </div>
+    <span class="q-›">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt correct"><span class="opt-letter">A  ✓</span><span>the DS1 settings</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>the WS1 settings</span></div>
+<div class="opt correct"><span class="opt-letter">C  ✓</span><span>the C1 settings</span></div>
+<div class="opt"><span class="opt-letter">D</span><span>the Tenant1 settings</span></div>
+</div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">year ago s XMLA is set to Read-Only first, you must go to the capacity settings to enable read-write. https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-connect-tools#enable-xmla-read-write year ago The question concerns changing from read-only to read-write (in the Capacity settings), not about enabling XMLA endpoints (in the Tenant settings), which, as per the query, are already set up. the C1 settings The XMLA endpoint in Microsoft Fabric allows read-write operations for da...</div></div>
   </div>
 </div>
+<div class="done-banner" id="done-banner">
+  <p>You reviewed all questions on this page!</p>
+  <small>Head to another topic or test yourself in the quiz.</small>
+</div>
+<div class="page-nav"><a class="nav-btn" href="learn-transform.html">← Transform &amp; Model</a><a class="nav-btn primary" href="quiz.html">⚡ Test yourself</a><a class="nav-btn" href="learn-dax.html">DAX &amp; Power BI →</a></div>
+
 </div>
 <footer><div class="container">DP-600 Microsoft Fabric Analytics Engineer</div></footer>
 <script>
-  function toggleTheme(){
-    const html=document.documentElement;
-    const isDark=html.getAttribute('data-theme')==='dark';
-    html.setAttribute('data-theme',isDark?'light':'dark');
-    document.getElementById('theme-btn').textContent=isDark?'🌙':'☀️';
-    localStorage.setItem('theme',isDark?'light':'dark');
+window.PAGE_STORAGE_KEY='dp600-sm-progress';
+
+function toggleTheme(){
+  const html=document.documentElement;
+  const isDark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('theme-btn').textContent=isDark?'🌙':'☀️';
+  localStorage.setItem('theme',isDark?'light':'dark');
+}
+const saved=localStorage.getItem('theme');
+if(saved){document.documentElement.setAttribute('data-theme',saved);
+  if(saved==='dark')document.getElementById('theme-btn').textContent='☀️';}
+
+let seenCount=0;
+const totalQ=document.querySelectorAll('.q-card').length;
+
+function openQ(card){
+  card.classList.add('open','seen');
+  const already=card.dataset.counted;
+  if(!already){
+    card.dataset.counted='1';
+    seenCount++;
+    updatePageProgress();
+    if(seenCount===totalQ){
+      const b=document.getElementById('done-banner');
+      if(b) b.classList.add('show');
+    }
   }
-  const saved=localStorage.getItem('theme');
-  if(saved){document.documentElement.setAttribute('data-theme',saved);
-    if(saved==='dark')document.getElementById('theme-btn').textContent='☀️';}
-  function toggleQ(el){
-    const card=el.closest('.q-card');
-    card.classList.toggle('open');
-  }
+}
+function toggleQ(el){
+  const card=el.closest('.q-card');
+  if(card.classList.contains('open')) card.classList.remove('open');
+  else openQ(card);
+}
+function updatePageProgress(){
+  const pct=Math.round((seenCount/totalQ)*100);
+  const fill=document.getElementById('pp-fill');
+  const cnt=document.getElementById('pp-count');
+  if(fill) fill.style.width=pct+'%';
+  if(cnt) cnt.textContent=seenCount+' / '+totalQ;
+  if(window.PAGE_STORAGE_KEY) localStorage.setItem(window.PAGE_STORAGE_KEY,pct);
+}
+
+const savedPct=parseInt(localStorage.getItem(window.PAGE_STORAGE_KEY)||'0');
+const fill=document.getElementById('pp-fill');
+if(fill) fill.style.width=savedPct+'%';
 </script>
 </body>
 </html>

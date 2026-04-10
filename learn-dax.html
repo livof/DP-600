@@ -3,299 +3,340 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>DAX & Power BI — DP-600</title>
+<title>DAX and Power BI - DP-600</title>
 <style>
-    :root {
-      --bg:#f5f5f7;--surface:#fff;--border:#e2e2e8;--text:#1a1a2e;
-      --muted:#6b6b80;--accent:#5c54e8;--accent-soft:#eeecff;
-      --green:#22c55e;--green-soft:#f0fdf4;--radius:14px;
-      --shadow:0 2px 12px rgba(0,0,0,.07);
-    }
-    [data-theme="dark"]{
-      --bg:#0f1117;--surface:#1a1d2e;--border:#2a2d42;--text:#e8e8f4;
-      --muted:#8888aa;--accent:#7b75f5;--accent-soft:#1e1c3a;
-      --green:#4ade80;--green-soft:#052e16;
-    }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-      background:var(--bg);color:var(--text);line-height:1.65;
-      transition:background .25s,color .25s}
-    .container{max-width:720px;margin:0 auto;padding:0 20px}
-    header{display:flex;align-items:center;justify-content:space-between;
-      padding:18px 0;border-bottom:1px solid var(--border)}
-    .logo{font-size:1rem;font-weight:700;color:var(--accent);
-      text-decoration:none;letter-spacing:-.3px}
-    nav a{color:var(--muted);text-decoration:none;font-size:.9rem;
-      margin-left:20px;transition:color .2s}
-    nav a:hover,nav a.active{color:var(--accent)}
-    #theme-btn{background:none;border:1px solid var(--border);border-radius:8px;
-      padding:5px 10px;cursor:pointer;color:var(--muted);font-size:.85rem;
-      margin-left:16px;transition:border-color .2s,color .2s}
-    #theme-btn:hover{border-color:var(--accent);color:var(--accent)}
-    .back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);
-      text-decoration:none;font-size:.85rem;margin-bottom:20px;transition:color .2s}
-    .back:hover{color:var(--accent)}
-    .page-header{padding:48px 0 36px}
-    h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;letter-spacing:-1px;margin-bottom:8px}
-    h1 span{color:var(--accent)}
-    .page-sub{font-size:.95rem;color:var(--muted);max-width:560px}
-    .section-label{font-size:.72rem;font-weight:700;letter-spacing:1.2px;
-      text-transform:uppercase;color:var(--muted);margin-bottom:18px;margin-top:48px}
-    /* concept cards */
-    .concepts{display:grid;gap:10px;margin-bottom:8px}
-    .concept{background:var(--surface);border:1px solid var(--border);
-      border-radius:var(--radius);padding:18px 20px;
-      display:flex;gap:14px;box-shadow:var(--shadow)}
-    .concept-icon{font-size:1.4rem;flex-shrink:0;margin-top:2px}
-    .concept-body strong{display:block;font-size:.95rem;margin-bottom:4px}
-    .concept-body p{font-size:.85rem;color:var(--muted);margin:0}
-    /* question cards */
-    .q-card{background:var(--surface);border:1px solid var(--border);
-      border-radius:var(--radius);margin-bottom:12px;
-      box-shadow:var(--shadow);overflow:hidden}
-    .q-head{padding:18px 20px;cursor:pointer;
-      display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-    .q-head:hover{background:var(--accent-soft)}
-    .q-num{font-size:.72rem;font-weight:700;letter-spacing:.5px;
-      text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-    .q-text{font-size:.9rem;line-height:1.55;flex:1}
-    .q-chevron{color:var(--muted);font-size:1.1rem;flex-shrink:0;
-      transition:transform .25s;margin-top:2px}
-    .q-card.open .q-chevron{transform:rotate(90deg)}
-    .q-body{display:none;border-top:1px solid var(--border);padding:20px}
-    .q-card.open .q-body{display:block}
-    /* options */
-    .options{display:grid;gap:6px;margin-bottom:16px}
-    .opt{background:var(--bg);border:1px solid var(--border);
-      border-radius:10px;padding:10px 14px;font-size:.85rem;display:flex;gap:10px}
-    .opt.correct{background:var(--green-soft);border-color:var(--green);color:var(--text)}
-    .opt-letter{font-weight:700;color:var(--muted);flex-shrink:0;min-width:18px}
-    .opt.correct .opt-letter{color:var(--green)}
-    /* answer block */
-    .answer-block{background:var(--accent-soft);border-radius:10px;
-      padding:14px 16px;margin-bottom:14px}
-    .answer-label{font-size:.72rem;font-weight:700;letter-spacing:.5px;
-      text-transform:uppercase;color:var(--accent);margin-bottom:6px}
-    .answer-text{font-size:.88rem;line-height:1.6}
-    /* learn link */
-    .learn-link{display:inline-flex;align-items:center;gap:6px;
-      font-size:.8rem;color:var(--accent);text-decoration:none;
-      border:1px solid var(--border);border-radius:8px;padding:5px 12px;
-      transition:border-color .2s;margin-top:4px}
-    .learn-link:hover{border-color:var(--accent)}
-    footer{border-top:1px solid var(--border);padding:24px 0 40px;
-      text-align:center;font-size:.8rem;color:var(--muted)}
-    .divider{height:1px;background:var(--border);margin:8px 0}
+:root{--bg:#f5f5f7;--surface:#fff;--border:#e2e2e8;--text:#1a1a2e;--muted:#6b6b80;
+  --accent:#5c54e8;--accent-soft:#eeecff;--green:#22c55e;--green-soft:#f0fdf4;
+  --radius:14px;--shadow:0 2px 12px rgba(0,0,0,.07)}
+[data-theme="dark"]{--bg:#0f1117;--surface:#1a1d2e;--border:#2a2d42;--text:#e8e8f4;
+  --muted:#8888aa;--accent:#7b75f5;--accent-soft:#1e1c3a;--green:#4ade80;--green-soft:#052e16}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.65;transition:background .25s,color .25s}
+.container{max-width:720px;margin:0 auto;padding:0 20px}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--border)}
+.logo{font-size:1rem;font-weight:700;color:var(--accent);text-decoration:none;letter-spacing:-.3px}
+nav a{color:var(--muted);text-decoration:none;font-size:.9rem;margin-left:20px;transition:color .2s}
+nav a:hover,nav a.active{color:var(--accent)}
+#theme-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:5px 10px;
+  cursor:pointer;color:var(--muted);font-size:.85rem;margin-left:16px;transition:border-color .2s,color .2s}
+#theme-btn:hover{border-color:var(--accent);color:var(--accent)}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--muted);text-decoration:none;
+  font-size:.85rem;margin-bottom:18px;transition:color .2s}
+.back:hover{color:var(--accent)}
+.page-header{padding:44px 0 28px}
+.page-title-row{display:flex;align-items:baseline;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+h1{font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;letter-spacing:-1px}
+h1 span{color:var(--accent)}
+.time-badge{font-size:.75rem;font-weight:600;color:var(--muted);border:1px solid var(--border);
+  padding:2px 9px;border-radius:20px;white-space:nowrap}
+.page-sub{font-size:.9rem;color:var(--muted);max-width:560px}
+.section-label{font-size:.72rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--muted);margin-bottom:14px;margin-top:44px}
+.page-progress{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 18px;margin-bottom:8px;display:flex;align-items:center;gap:14px;box-shadow:var(--shadow)}
+.pp-label{font-size:.8rem;color:var(--muted);white-space:nowrap;flex-shrink:0}
+.pp-bar{flex:1;height:5px;background:var(--border);border-radius:99px;overflow:hidden}
+.pp-fill{height:100%;background:var(--accent);border-radius:99px;width:0%;transition:width .4s ease}
+.pp-count{font-size:.8rem;color:var(--muted);white-space:nowrap;flex-shrink:0}
+.concepts{display:grid;gap:8px}
+.concept{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  padding:16px 18px;display:flex;gap:14px;box-shadow:var(--shadow);transition:border-color .2s}
+.concept:hover{border-color:var(--accent)}
+.concept-icon{font-size:1.3rem;flex-shrink:0;margin-top:2px}
+.concept-body strong{display:block;font-size:.92rem;margin-bottom:3px}
+.concept-body p{font-size:.83rem;color:var(--muted);margin:0;line-height:1.55}
+code{background:var(--border);border-radius:4px;padding:1px 5px;font-size:.85em;font-family:monospace}
+.q-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);
+  margin-bottom:10px;box-shadow:var(--shadow);overflow:hidden;transition:border-color .2s}
+.q-card.seen{border-left:3px solid var(--green)}
+.q-head{padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;
+  align-items:flex-start;gap:12px;transition:background .15s}
+.q-head:hover{background:var(--accent-soft)}
+.q-meta{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.q-num{font-size:.7rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--accent)}
+.q-seen-dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:none}
+.q-card.seen .q-seen-dot{display:block}
+.q-text{font-size:.88rem;line-height:1.55;flex:1}
+.q-›{color:var(--muted);font-size:1.1rem;flex-shrink:0;transition:transform .25s;margin-top:2px}
+.q-card.open .q-›{transform:rotate(90deg)}
+.q-body{display:none;border-top:1px solid var(--border);padding:18px}
+.q-card.open .q-body{display:block}
+.options{display:grid;gap:6px;margin-bottom:14px}
+.opt{background:var(--bg);border:1px solid var(--border);border-radius:10px;
+  padding:9px 13px;font-size:.84rem;display:flex;gap:10px;align-items:flex-start}
+.opt.correct{background:var(--green-soft);border-color:var(--green)}
+.opt-letter{font-weight:700;color:var(--muted);flex-shrink:0;min-width:16px}
+.opt.correct .opt-letter{color:var(--green)}
+.disc{background:var(--accent-soft);border-radius:10px;padding:13px 15px;margin-bottom:12px}
+.disc-label{font-size:.68rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+.disc-text{font-size:.84rem;line-height:1.6}
+.page-nav{display:flex;gap:8px;margin:44px 0 0;flex-wrap:wrap}
+.nav-btn{display:inline-flex;align-items:center;gap:6px;background:var(--surface);
+  border:1px solid var(--border);border-radius:var(--radius);padding:10px 16px;
+  text-decoration:none;color:var(--text);font-size:.85rem;font-weight:500;
+  transition:border-color .2s,transform .15s;flex:1;min-width:140px}
+.nav-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.nav-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.nav-btn.primary:hover{opacity:.88}
+.done-banner{display:none;background:var(--green-soft);border:1px solid var(--green);
+  border-radius:var(--radius);padding:16px 20px;text-align:center;margin-top:20px}
+.done-banner.show{display:block}
+.done-banner p{font-size:.95rem;font-weight:600;color:var(--green)}
+.done-banner small{font-size:.8rem;color:var(--muted);display:block;margin-top:4px}
+footer{border-top:1px solid var(--border);padding:24px 0 40px;text-align:center;font-size:.8rem;color:var(--muted)}
 </style>
 </head>
 <body>
 <div class="container">
-
 <header>
   <a class="logo" href="index.html">DP-600</a>
   <div style="display:flex;align-items:center">
     <nav>
       <a href="index.html">Home</a>
       <a href="topics.html">Topics</a>
+      <a href="quiz.html">Quiz</a>
     </nav>
     <button id="theme-btn" onclick="toggleTheme()">🌙</button>
   </div>
 </header>
-
 <div class="page-header">
   <a class="back" href="topics.html">← All topics</a>
-  <h1>📊 DAX &amp; <span>Power BI</span></h1>
-  <p class="page-sub">Measures, file types, dynamic formats, and performance tools.</p>
+  <div class="page-title-row"><h1>📊 DAX <span>and Power BI</span></h1><span class="time-badge">⏱ ~10 min</span></div>
+  <p class="page-sub">Measures, file formats, performance tools, and dynamic formatting.</p>
 </div>
-
-<p class="section-label">Core concepts first</p>
+<div class="page-progress">
+  <span class="pp-label">Progress</span>
+  <div class="pp-bar"><div class="pp-fill" id="pp-fill"></div></div>
+  <span class="pp-count" id="pp-count">0 / 10</span>
+</div>
+<p class="section-label">Concepts - read these first</p>
 <div class="concepts">
-  <div class="concept">
-    <span class="concept-icon">🧮</span>
-    <div class="concept-body">
-      <strong>CALCULATE = the most important DAX function</strong>
-      <p>CALCULATE evaluates an expression in a <em>modified filter context</em>. Almost every complex measure uses it. The pattern is: <code>CALCULATE([Measure], Filter1, Filter2)</code>. Time intelligence functions like <code>SAMEPERIODLASTYEAR</code> are always wrapped in CALCULATE — they only produce a filter, they don't calculate anything on their own.</p>
-    </div>
-  </div>
-  <div class="concept">
-    <span class="concept-icon">📁</span>
-    <div class="concept-body">
-      <strong>PBIT vs PBIX vs PBIP — know every format</strong>
-      <p><b>PBIX</b>: the standard file, contains data + report. <b>PBIT</b>: a template — has structure and connections but <em>no data</em>. <b>PBIP</b>: Power BI project, folder-based for Git. <b>PBIDS</b>: just a data source connection file. The exam tests "no data + pre-built structure" = PBIT.</p>
-    </div>
-  </div>
-  <div class="concept">
-    <span class="concept-icon">💱</span>
-    <div class="concept-body">
-      <strong>Dynamic format strings = currency symbol that changes</strong>
-      <p>When a measure should display in different currencies based on a user's selection, use a <b>dynamic format string</b>. It's a DAX expression that returns a format string (like "€#,0.00") rather than a fixed one. Field parameters are for switching which measure/column displays — not for formatting.</p>
-    </div>
-  </div>
-  <div class="concept">
-    <span class="concept-icon">🔍</span>
-    <div class="concept-body">
-      <strong>Model view vs Model Explorer — different tools, different jobs</strong>
-      <p><b>Model view</b> (the diagram) shows tables, columns, and relationships — great for spotting columns with wrong settings like "Summarize By". <b>Model Explorer</b> (the tree panel) shows the full semantic model hierarchy including measures and calculation groups. Performance Analyzer is for report-level query timing.</p>
-    </div>
-  </div>
+  <div class="concept"><span class="concept-icon">🧮</span><div class="concept-body"><strong>CALCULATE changes the filter context around a measure</strong><p>CALCULATE([Measure], Filter) evaluates a measure inside a modified filter context. Time intelligence functions like SAMEPERIODLASTYEAR only produce a filter - they always need to be wrapped in CALCULATE to actually compute something.</p></div></div>
+  <div class="concept"><span class="concept-icon">📁</span><div class="concept-body"><strong>PBIT is a template with no data. PBIP is a project for Git.</strong><p>PBIX is the standard file and contains data. PBIT is a template with structure and connections but no data - used to share report layouts. PBIP is a 📁-based project for version control. PBIDS is just a data source connection file with no report.</p></div></div>
+  <div class="concept"><span class="concept-icon">💱</span><div class="concept-body"><strong>Dynamic format strings change the 💱 symbol based on context</strong><p>A dynamic format string is a DAX expression that returns a format string. Use it when a measure should display in different currencies based on a user selection. Field parameters switch which measure shows - not how it is formatted.</p></div></div>
+  <div class="concept"><span class="concept-icon">🔍</span><div class="concept-body"><strong>Model view shows column properties. Model Explorer shows the full hierarchy.</strong><p>Model view (the diagram tab) is best for checking column properties like Summarize By - spot surrogate keys set to Sum by mistake. Model Explorer (the tree) shows measures and 🧮ulation groups. Performance Analyzer records query timings per visual.</p></div></div>
+  <div class="concept"><span class="concept-icon">🚀</span><div class="concept-body"><strong>NOT ISEMPTY() is faster than COUNTROWS() &gt; 0</strong><p>ISEMPTY short-circuits as soon as it finds one row. COUNTROWS scans the whole table first, then compares. For existence checks in DAX, always use ISEMPTY - it is measurably faster on large tables.</p></div></div>
 </div>
-
-<p class="section-label">Exam questions — try them yourself</p>
-
+<p class="section-label">Exam questions - click to reveal answers</p>
 <div class="q-card">
   <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 1</div>
-      <div class="q-text">Case study - This is a case study. Case studies are not timed separately. You can use as much exam time as you would like to complete each case. However, there may be additional case studies and sections on this exam. You must manage your time to ensure that you are able to complete all questions included on this exam in the time provided. To answer the questions included in a case study, you will</div>
-    </div>
-    <span class="q-chevron">›</span>
-  </div>
-  <div class="q-body">
-    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Store at the semantic models and reports in Data Lake Gen2 storage.</span></div>
-<div class="opt"><span class="opt-letter">B</span><span>Modify the settings of the Research workspaces to use a GitHub repository.</span></div>
-<div class="opt correct"><span class="opt-letter">C ✓</span><span>Modify the settings of the Research division workspaces to use an Azure Repos repository.</span></div>
-<div class="opt"><span class="opt-letter">D</span><span>Store all the semantic models and reports in Microsoft OneDrive.</span></div>
-</div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">"Currently, only Git in Azure Repos is supported." https://learn.microsoft.com/en-us/fabric/cicd/git-integration/intro-to-git- integration#considerations-and-limitations IMHO, the Azure Repos is the answer. It is directly mentioned here: https://learn.microsoft.com/en-us/fabric/cicd/git-integration/intro-to-git-integration Considerations and limitations Currently, only Git in Azure Repos with the same tenant as the Fabric tenant is supported. If the workspace and Git repo are in two different geographical regions, the tenant admin must enable cross-geo exports. Azure DevOps on-prem isn't suppo...</div></div>
-  </div>
-</div>
-<div class="q-card">
-  <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 60</div>
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q60</span><span class="q-seen-dot"></span></div>
       <div class="q-text">You need to create a Microsoft Power BI file that will be used to create multiple reports. The solution must meet the following requirements: • The file must include predefined data source connections. • The file must include the report structure and formatting. • The file must NOT contain any data. Which file format should you use?</div>
     </div>
-    <span class="q-chevron">›</span>
+    <span class="q-›">›</span>
   </div>
   <div class="q-body">
-    <div class="options"><div class="opt correct"><span class="opt-letter">A ✓</span><span>PBIT</span></div>
+    <div class="options"><div class="opt correct"><span class="opt-letter">A  ✓</span><span>PBIT</span></div>
 <div class="opt"><span class="opt-letter">B</span><span>PBIDS</span></div>
 <div class="opt"><span class="opt-letter">C</span><span>PBIX</span></div>
 <div class="opt"><span class="opt-letter">D</span><span>PBIP</span></div>
 </div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">PBIT (Power BI Template File) ✅ Why? A PBIT (Power BI Template file): ✔ Includes predefined data source connections. ✔ Includes report structure and formatting. ✔ Does NOT contain any actual data—only metadata (queries, measures, visual PBIT is the answer for sure. PBIT is a Power BI Template file, which is designed to meet the requirements specified in your question</div></div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">PBIT (Power BI Template File) ✅ Why? A PBIT (Power BI Template file): ✔ Includes predefined data source connections. ✔ Includes report structure and formatting. ✔ Does NOT contain any actual data—only metadata (queries, measures, visual PBIT is the answer for sure. PBIT is a Power BI Template file, which is designed to meet the requirements specified in your question</div></div>
   </div>
-</div>
-<div class="q-card">
+</div><div class="q-card">
   <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 62</div>
-      <div class="q-text">You have a Fabric tenant that contains a workspace named Workspace1 and a user named User1. User1 is assigned the Contributor role for Workspace1. You plan to configure Workspace1 to use an Azure DevOps repository for version control. You need to ensure that User1 can commit items to the repository. Which two settings should you enable for User1? Each correct answer presents part of the solution. </div>
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q62</span><span class="q-seen-dot"></span></div>
+      <div class="q-text">You have a Fabric tenant that contains a workspace named Workspace1 and a user named User1. User1 is assigned the Contributor role for Workspace1. You plan to configure Workspace1 to use an Azure DevOps repository for version control. You need to ensure that User1 can commit items to the repository. Which two settings should you enable for User1? Each correct answer presents part of the solution. NOTE: Each correct selection is worth one point.</div>
     </div>
-    <span class="q-chevron">›</span>
+    <span class="q-›">›</span>
   </div>
   <div class="q-body">
     <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Users can sync workspace items with GitHub repositories</span></div>
 <div class="opt"><span class="opt-letter">B</span><span>Users can create and use Data workflows</span></div>
-<div class="opt correct"><span class="opt-letter">C ✓</span><span>Users can create Fabric items</span></div>
-<div class="opt correct"><span class="opt-letter">D ✓</span><span>Users can synchronize workspace items with their Git repositories</span></div>
+<div class="opt correct"><span class="opt-letter">C  ✓</span><span>Users can create Fabric items</span></div>
+<div class="opt correct"><span class="opt-letter">D  ✓</span><span>Users can synchronize workspace items with their Git repositories</span></div>
 </div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">. Users need to be able to Create Fabric Items to satisfy 'User1 can commit Items to the repository. D. They try to trick you with 'GITHUB'. Azure Devops uses GIT, but GITHUB is different. You want to sync your 'GIT Repositories'. Has nothing to do with GITHUB... solorumore 1 point4 months ago To allow a user like User1 to commit to the Git repository (in this case an Azure DevOps repository), you need specifications that enable synchronization and version control via Git. A. Users can sync workspace items with GitHub repositories: This option allows users to link workspace items to a Git repo...</div></div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">. Users need to be able to Create Fabric Items to satisfy &#x27;User1 can commit Items to the repository. D. They try to trick you with &#x27;GITHUB&#x27;. Azure Devops uses GIT, but GITHUB is different. You want to sync your &#x27;GIT Repositories&#x27;. Has nothing to do with GITHUB... To allow a user like User1 to commit to the Git repository (in this case an Azure DevOps repository), you need specifications that enable synchronization and version control via Git. A. Users can sync workspace items with GitHub reposit...</div></div>
   </div>
-</div>
-<div class="q-card">
+</div><div class="q-card">
   <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 73</div>
-      <div class="q-text">You have a query in Microsoft Power BI Desktop that contains two columns named Order_Date and Shipping_Date. You need to create a column that will calculate the number of days between Order_Date and Shipping_Date for each row. Which Power Query function should you use?</div>
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q73</span><span class="q-seen-dot"></span></div>
+      <div class="q-text">You have a query in Microsoft Power BI Desktop that contains two columns named Order_Date and Shipping_Date. You need to create a column that will 🧮ulate the number of days between Order_Date and Shipping_Date for each row. Which Power Query function should you use?</div>
     </div>
-    <span class="q-chevron">›</span>
+    <span class="q-›">›</span>
   </div>
   <div class="q-body">
     <div class="options"><div class="opt"><span class="opt-letter">A</span><span>DateTime.LocalNow</span></div>
-<div class="opt correct"><span class="opt-letter">B ✓</span><span>Duration.Days</span></div>
+<div class="opt correct"><span class="opt-letter">B  ✓</span><span>Duration.Days</span></div>
 <div class="opt"><span class="opt-letter">C</span><span>Duration.From</span></div>
-<div class="opt correct"><span class="opt-letter">D ✓</span><span>Date.AddDays</span></div>
+<div class="opt correct"><span class="opt-letter">D  ✓</span><span>Date.AddDays</span></div>
 </div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">tizian10 1 point5 months ago uration.Days(duration) ✅ Extracts the number of days from a duration value. 🔹 Example: Convert a duration to the number of days. powerquery Copy Edit Duration.Days(#duration(5, 12, 30, 0)) 🔹 Output: 5 (because the duration represents 5 days, 12 hours, 30 minutes, and 0 seconds) 📌 Use Case: Used when working with time differences and you only care about the number of days. aks2304 1 point5 months ago uration.Days([Shipping_Date] - [Order_Date])</div></div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">uration.Days(duration) ✅ Extracts the number of days from a duration value. 🔹 Example: Convert a duration to the number of days. powerquery Copy Edit Duration.Days(#duration(5, 12, 30, 0)) 🔹 Output: 5 (because the duration represents 5 days, 12 hours, 30 minutes, and 0 seconds) 📌 Use Case: Used when working with time differences and you only care about the number of days. uration.Days([Shipping_Date] - [Order_Date])</div></div>
   </div>
-</div>
-<div class="q-card">
+</div><div class="q-card">
   <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 75</div>
-      <div class="q-text">You have a Microsoft Power BI semantic model that contains a measure named TotalSalesAmount. TotalSalesAmount returns a sales revenue amount that is translated into a selected currency. You need to ensure that the value returned by TotalSalesAmount is formatted to use the correct currency symbol. What should you include in the solution?</div>
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q75</span><span class="q-seen-dot"></span></div>
+      <div class="q-text">You have a Microsoft Power BI semantic model that contains a measure named TotalSalesAmount. TotalSalesAmount returns a sales revenue amount that is translated into a selected 💱. You need to ensure that the value returned by TotalSalesAmount is formatted to use the correct 💱 symbol. What should you include in the solution?</div>
     </div>
-    <span class="q-chevron">›</span>
+    <span class="q-›">›</span>
   </div>
   <div class="q-body">
-    <div class="options"><div class="opt correct"><span class="opt-letter">A ✓</span><span>a field parameter</span></div>
+    <div class="options"><div class="opt correct"><span class="opt-letter">A  ✓</span><span>a field parameter</span></div>
 <div class="opt"><span class="opt-letter">B</span><span>a linguistic schema</span></div>
-<div class="opt correct"><span class="opt-letter">C ✓</span><span>a dynamic format string</span></div>
+<div class="opt correct"><span class="opt-letter">C  ✓</span><span>a dynamic format string</span></div>
 <div class="opt"><span class="opt-letter">D</span><span>the WINDOW DAX function</span></div>
 </div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">JuanGonzalezT 1 point4 months ago nswer: C https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-dynamic-format-strings "With dynamic format strings for measures, you can determine how measures appear in visuals by conditionally applying a format string with a separate DAX formula." To format the value returned by TotalSalesAmount with the correct currency symbol in your semantic model, you can use a dynamic format string in your DAX expression. Dynamic format strings allow you to apply custom formatting based on the context or user selection, such as displaying the appropriate cur...</div></div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">nswer: C https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-dynamic-format-strings &quot;With dynamic format strings for measures, you can determine how measures appear in visuals by conditionally applying a format string with a separate DAX formula.&quot; To format the value returned by TotalSalesAmount with the correct 💱 symbol in your semantic model, you can use a dynamic format string in your DAX expression. Dynamic format strings allow you to apply custom formatting based on the...</div></div>
   </div>
-</div>
-<div class="q-card">
+</div><div class="q-card">
   <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 80</div>
-      <div class="q-text">You have a Fabric tenant that contains a Microsoft Power BI report named Report1. Report1 includes a Python visual. Data displayed by the visual is grouped automatically and duplicate rows are NOT displayed. You need all rows to appear in the visual. What should you do?</div>
-    </div>
-    <span class="q-chevron">›</span>
-  </div>
-  <div class="q-body">
-    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Reference the columns in the Python code by index.</span></div>
-<div class="opt"><span class="opt-letter">B</span><span>Modify the Sort Column By property for all columns.</span></div>
-<div class="opt"><span class="opt-letter">C</span><span>Add a unique field to each row.</span></div>
-<div class="opt"><span class="opt-letter">D</span><span>Modify the Summarize By property for all columns.</span></div>
-</div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">year ago A - often the Microsoft learn pages give you the exact answer: Under tips on the link I posted: In some cases, you might not want automatic grouping to occur, or you might want all rows to appear, including duplicates. In those cases, you can add an index field to your dataset that causes all rows to be considered unique and prevents grouping. https://learn.microsoft.com/en-us/power-bi/connect-data/desktop-python-visuals There are always multiple approaches in application but if you do the MS exam give the MS answer. year ago sorry but that (A) sounds incorrect. This is from the MS do...</div></div>
-  </div>
-</div>
-<div class="q-card">
-  <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 101</div>
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q101</span><span class="q-seen-dot"></span></div>
       <div class="q-text">You have a Microsoft Power BI semantic model. You need to identify any surrogate key columns in the model that have the Summarize By property set to a value other than to None. The solution must minimize effort. What should you use?</div>
     </div>
-    <span class="q-chevron">›</span>
+    <span class="q-›">›</span>
   </div>
   <div class="q-body">
     <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Performance Analyzer in Power BI Desktop</span></div>
 <div class="opt"><span class="opt-letter">B</span><span>Model explorer in Microsoft Power BI Desktop</span></div>
-<div class="opt correct"><span class="opt-letter">C ✓</span><span>Model view in Microsoft Power BI Desktop</span></div>
+<div class="opt correct"><span class="opt-letter">C  ✓</span><span>Model view in Microsoft Power BI Desktop</span></div>
 <div class="opt"><span class="opt-letter">D</span><span>DAX Formatter in DAX Studio</span></div>
 </div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">Iʼm cool with C, unless someoneʼs got a better take based on the docs.</div></div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">Iʼm cool with C, unless someoneʼs got a better take based on the docs.</div></div>
   </div>
-</div>
-<div class="q-card">
+</div><div class="q-card">
   <div class="q-head" onclick="toggleQ(this)">
-    <div>
-      <div class="q-num">Question 126</div>
-      <div class="q-text">You have a Fabric tenant that contains a semantic model named Model1. Model1 uses Import mode. Model1 contains a table named Orders. Orders has 100 million rows and the following fields. You need to reduce the memory used by Model1 and the time it takes to refresh the model. Which two actions should you perform? Each correct answer presents part of the solution. NOTE: Each correct answer is worth </div>
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q126</span><span class="q-seen-dot"></span></div>
+      <div class="q-text">You have a Fabric tenant that contains a semantic model named Model1. Model1 uses Import mode. Model1 contains a table named Orders. Orders has 100 million rows and the following fields. You need to reduce the memory used by Model1 and the time it takes to refresh the model. Which two actions should you perform? Each correct answer presents part of the solution. NOTE: Each correct answer is worth one point.</div>
     </div>
-    <span class="q-chevron">›</span>
+    <span class="q-›">›</span>
   </div>
   <div class="q-body">
-    <div class="options"><div class="opt correct"><span class="opt-letter">A ✓</span><span>Split OrderDateTime into separate date and time columns.</span></div>
-<div class="opt"><span class="opt-letter">B</span><span>Replace TotalQuantity with a calculated column.</span></div>
+    <div class="options"><div class="opt correct"><span class="opt-letter">A  ✓</span><span>Split OrderDateTime into separate date and time columns.</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>Replace TotalQuantity with a 🧮ulated column.</span></div>
 <div class="opt"><span class="opt-letter">C</span><span>Convert Quantity into the Text data type.</span></div>
-<div class="opt correct"><span class="opt-letter">D ✓</span><span>Replace TotalSalesAmount with a measure.</span></div>
+<div class="opt correct"><span class="opt-letter">D  ✓</span><span>Replace TotalSalesAmount with a measure.</span></div>
 </div>
-    <div class="answer-block"><div class="answer-label">Why this answer?</div><div class="answer-text">year ago A : Best practice D : measure better than column year ago I was under the impression that A should be correct due to the fact that separate date and time column achieve higher columnar redundancy and allow better data compression. Whereas solution B, an additional calculated column, would inflate the memory usage. Measure are not stored in memory and would therefore be favorable concerning the stated objective of reducing memory used and minimizing refresh times. NRezgui 1 point8 months ago & D is the answer Rakesh16 1 point9 months ago & D is the answer 6d1de25 1 pointabout 1 year ag...</div></div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">year ago A : Best practice D : measure better than column year ago I was under the impression that A should be correct due to the fact that separate date and time column achieve higher columnar redundancy and allow better data compression. Whereas solution B, an additional 🧮ulated column, would inflate the memory usage. Measure are not stored in memory and would therefore be favorable concerning the stated objective of reducing memory used and minimizing refresh times. &amp; D is the answer &amp; D i...</div></div>
+  </div>
+</div><div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q173</span><span class="q-seen-dot"></span></div>
+      <div class="q-text">You have a Fabric tenant that contains a lakehouse. You plan to use a visual query to merge two tables. You need to ensure that the query returns all the rows in both tables. Which type of join should you use?</div>
+    </div>
+    <span class="q-›">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>inner</span></div>
+<div class="opt correct"><span class="opt-letter">B  ✓</span><span>full outer</span></div>
+<div class="opt"><span class="opt-letter">C</span><span>left outer</span></div>
+<div class="opt"><span class="opt-letter">D</span><span>right anti</span></div>
+<div class="opt"><span class="opt-letter">E</span><span>right outer F. left anti</span></div>
+</div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">since there is no other information on the tables, the answer is the academical one year ago Just making it more obvious, but yea... all other options wouldn&#x27;t return all the rows in both tables but exclude some. year ago IMHO, 1st grage of SQL school - FULL OUTER JOIN. Because - ALL rows, not from left, right, ... table(s) year ago B. Left or right will only return one table all rows and other table if exist in the other table. inner will only return if data match in both tables so Full (outer)...</div></div>
+  </div>
+</div><div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q187</span><span class="q-seen-dot"></span></div>
+      <div class="q-text">You have a Fabric tenant that contains a semantic model. The model contains 15 tables. You need to programmatically change each column that ends in the word Key to meet the following requirements: • Hide the column. • Set Nullable to False • Set Summarize By to None. • Set Available in MDX to False. • Mark the column as a key column. What should you use?</div>
+    </div>
+    <span class="q-›">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Microsoft Power BI Desktop</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>ALM Toolkit</span></div>
+<div class="opt correct"><span class="opt-letter">C  ✓</span><span>Tabular Editor</span></div>
+<div class="opt"><span class="opt-letter">D</span><span>DAX Studio</span></div>
+</div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">IMHO, C) Tabulr Editor is good. Here&#x27;s why the other options are not ideal for this scenario: 1) Microsoft Power BI Desktop: doesn&#x27;t offer functionalities for bulk programmatic changes based on naming conventions. 2) ALM Toolkit: it&#x27;s not specifically designed for modifying the structure of semantic models within the tool itself. 3) DAX Studio doesn&#x27;t provide functionalities for directly modifying model structure or properties en masse. Tabular Editor seems most correct for me Why option A is no...</div></div>
+  </div>
+</div><div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q190</span><span class="q-seen-dot"></span></div>
+      <div class="q-text">You have a Microsoft Power BI report named Report1 that uses a Fabric semantic model. Users discover that Report1 renders slowly. You open Performance analyzer and identify that a visual named Orders By Date is the slowest to render. The duration breakdown for Orders By Date is shown in the following table. What will provide the greatest reduction in the rendering duration of Report1?</div>
+    </div>
+    <span class="q-›">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>Enable automatic page refresh.</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>Optimize the DAX query of Orders By Date by using DAX Studio.</span></div>
+<div class="opt"><span class="opt-letter">C</span><span>Change the visual type of Orders By Date.</span></div>
+<div class="opt correct"><span class="opt-letter">D  ✓</span><span>Reduce the number of visuals in Report1.</span></div>
+</div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">year ago https://learn.microsoft.com/en-us/power-bi/create-reports/desktop-performance-analyzer#display-the-performance- analyzer-pane &quot;Other - This is the time required by the visual for preparing queries, waiting for other visuals to complete, or performing other background processing.&quot; year ago While optimizing the DAX query could slightly improve performance, the DAX query duration (27 ms) is already very low. The &quot;Other&quot; duration (1047 ms) is significantly higher than the DAX query (27 ms) ...</div></div>
+  </div>
+</div><div class="q-card">
+  <div class="q-head" onclick="toggleQ(this)">
+    <div style="flex:1">
+      <div class="q-meta"><span class="q-num">Q193</span><span class="q-seen-dot"></span></div>
+      <div class="q-text">You have a Microsoft Power BI semantic model that contains measures. The measures use multiple CALCULATE functions and a FILTER function. You are evaluating the performance of the measures. In which use case will replacing the FILTER function with the KEEPFILTERS function reduce execution time?</div>
+    </div>
+    <span class="q-›">›</span>
+  </div>
+  <div class="q-body">
+    <div class="options"><div class="opt"><span class="opt-letter">A</span><span>when the FILTER function uses a nested 🧮ulate function</span></div>
+<div class="opt"><span class="opt-letter">B</span><span>when the FILTER function references a measure</span></div>
+<div class="opt"><span class="opt-letter">C</span><span>when the FILTER function references columns from multiple tables</span></div>
+<div class="opt correct"><span class="opt-letter">D  ✓</span><span>when the FILTER function references a column from a single table that uses Import mode</span></div>
+</div>
+    <div class="disc"><div class="disc-label">Why this answer</div><div class="disc-text">year ago xplanation here: https://learn.microsoft.com/en-us/dax/best-practices/dax-avoid-avoid-filter-as-filter-argument FILTER returns a table whereas KEEPFILTERS returns a Boolean. So, A, B and C are limitations of uses of Boolean expressions. Correct Answer is D Reference: &quot;It&#x27;s recommended you pass filter arguments as Boolean expressions, whenever possible. It&#x27;s because Import model tables are in-memory column stores. They are explicitly optimized to efficiently filter columns in this way.&quot; ...</div></div>
   </div>
 </div>
+<div class="done-banner" id="done-banner">
+  <p>You reviewed all questions on this page!</p>
+  <small>Head to another topic or test yourself in the quiz.</small>
+</div>
+<div class="page-nav"><a class="nav-btn" href="learn-semantic-model.html">← Semantic Models</a><a class="nav-btn primary" href="quiz.html">⚡ Test yourself</a><a class="nav-btn" href="learn-security.html">Security &amp; Governance →</a></div>
+
 </div>
 <footer><div class="container">DP-600 Microsoft Fabric Analytics Engineer</div></footer>
 <script>
-  function toggleTheme(){
-    const html=document.documentElement;
-    const isDark=html.getAttribute('data-theme')==='dark';
-    html.setAttribute('data-theme',isDark?'light':'dark');
-    document.getElementById('theme-btn').textContent=isDark?'🌙':'☀️';
-    localStorage.setItem('theme',isDark?'light':'dark');
+window.PAGE_STORAGE_KEY='dp600-dax-progress';
+
+function toggleTheme(){
+  const html=document.documentElement;
+  const isDark=html.getAttribute('data-theme')==='dark';
+  html.setAttribute('data-theme',isDark?'light':'dark');
+  document.getElementById('theme-btn').textContent=isDark?'🌙':'☀️';
+  localStorage.setItem('theme',isDark?'light':'dark');
+}
+const saved=localStorage.getItem('theme');
+if(saved){document.documentElement.setAttribute('data-theme',saved);
+  if(saved==='dark')document.getElementById('theme-btn').textContent='☀️';}
+
+let seenCount=0;
+const totalQ=document.querySelectorAll('.q-card').length;
+
+function openQ(card){
+  card.classList.add('open','seen');
+  const already=card.dataset.counted;
+  if(!already){
+    card.dataset.counted='1';
+    seenCount++;
+    updatePageProgress();
+    if(seenCount===totalQ){
+      const b=document.getElementById('done-banner');
+      if(b) b.classList.add('show');
+    }
   }
-  const saved=localStorage.getItem('theme');
-  if(saved){document.documentElement.setAttribute('data-theme',saved);
-    if(saved==='dark')document.getElementById('theme-btn').textContent='☀️';}
-  function toggleQ(el){
-    const card=el.closest('.q-card');
-    card.classList.toggle('open');
-  }
+}
+function toggleQ(el){
+  const card=el.closest('.q-card');
+  if(card.classList.contains('open')) card.classList.remove('open');
+  else openQ(card);
+}
+function updatePageProgress(){
+  const pct=Math.round((seenCount/totalQ)*100);
+  const fill=document.getElementById('pp-fill');
+  const cnt=document.getElementById('pp-count');
+  if(fill) fill.style.width=pct+'%';
+  if(cnt) cnt.textContent=seenCount+' / '+totalQ;
+  if(window.PAGE_STORAGE_KEY) localStorage.setItem(window.PAGE_STORAGE_KEY,pct);
+}
+
+const savedPct=parseInt(localStorage.getItem(window.PAGE_STORAGE_KEY)||'0');
+const fill=document.getElementById('pp-fill');
+if(fill) fill.style.width=savedPct+'%';
 </script>
 </body>
 </html>

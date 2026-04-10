@@ -302,6 +302,7 @@
       <nav>
         <a href="index.html">Home</a>
         <a href="topics.html" class="active">Topics</a>
+        <a href="quiz.html">Quiz</a>
       </nav>
       <button id="theme-btn" onclick="toggleTheme()" title="Toggle dark mode">🌙</button>
     </div>
@@ -311,7 +312,7 @@
   <div class="page-header">
     <a class="back" href="index.html">← Back to home</a>
     <h1>Exam Topics</h1>
-    <p class="page-sub">Tick off topics as you go. Progress is saved in your browser.</p>
+    <p class="page-sub">Tick off topics as you go. Each domain links to a study page with real exam questions.</p>
   </div>
 
   <!-- ── Progress ── -->
@@ -323,7 +324,7 @@
     <div class="progress-bar">
       <div class="progress-fill" id="progress-fill"></div>
     </div>
-    <p class="progress-note">Click any topic to mark it as studied ✓</p>
+    <p class="progress-note">Click any topic card to mark it as studied ✓ · Or jump straight to <a href="quiz.html" style="color:var(--accent)">the quiz →</a></p>
   </div>
 
   <!-- ══════════════════════════════════════════ -->
@@ -480,6 +481,7 @@
           <span class="topic-count">4 topics</span>
         </div>
         <a class="study-btn" href="learn-dax.html">Study with exam questions →</a>
+        <a class="study-btn" href="learn-realtime.html" style="background:var(--muted);margin-top:4px">Real-Time &amp; KQL →</a>
       </div>
     </div>
 
